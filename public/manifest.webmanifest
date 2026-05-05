@@ -1,7 +1,7 @@
 {
-  "name": "CodeLearn",
-  "short_name": "CodeLearn",
-  "description": "Interactive platform to learn algorithms, data structures, and programming languages.",
+  "name": "AlgoMaster",
+  "short_name": "AlgoMaster",
+  "description": "Plateforme interactive pour maîtriser les algorithmes et structures de données (FR).",
   "start_url": ".",
   "display": "standalone",
   "background_color": "#0d1117",

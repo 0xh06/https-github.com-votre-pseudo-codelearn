@@ -16,6 +16,16 @@
     --red: #f85149;
   }
 
+  .light-theme {
+    --bg: #ffffff;
+    --bg2: #f6f8fa;
+    --bg3: #ebf0f4;
+    --border: #d0d7de;
+    --text: #24292f;
+    --text-bright: #1f2328;
+    --text-dim: #57606a;
+  }
+
   body {
     @apply bg-[var(--bg)] text-[var(--text)] antialiased selection:bg-[var(--green)] selection:text-black;
     font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;

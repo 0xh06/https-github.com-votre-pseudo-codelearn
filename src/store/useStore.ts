@@ -13,6 +13,8 @@ interface SrsItem {
   nextReview: number;
 }
 
+export type SubscriptionPlan = 'free' | 'pro';
+
 interface StoreState {
   xp: number;
   favorites: string[];
@@ -22,6 +24,7 @@ interface StoreState {
   lastAlgo: string | null;
   user: any | null;
   profile: any | null;
+  subscriptionPlan: SubscriptionPlan;
   addXp: (amount: number) => void;
   toggleFavorite: (id: string) => void;
   toggleCompleted: (id: number) => void;
@@ -30,6 +33,7 @@ interface StoreState {
   checkStreak: () => void;
   setUser: (user: any) => void;
   setProfile: (profile: any) => void;
+  setSubscriptionPlan: (plan: SubscriptionPlan) => void;
   signOut: () => void;
 }
 
@@ -52,7 +56,8 @@ export const useStore = create<StoreState>()(
       lastAlgo: null,
       user: null,
       profile: null,
-      
+      subscriptionPlan: 'free',
+
       addXp: (amount) => set((state) => ({ xp: state.xp + amount })),
       
       toggleFavorite: (id) => set((state) => ({
@@ -105,6 +110,7 @@ export const useStore = create<StoreState>()(
 
       setUser: (user) => set({ user }),
       setProfile: (profile) => set({ profile }),
+      setSubscriptionPlan: (plan) => set({ subscriptionPlan: plan }),
       signOut: () => set({ user: null, profile: null })
     }),
     {

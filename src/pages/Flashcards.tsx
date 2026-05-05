@@ -4,12 +4,22 @@ import { useStore } from '../store/useStore';
 import Seo from '../components/Seo';
 
 export default function Flashcards() {
-  const { srs } = useStore();
-  const dueCount = Object.values(srs).filter(item => item.nextReview <= Date.now()).length;
+  const { srs, subscriptionPlan } = useStore();
+  const dueCount = Object.values(srs).filter((item) => item.nextReview <= Date.now()).length;
+  const isPro = subscriptionPlan === 'pro';
 
   return (
     <div className="container mx-auto px-4 py-12 max-w-2xl">
-      <Seo title="Flashcards" description="Repetition espacee pour memoriser les concepts clefs." />
+      <Seo title="Flashcards" description="Répétition espacée pour ancrer la complexité et les définitions clés." />
+      {!isPro && (
+        <p className="text-center text-sm text-[var(--text-dim)] mb-6 p-4 rounded-xl border border-[var(--border)] bg-[var(--bg2)]">
+          Gratuit : jusqu&apos;à <strong className="text-[var(--text-bright)]">8 cartes</strong> par session.{' '}
+          <Link to="/pricing" className="text-[var(--green)] font-bold hover:underline">
+            Pro
+          </Link>{' '}
+          = sessions illimitées.
+        </p>
+      )}
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}

@@ -16,7 +16,7 @@ export default function Profile() {
 
   return (
     <div className="container mx-auto px-4 py-12 max-w-5xl">
-      <Seo title="Mon Profil" description="Votre tableau de bord personnel sur CodeLearn." />
+      <Seo title="Mon Profil" description="Votre tableau de bord personnel sur AlgoMaster." />
 
       <motion.div
         initial={{ opacity: 0, y: 20 }}

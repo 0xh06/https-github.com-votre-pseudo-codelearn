@@ -1,7 +1,7 @@
 export const SITE = {
-  name: 'CodeLearn',
+  name: 'AlgoMaster',
   description:
-    'Interactive platform to learn algorithms, data structures, and programming languages.',
-  url: 'https://codelearn.app',
+    'Plateforme interactive en français pour maîtriser les algorithmes, les structures de données et préparer vos entretiens techniques.',
+  url: 'https://algomaster.app',
   ogImage: '/favicon.svg'
 };

@@ -12,39 +12,77 @@ export default function Footer() {
                 <Code2 className="text-[var(--green)] w-6 h-6" />
               </div>
               <span className="text-xl font-black tracking-tighter text-[var(--text-bright)]">
-                CODE<span className="text-[var(--green)]">LEARN</span>
+                ALGO<span className="text-[var(--green)]">MASTER</span>
               </span>
             </Link>
             <p className="text-[var(--text-dim)] max-w-sm leading-relaxed">
-              La plateforme EdTech francophone pour les développeurs ambitieux. 
-              Maîtrisez l'informatique théorique par la pratique.
+              Plateforme d&apos;apprentissage pour développeurs : algorithmes, exécution dans le navigateur, parcours et révisions.
+              Données traitées conformément au RGPD — voir la politique de confidentialité.
             </p>
           </div>
-          
+
           <div>
             <h4 className="font-bold text-[var(--text-bright)] mb-4 uppercase text-xs tracking-widest">Plateforme</h4>
             <ul className="space-y-2 text-sm text-[var(--text-dim)]">
-              <li><Link to="/algorithms" className="hover:text-[var(--green)] transition-colors">Algorithmes</Link></li>
-              <li><Link to="/exercises" className="hover:text-[var(--green)] transition-colors">Exercices</Link></li>
-              <li><Link to="/paths" className="hover:text-[var(--green)] transition-colors">Roadmap</Link></li>
-              <li><Link to="/languages" className="hover:text-[var(--green)] transition-colors">Langages</Link></li>
+              <li>
+                <Link to="/algorithms" className="hover:text-[var(--green)] transition-colors">
+                  Algorithmes
+                </Link>
+              </li>
+              <li>
+                <Link to="/exercises" className="hover:text-[var(--green)] transition-colors">
+                  Exercices
+                </Link>
+              </li>
+              <li>
+                <Link to="/paths" className="hover:text-[var(--green)] transition-colors">
+                  Parcours
+                </Link>
+              </li>
+              <li>
+                <Link to="/languages" className="hover:text-[var(--green)] transition-colors">
+                  Langages
+                </Link>
+              </li>
             </ul>
           </div>
 
           <div>
-            <h4 className="font-bold text-[var(--text-bright)] mb-4 uppercase text-xs tracking-widest">Compte</h4>
+            <h4 className="font-bold text-[var(--text-bright)] mb-4 uppercase text-xs tracking-widest">Légal & compte</h4>
             <ul className="space-y-2 text-sm text-[var(--text-dim)]">
-              <li><Link to="/profile" className="hover:text-[var(--green)] transition-colors">Mon Dashboard</Link></li>
-              <li><Link to="/pricing" className="hover:text-[var(--green)] transition-colors">Tarifs</Link></li>
-              <li><Link to="/signup" className="hover:text-[var(--green)] transition-colors">S'inscrire</Link></li>
+              <li>
+                <Link to="/profile" className="hover:text-[var(--green)] transition-colors">
+                  Dashboard
+                </Link>
+              </li>
+              <li>
+                <Link to="/pricing" className="hover:text-[var(--green)] transition-colors">
+                  Tarifs
+                </Link>
+              </li>
+              <li>
+                <Link to="/contact" className="hover:text-[var(--green)] transition-colors">
+                  Contact
+                </Link>
+              </li>
+              <li>
+                <Link to="/privacy" className="hover:text-[var(--green)] transition-colors">
+                  Confidentialité
+                </Link>
+              </li>
+              <li>
+                <Link to="/terms" className="hover:text-[var(--green)] transition-colors">
+                  CGU
+                </Link>
+              </li>
             </ul>
           </div>
         </div>
-        
-        <div className="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-[var(--border)] text-[10px] text-[var(--text-dim)] uppercase tracking-widest">
-          <div>© 2026 CodeLearn. Tous droits réservés.</div>
-          <div className="flex gap-6 mt-4 md:mt-0">
-            <span>Fait avec 💚 pour les développeurs</span>
+
+        <div className="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-[var(--border)] text-[10px] text-[var(--text-dim)] uppercase tracking-widest gap-4">
+          <div>© 2026 AlgoMaster. Tous droits réservés.</div>
+          <div className="flex gap-6 flex-wrap justify-center">
+            <span>Hébergement sécurisé · HTTPS</span>
           </div>
         </div>
       </div>

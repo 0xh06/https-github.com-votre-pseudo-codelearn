@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useStore } from '../store/useStore';
 import { supabase } from '../lib/supabase';
@@ -15,16 +15,29 @@ import {
   X,
   Sparkles,
   Globe,
-  User
+  User,
+  Moon,
+  Sun
 } from 'lucide-react';
 import { getLevelInfo } from '../utils/levels';
 
 export default function Navbar() {
-  const { xp, user, setUser } = useStore();
+  const { xp, user, setUser, subscriptionPlan } = useStore();
   const location = useLocation();
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isDark, setIsDark] = useState(() => localStorage.getItem('theme') !== 'light');
   const levelData = getLevelInfo(xp);
+
+  useEffect(() => {
+    if (isDark) {
+      document.documentElement.classList.remove('light-theme');
+      localStorage.setItem('theme', 'dark');
+    } else {
+      document.documentElement.classList.add('light-theme');
+      localStorage.setItem('theme', 'light');
+    }
+  }, [isDark]);
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
@@ -48,7 +61,7 @@ export default function Navbar() {
             <Code2 className="text-[var(--green)] w-6 h-6" />
           </div>
           <span className="text-xl font-black tracking-tighter text-[var(--text-bright)]">
-            CODE<span className="text-[var(--green)]">LEARN</span>
+            ALGO<span className="text-[var(--green)]">MASTER</span>
           </span>
         </Link>
 
@@ -71,6 +84,14 @@ export default function Navbar() {
         </div>
 
         <div className="flex items-center gap-4">
+          <button onClick={() => setIsDark(!isDark)} className="p-2 text-[var(--text-dim)] hover:text-[var(--text-bright)] transition-colors rounded-full hover:bg-[var(--bg3)]">
+            {isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+          </button>
+          {subscriptionPlan === 'pro' && (
+            <span className="hidden sm:inline text-[10px] font-black uppercase tracking-widest px-2 py-1 rounded-md bg-[var(--green)]/15 text-[var(--green)] border border-[var(--green)]/30">
+              Pro
+            </span>
+          )}
           <div className="hidden md:flex flex-col items-end mr-4">
             <div className="text-[10px] text-[var(--yellow)] font-black uppercase tracking-widest">Niv. {levelData.level}</div>
             <div className="w-20 h-1 bg-[var(--bg3)] rounded-full mt-1 overflow-hidden">
