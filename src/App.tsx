@@ -9,6 +9,7 @@ import Paths from './pages/Paths';
 import NotFound from './pages/NotFound';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
+import Pricing from './pages/Pricing';
 import Footer from './components/Footer';
 
 export default function App() {
@@ -25,6 +26,7 @@ export default function App() {
           <Route path="/paths" element={<Paths />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
+          <Route path="/pricing" element={<Pricing />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>

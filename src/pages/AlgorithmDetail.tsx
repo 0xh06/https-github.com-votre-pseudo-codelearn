@@ -4,13 +4,30 @@ import { ALGORITHMS } from '../data/content';
 import CodeEditor from '../components/CodeEditor';
 import Seo from '../components/Seo';
 import { useState } from 'react';
+import { executeCode } from '../utils/piston';
 
 export default function AlgorithmDetail() {
   const { id } = useParams();
   const algo = ALGORITHMS.find(a => a.id === id);
   const [lang, setLang] = useState('js');
+  const [code, setCode] = useState('');
+  const [output, setOutput] = useState('');
+  const [isRunning, setIsRunning] = useState(false);
 
   if (!algo) return <div className="container mx-auto py-20">Algorithme non trouvé.</div>;
+
+  const handleRun = async () => {
+    setIsRunning(true);
+    setOutput('Exécution en cours...');
+    try {
+      const currentCode = code || (lang === 'js' ? algo.js : algo.python);
+      const result = await executeCode(currentCode, lang);
+      setOutput(result.output || 'Code exécuté avec succès (pas de sortie).');
+    } catch (err) {
+      setOutput(`Erreur: ${err instanceof Error ? err.message : String(err)}`);
+    }
+    setIsRunning(false);
+  };
 
   return (
     <div className="container mx-auto px-4 py-12">
@@ -68,20 +85,35 @@ export default function AlgorithmDetail() {
                   JavaScript
                 </button>
                 <button 
-                  onClick={() => setLang('python')}
+                  onClick={() => { setLang('python'); setCode(''); }}
                   className={`px-4 py-1.5 rounded-md text-xs font-bold transition-all ${lang === 'python' ? 'bg-[var(--green)] text-black' : 'bg-[var(--bg3)] text-[var(--text-dim)]'}`}
                 >
                   Python
                 </button>
               </div>
-              <button className="btn btn-primary px-4 py-1.5 text-xs">Exécuter</button>
+              <button 
+                onClick={handleRun}
+                disabled={isRunning}
+                className="btn btn-primary px-4 py-1.5 text-xs"
+              >
+                {isRunning ? '...' : 'Exécuter'}
+              </button>
             </div>
             
             <div className="flex-1">
               <CodeEditor 
                 value={lang === 'js' ? algo.js : algo.python} 
                 language={lang === 'js' ? 'javascript' : 'python'} 
+                onChange={(val) => setCode(val || '')}
               />
+            </div>
+
+            {/* Terminal Output */}
+            <div className="bg-[#1e1e1e] border-t border-[var(--border)] p-4 min-h-[120px] font-mono text-sm">
+              <div className="text-[var(--text-dim)] mb-2 uppercase text-[10px] tracking-widest font-bold">Sortie de la console</div>
+              <pre className={output.startsWith('Erreur') ? 'text-red-400' : 'text-green-400'}>
+                {output || '> En attente d\'exécution...'}
+              </pre>
             </div>
           </div>
         </motion.div>

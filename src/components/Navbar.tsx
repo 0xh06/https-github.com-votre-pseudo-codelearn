@@ -56,6 +56,10 @@ export default function Navbar() {
               {xp} / {levelData.max} XP
             </div>
           </div>
+
+          <Link to="/pricing" className="hidden lg:block text-xs font-bold text-[var(--yellow)] border border-[var(--yellow)]/30 px-3 py-1 rounded hover:bg-[var(--yellow)]/10 transition-colors mr-2">
+            PRO
+          </Link>
           
           {user ? (
             <div className="flex items-center gap-3">
