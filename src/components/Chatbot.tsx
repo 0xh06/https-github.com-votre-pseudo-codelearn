@@ -31,11 +31,15 @@ export default function Chatbot() {
       
       const lowerInput = input.toLowerCase();
       if (lowerInput.includes('algo') || lowerInput.includes('algorithme')) {
-        botText = "Les algorithmes sont le cœur de l'informatique. Commencez par le 'Bubble Sort' pour comprendre les bases du tri.";
+        botText = "Les algorithmes sont le cœur de l'informatique. Commencez par le 'Bubble Sort' pour comprendre les bases du tri, puis passez au 'Quick Sort' !";
       } else if (lowerInput.includes('python')) {
-        botText = "Python est parfait pour débuter grâce à sa syntaxe lisible. Regardez notre guide dans la section 'Langages'.";
-      } else if (lowerInput.includes('prix') || lowerInput.includes('gratuit')) {
-        botText = "Nous avons un plan gratuit pour débuter et un plan Pro pour accéder à tous les exercices avancés !";
+        botText = "Python est parfait pour débuter grâce à sa syntaxe lisible. Regardez notre guide dans la section 'Langages' pour comparer avec le JavaScript.";
+      } else if (lowerInput.includes('prix') || lowerInput.includes('gratuit') || lowerInput.includes('payant')) {
+        botText = "Nous avons un plan gratuit pour débuter et un plan Pro (19€/mois) pour accéder à tous les exercices avancés et obtenir des certificats !";
+      } else if (lowerInput.includes('recrutement') || lowerInput.includes('job') || lowerInput.includes('travail')) {
+        botText = "Notre section 'Roadmap' est conçue pour vous préparer aux entretiens techniques des plus grandes entreprises. Suivez le parcours 'Ingénieur Logiciel' !";
+      } else if (lowerInput.includes('merci')) {
+        botText = "Je vous en prie ! C'est un plaisir de vous aider dans votre apprentissage du code. 😊";
       }
 
       setMessages(prev => [...prev, { role: 'bot', text: botText }]);

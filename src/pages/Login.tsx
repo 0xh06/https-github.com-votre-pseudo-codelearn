@@ -50,21 +50,11 @@ export default function Login() {
     }
   };
 
-  // Warning pour la configuration
-  const isKeyIncorrect = import.meta.env.VITE_SUPABASE_ANON_KEY?.startsWith('sb_publishable');
-
   return (
     <div className="container mx-auto px-4 py-20 flex justify-center items-center min-h-[80vh]">
       <Seo title="Connexion" description="Connectez-vous a votre compte CodeLearn." />
       
       <div className="card w-full max-w-md p-10 border border-[var(--border)] shadow-2xl">
-        {isKeyIncorrect && (
-          <div className="bg-amber-500/10 border border-amber-500/50 text-amber-500 p-3 rounded-xl mb-6 text-[10px] font-bold uppercase tracking-wider">
-            ⚠️ Attention : La clé API configurée semble être une clé Stripe au lieu de Supabase. 
-            Vérifiez vos variables d'environnement.
-          </div>
-        )}
-
         <div className="text-center mb-10">
           <h1 className="text-3xl font-bold mb-2">Bon retour !</h1>
           <p className="text-[var(--text-dim)] text-sm">Continuez votre progression là où vous vous étiez arrêté.</p>
