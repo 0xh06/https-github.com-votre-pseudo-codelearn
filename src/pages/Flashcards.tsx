@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { useStore } from '../store/useStore';
 import Seo from '../components/Seo';
 
@@ -32,12 +33,12 @@ export default function Flashcards() {
             </div>
           </div>
 
-          <button 
-            className={`mt-10 btn btn-primary w-full py-4 rounded-2xl text-lg ${dueCount === 0 ? 'opacity-50 cursor-not-allowed' : ''}`}
-            disabled={dueCount === 0}
+          <Link 
+            to="/flashcards/session"
+            className={`mt-10 btn btn-primary w-full py-4 rounded-2xl text-lg block ${dueCount === 0 ? 'opacity-50 pointer-events-none' : ''}`}
           >
             {dueCount > 0 ? 'Demarrer la session' : 'Tout est a jour !'}
-          </button>
+          </Link>
         </div>
       </motion.div>
     </div>

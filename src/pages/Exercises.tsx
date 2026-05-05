@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { EXERCISES } from '../data/content';
 import Seo from '../components/Seo';
 
@@ -39,7 +40,7 @@ export default function Exercises() {
               }`}>
                 {ex.level}
               </span>
-              <button className="btn btn-secondary px-4 py-1 text-sm">Resoudre</button>
+              <Link to={`/exercises/${ex.id}`} className="btn btn-secondary px-4 py-1 text-sm">Resoudre</Link>
             </div>
           </motion.div>
         ))}
