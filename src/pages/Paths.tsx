@@ -77,6 +77,13 @@ export default function Paths() {
                 <div className="h-full bg-[var(--green)] w-0 transition-all duration-1000" />
               </div>
             </div>
+
+            <Link 
+              to={`/algorithms/${path.algos[0]}`}
+              className="mt-6 btn btn-secondary w-full py-2.5 text-sm font-bold"
+            >
+              Continuer
+            </Link>
           </motion.div>
         ))}
       </div>
