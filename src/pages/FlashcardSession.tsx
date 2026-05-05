@@ -29,7 +29,7 @@ export default function FlashcardSession() {
     setCurrentIndex(0);
     setShowAnswer(false);
     setSessionFinished(false);
-  }, [isPro, dueItemsFull.length]);
+  }, [isPro]);
 
   useEffect(() => {
     if (dueItems.length > 0 && currentIndex >= dueItems.length) {
