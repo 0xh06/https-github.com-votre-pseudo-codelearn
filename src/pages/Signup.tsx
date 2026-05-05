@@ -36,8 +36,17 @@ export default function Signup() {
         redirectTo: window.location.origin
       }
     });
-    if (error) setError(error.message);
+    
+    if (error) {
+      if (error.message.includes("provider is not enabled")) {
+        setError(`L'authentification via ${provider} n'est pas encore activée dans le dashboard Supabase. Veuillez l'activer dans Authentication > Providers.`);
+      } else {
+        setError(error.message);
+      }
+    }
   };
+
+  const isKeyIncorrect = import.meta.env.VITE_SUPABASE_ANON_KEY?.startsWith('sb_publishable');
 
   if (success) {
     return (
@@ -63,6 +72,12 @@ export default function Signup() {
       <Seo title="Inscription" description="Rejoignez CodeLearn et commencez votre aventure." />
       
       <div className="card w-full max-w-md p-10 border border-[var(--border)] shadow-2xl">
+        {isKeyIncorrect && (
+          <div className="bg-amber-500/10 border border-amber-500/50 text-amber-500 p-3 rounded-xl mb-6 text-[10px] font-bold uppercase tracking-wider">
+            ⚠️ Attention : La clé API configurée semble être une clé Stripe au lieu de Supabase. 
+            Vérifiez vos variables d'environnement.
+          </div>
+        )}
         <div className="text-center mb-10">
           <h1 className="text-3xl font-bold mb-2">Rejoignez-nous</h1>
           <p className="text-[var(--text-dim)] text-sm">Créez votre compte en quelques secondes.</p>
