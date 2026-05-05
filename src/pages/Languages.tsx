@@ -130,7 +130,7 @@ export default function Languages() {
           <h3 className="text-2xl font-bold">Tableau Comparatif</h3>
         </div>
         <div className="overflow-x-auto">
-          <table className="w-full text-left border-collapse">
+          <table className="w-full text-left border-collapse min-w-[600px]">
             <thead>
               <tr className="bg-[var(--bg3)] text-[var(--text-dim)] text-xs uppercase tracking-widest">
                 <th className="p-6">Caractéristique</th>

@@ -79,16 +79,46 @@ export const ALGORITHMS = [
 ];
 
 export const EXERCISES = [
-  { id: 1, title: 'Inverser une chaine', level: 'Debutant', lang: 'Tous', desc: 'Ecrivez une fonction qui inverse une chaine de caracteres.' },
-  { id: 2, title: 'FizzBuzz', level: 'Debutant', lang: 'Tous', desc: 'Affichez les nombres de 1 a 100. Fizz si multiple de 3, Buzz si multiple de 5.' },
-  { id: 3, title: 'Palindrome', level: 'Debutant', lang: 'Tous', desc: 'Verifiez si un mot se lit pareil dans les deux sens.' },
-  { id: 4, title: 'Deux Sommes (Two Sum)', level: 'Intermediaire', lang: 'Tous', desc: 'Trouvez deux nombres dans un tableau dont la somme vaut une cible.' },
-  { id: 5, title: 'Parentheses valides', level: 'Intermediaire', lang: 'Tous', desc: 'Verifiez qu\'une chaine de parentheses (), [], {} est bien formee.' },
-  { id: 6, title: 'Plus longue sous-chaine', level: 'Avance', lang: 'Tous', desc: 'Trouvez la longueur de la plus longue sous-chaine sans caracteres repetes.' },
-  { id: 7, title: 'Somme d\'un tableau', level: 'Debutant', lang: 'Tous', desc: 'Calculez la somme des elements d\'un tableau d\'entiers.' },
-  { id: 8, title: 'Anagramme', level: 'Debutant', lang: 'Tous', desc: 'Verifiez si deux chaines sont des anagrammes.' },
-  { id: 9, title: 'Tri Fusion', level: 'Intermediaire', lang: 'Tous', desc: 'Implementez l\'algorithme de tri fusion.' },
-  { id: 10, title: 'Suite de Syracuse', level: 'Intermediaire', lang: 'Tous', desc: 'Affichez la suite de Collatz pour un nombre donne.' }
+  { id: 1, title: 'Inverser une chaîne', level: 'Debutant', lang: 'Tous', desc: 'Écrivez une fonction qui inverse une chaîne de caractères.',
+    starter: { js: 'function reverseString(str) {\n  // Votre code ici\n  \n}', python: 'def reverse_string(s):\n    # Votre code ici\n    pass' },
+    tests: 'console.log(reverseString("hello")); // "olleh"\nconsole.log(reverseString("CodeLearn")); // "nraeLedoC"'
+  },
+  { id: 2, title: 'FizzBuzz', level: 'Debutant', lang: 'Tous', desc: 'Affichez les nombres de 1 à 100. Fizz si multiple de 3, Buzz si multiple de 5.',
+    starter: { js: 'function fizzBuzz(n) {\n  // Retournez un tableau de 1 à n\n  \n}', python: 'def fizz_buzz(n):\n    # Retournez une liste de 1 à n\n    pass' },
+    tests: 'console.log(fizzBuzz(15)); // [..., "13", "14", "FizzBuzz"]'
+  },
+  { id: 3, title: 'Palindrome', level: 'Debutant', lang: 'Tous', desc: 'Vérifiez si un mot se lit pareil dans les deux sens.',
+    starter: { js: 'function isPalindrome(str) {\n  // Retournez true ou false\n  \n}', python: 'def is_palindrome(s):\n    # Retournez True ou False\n    pass' },
+    tests: 'console.log(isPalindrome("kayak")); // true\nconsole.log(isPalindrome("hello")); // false'
+  },
+  { id: 4, title: 'Deux Sommes (Two Sum)', level: 'Intermediaire', lang: 'Tous', desc: 'Trouvez deux nombres dans un tableau dont la somme vaut une cible.',
+    starter: { js: 'function twoSum(nums, target) {\n  // Retournez les indices [i, j]\n  \n}', python: 'def two_sum(nums, target):\n    # Retournez les indices [i, j]\n    pass' },
+    tests: 'console.log(twoSum([2,7,11,15], 9)); // [0, 1]'
+  },
+  { id: 5, title: 'Parenthèses valides', level: 'Intermediaire', lang: 'Tous', desc: 'Vérifiez qu\'une chaîne de parenthèses (), [], {} est bien formée.',
+    starter: { js: 'function isValid(s) {\n  // Utilisez une pile (stack)\n  \n}', python: 'def is_valid(s):\n    # Utilisez une pile (stack)\n    pass' },
+    tests: 'console.log(isValid("()[]{}")); // true\nconsole.log(isValid("(]")); // false'
+  },
+  { id: 6, title: 'Plus longue sous-chaîne', level: 'Avance', lang: 'Tous', desc: 'Trouvez la longueur de la plus longue sous-chaîne sans caractères répétés.',
+    starter: { js: 'function lengthOfLongestSubstring(s) {\n  // Technique: Sliding window\n  \n}', python: 'def length_of_longest_substring(s):\n    # Technique: Sliding window\n    pass' },
+    tests: 'console.log(lengthOfLongestSubstring("abcabcbb")); // 3'
+  },
+  { id: 7, title: 'Somme d\'un tableau', level: 'Debutant', lang: 'Tous', desc: 'Calculez la somme des éléments d\'un tableau d\'entiers.',
+    starter: { js: 'function sumArray(arr) {\n  // Retournez la somme\n  \n}', python: 'def sum_array(arr):\n    # Retournez la somme\n    pass' },
+    tests: 'console.log(sumArray([1, 2, 3, 4, 5])); // 15'
+  },
+  { id: 8, title: 'Anagramme', level: 'Debutant', lang: 'Tous', desc: 'Vérifiez si deux chaînes sont des anagrammes.',
+    starter: { js: 'function isAnagram(s, t) {\n  // Comparez les caractères\n  \n}', python: 'def is_anagram(s, t):\n    # Comparez les caractères\n    pass' },
+    tests: 'console.log(isAnagram("anagram", "nagaram")); // true\nconsole.log(isAnagram("rat", "car")); // false'
+  },
+  { id: 9, title: 'Tri Fusion', level: 'Intermediaire', lang: 'Tous', desc: 'Implémentez l\'algorithme de tri fusion (merge sort).',
+    starter: { js: 'function mergeSort(arr) {\n  // Diviser pour mieux régner\n  \n}', python: 'def merge_sort(arr):\n    # Diviser pour mieux régner\n    pass' },
+    tests: 'console.log(mergeSort([38, 27, 43, 3, 9, 82, 10])); // [3, 9, 10, 27, 38, 43, 82]'
+  },
+  { id: 10, title: 'Suite de Syracuse', level: 'Intermediaire', lang: 'Tous', desc: 'Affichez la suite de Collatz pour un nombre donné.',
+    starter: { js: 'function syracuse(n) {\n  // Retournez la suite jusqu\'à 1\n  \n}', python: 'def syracuse(n):\n    # Retournez la suite jusqu\'à 1\n    pass' },
+    tests: 'console.log(syracuse(6)); // [6, 3, 10, 5, 16, 8, 4, 2, 1]'
+  }
 ];
 
 export const RESOURCES = [

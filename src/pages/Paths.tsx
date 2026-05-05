@@ -2,7 +2,8 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import Seo from '../components/Seo';
 import { ALGORITHMS } from '../data/content';
-import { CheckCircle2, Lock, ChevronRight, GraduationCap, Code2, Rocket } from 'lucide-react';
+import { useStore } from '../store/useStore';
+import { CheckCircle2, Circle, ChevronRight, GraduationCap, Code2, Rocket } from 'lucide-react';
 
 const PATHS = [
   { 
@@ -38,8 +39,10 @@ const PATHS = [
 ];
 
 export default function Paths() {
+  const { favorites } = useStore();
+
   return (
-    <div className="container mx-auto px-4 py-20 max-w-5xl">
+    <div className="container mx-auto px-4 py-20 max-w-4xl">
       <Seo title="Parcours Professionnels" description="Suivez des parcours d'apprentissage structurés pour devenir ingénieur." />
       
       <div className="text-center mb-20">
@@ -56,89 +59,97 @@ export default function Paths() {
         </p>
       </div>
 
-      <div className="relative">
-        {/* Connection Line */}
-        <div className="absolute left-1/2 -translate-x-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-[var(--green)] via-[var(--blue)] to-[var(--purple)] opacity-20 hidden md:block" />
+      <div className="space-y-12">
+        {PATHS.map((path, i) => {
+          const completedCount = path.algos.filter(a => favorites.includes(a)).length;
+          const progress = Math.round((completedCount / path.algos.length) * 100);
+          const colorVar = path.color === 'green' ? 'var(--green)' : path.color === 'blue' ? 'var(--blue)' : 'var(--purple)';
 
-        <div className="space-y-32 relative">
-          {PATHS.map((path, i) => (
+          return (
             <motion.div
               key={path.id}
-              initial={{ opacity: 0, y: 50 }}
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: i * 0.1 }}
-              className={`flex flex-col ${i % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'} items-center gap-12`}
+              transition={{ duration: 0.6, delay: i * 0.1 }}
+              className={`card p-8 border-l-4`}
+              style={{ borderLeftColor: colorVar }}
             >
-              {/* Content Side */}
-              <div className="w-full md:w-1/2">
-                <div className={`card p-8 border-l-4 ${
-                  path.color === 'green' ? 'border-l-[var(--green)]' : 
-                  path.color === 'blue' ? 'border-l-[var(--blue)]' : 
-                  'border-l-[var(--purple)]'
-                }`}>
-                  <div className="flex items-center gap-3 mb-6">
-                    <div className={`p-3 rounded-xl bg-[var(--bg3)] text-${path.color}-400`}>
-                      {path.icon}
-                    </div>
-                    <span className="text-[10px] font-bold uppercase tracking-widest px-3 py-1 bg-[var(--bg3)] rounded-full text-[var(--text-dim)]">
+              {/* Header */}
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
+                <div className="flex items-center gap-4">
+                  <div className="p-3 rounded-xl bg-[var(--bg3)]" style={{ color: colorVar }}>
+                    {path.icon}
+                  </div>
+                  <div>
+                    <h3 className="text-2xl font-bold">{path.title}</h3>
+                    <span className="text-[10px] font-bold uppercase tracking-widest text-[var(--text-dim)]">
                       {path.level}
                     </span>
                   </div>
-                  
-                  <h3 className="text-3xl font-bold mb-4">{path.title}</h3>
-                  <p className="text-[var(--text-dim)] mb-8 text-sm leading-relaxed">
-                    {path.desc}
-                  </p>
-
-                  <div className="space-y-4 mb-10">
-                    <div className="text-[10px] uppercase font-bold text-[var(--text-dim)] tracking-widest border-b border-[var(--border)] pb-2 mb-4">Programme du module</div>
-                    {path.algos.map(algoId => {
-                      const algo = ALGORITHMS.find(a => a.id === algoId);
-                      return (
-                        <Link 
-                          key={algoId} 
-                          to={`/algorithms/${algoId}`}
-                          className="flex items-center justify-between group p-3 bg-[var(--bg3)] rounded-xl hover:bg-[var(--bg2)] border border-transparent hover:border-[var(--border)] transition-all"
-                        >
-                          <div className="flex items-center gap-3">
-                            <CheckCircle2 className="w-4 h-4 text-[var(--text-dim)] group-hover:text-[var(--green)] transition-colors" />
-                            <span className="text-sm font-medium">{algo?.name}</span>
-                          </div>
-                          <ChevronRight className="w-4 h-4 text-[var(--text-dim)] group-hover:translate-x-1 transition-all" />
-                        </Link>
-                      );
-                    })}
-                  </div>
-
-                  <Link 
-                    to={`/algorithms/${path.algos[0]}`}
-                    className="btn btn-primary w-full py-4 rounded-xl flex items-center justify-center gap-2 font-bold group"
-                  >
-                    Démarrer le parcours
-                    <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-all" />
-                  </Link>
+                </div>
+                <div className="text-right">
+                  <div className="text-2xl font-black" style={{ color: colorVar }}>{progress}%</div>
+                  <div className="text-[10px] text-[var(--text-dim)] uppercase tracking-widest">{completedCount}/{path.algos.length} complétés</div>
                 </div>
               </div>
 
-              {/* Icon / Step Marker Side */}
-              <div className="hidden md:flex w-20 h-20 rounded-full bg-[var(--bg)] border-4 border-[var(--bg3)] z-10 items-center justify-center text-2xl font-bold shadow-[0_0_20px_rgba(0,0,0,0.5)]">
-                {i + 1}
+              {/* Progress Bar */}
+              <div className="w-full h-2 bg-[var(--bg3)] rounded-full mb-8 overflow-hidden">
+                <motion.div
+                  initial={{ width: 0 }}
+                  whileInView={{ width: `${progress}%` }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 1, delay: 0.3 }}
+                  className="h-full rounded-full"
+                  style={{ backgroundColor: colorVar }}
+                />
               </div>
 
-              {/* Visual Side (Placeholder for now) */}
-              <div className="w-full md:w-1/2 flex justify-center">
-                <div className="relative group">
-                  <div className={`absolute inset-0 bg-${path.color}-500/20 blur-[100px] opacity-0 group-hover:opacity-100 transition-opacity`} />
-                  <div className="card p-12 aspect-square flex flex-col items-center justify-center text-center border-dashed border-2 border-[var(--border)] opacity-30">
-                    <div className="text-6xl mb-6 opacity-50">{path.icon}</div>
-                    <div className="text-xs uppercase font-bold tracking-widest">{path.objective}</div>
-                  </div>
-                </div>
+              <p className="text-[var(--text-dim)] mb-8 text-sm leading-relaxed">
+                {path.desc}
+              </p>
+
+              {/* Algo List */}
+              <div className="space-y-3 mb-8">
+                {path.algos.map(algoId => {
+                  const algo = ALGORITHMS.find(a => a.id === algoId);
+                  const isCompleted = favorites.includes(algoId);
+                  return (
+                    <Link 
+                      key={algoId} 
+                      to={`/algorithms/${algoId}`}
+                      className="flex items-center justify-between group p-3 bg-[var(--bg3)] rounded-xl hover:bg-[var(--bg2)] border border-transparent hover:border-[var(--border)] transition-all"
+                    >
+                      <div className="flex items-center gap-3">
+                        {isCompleted ? (
+                          <CheckCircle2 className="w-5 h-5 text-[var(--green)]" />
+                        ) : (
+                          <Circle className="w-5 h-5 text-[var(--text-dim)] group-hover:text-[var(--green)] transition-colors" />
+                        )}
+                        <span className={`text-sm font-medium ${isCompleted ? 'line-through text-[var(--text-dim)]' : ''}`}>
+                          {algo?.name}
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="text-[10px] font-bold text-[var(--text-dim)] uppercase">{algo?.timeO}</span>
+                        <ChevronRight className="w-4 h-4 text-[var(--text-dim)] group-hover:translate-x-1 transition-all" />
+                      </div>
+                    </Link>
+                  );
+                })}
               </div>
+
+              <Link 
+                to={`/algorithms/${path.algos[0]}`}
+                className="btn btn-primary w-full py-4 rounded-xl flex items-center justify-center gap-2 font-bold group"
+              >
+                {progress === 100 ? 'Revoir le parcours' : progress > 0 ? 'Continuer' : 'Démarrer le parcours'}
+                <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-all" />
+              </Link>
             </motion.div>
-          ))}
-        </div>
+          );
+        })}
       </div>
     </div>
   );

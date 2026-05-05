@@ -105,6 +105,14 @@ export default function Navbar() {
                       <div className="text-xs text-[var(--text-dim)] mb-1">Connecté en tant que</div>
                       <div className="text-sm font-bold truncate text-[var(--text-bright)]">{user.email}</div>
                     </div>
+                    <Link 
+                      to="/profile"
+                      onClick={() => setIsUserMenuOpen(false)}
+                      className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-[var(--text-dim)] hover:bg-[var(--bg3)] transition-colors"
+                    >
+                      <User className="w-4 h-4" />
+                      Mon Dashboard
+                    </Link>
                     <button 
                       onClick={handleLogout}
                       className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-red-400 hover:bg-red-400/10 transition-colors"

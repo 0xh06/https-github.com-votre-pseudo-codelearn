@@ -5,6 +5,7 @@ import CodeEditor from '../components/CodeEditor';
 import Seo from '../components/Seo';
 import { useState } from 'react';
 import { executeCode } from '../utils/piston';
+import { Play, Lightbulb, Eye, EyeOff } from 'lucide-react';
 
 export default function ExerciseDetail() {
   const { id } = useParams();
@@ -13,14 +14,21 @@ export default function ExerciseDetail() {
   const [code, setCode] = useState('');
   const [output, setOutput] = useState('');
   const [isRunning, setIsRunning] = useState(false);
+  const [showTests, setShowTests] = useState(false);
 
   if (!ex) return <div className="container mx-auto py-20">Exercice non trouvé.</div>;
+
+  const starterCode = lang === 'javascript' ? (ex as any).starter?.js : (ex as any).starter?.python;
+  const testCases = (ex as any).tests || '';
 
   const handleRun = async () => {
     setIsRunning(true);
     setOutput('Exécution en cours...');
     try {
-      const result = await executeCode(code || '// Ecrivez votre solution ici', lang);
+      const codeToRun = code || starterCode || '// Écrivez votre solution';
+      // Append test cases if running JS
+      const fullCode = lang === 'javascript' ? `${codeToRun}\n\n// --- Tests ---\n${testCases}` : codeToRun;
+      const result = await executeCode(fullCode, lang === 'javascript' ? 'js' : lang);
       setOutput(result.output || 'Exécuté (pas de sortie).');
     } catch (err) {
       setOutput(`Erreur: ${err instanceof Error ? err.message : String(err)}`);
@@ -56,9 +64,31 @@ export default function ExerciseDetail() {
               {ex.desc}
             </p>
 
-            <div className="p-4 bg-[var(--bg3)] rounded-lg border border-[var(--border)] text-sm text-[var(--text-dim)]">
-              <strong>Objectif :</strong> Implémenter une solution efficace et vérifier qu'elle passe les cas de tests de base.
+            <div className="p-4 bg-[var(--bg3)] rounded-lg border border-[var(--border)] text-sm text-[var(--text-dim)] mb-6">
+              <strong>Objectif :</strong> Implémenter une solution efficace et vérifier qu'elle passe les cas de tests.
             </div>
+
+            {/* Test Cases Toggle */}
+            {testCases && (
+              <div>
+                <button 
+                  onClick={() => setShowTests(!showTests)}
+                  className="flex items-center gap-2 text-sm font-bold text-[var(--blue)] hover:underline mb-3"
+                >
+                  {showTests ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                  {showTests ? 'Masquer les tests' : 'Voir les tests attendus'}
+                </button>
+                {showTests && (
+                  <motion.div
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: 'auto' }}
+                    className="bg-[#1e1e1e] rounded-lg p-4 font-mono text-xs text-green-400 whitespace-pre-wrap"
+                  >
+                    {testCases}
+                  </motion.div>
+                )}
+              </div>
+            )}
           </div>
         </motion.div>
 
@@ -72,7 +102,7 @@ export default function ExerciseDetail() {
               <select 
                 className="bg-[var(--bg3)] border border-[var(--border)] rounded px-3 py-1.5 text-xs font-bold outline-none"
                 value={lang}
-                onChange={(e) => setLang(e.target.value)}
+                onChange={(e) => { setLang(e.target.value); setCode(''); }}
               >
                 <option value="javascript">JavaScript</option>
                 <option value="python">Python</option>
@@ -80,15 +110,20 @@ export default function ExerciseDetail() {
               <button 
                 onClick={handleRun}
                 disabled={isRunning}
-                className="btn btn-primary px-6 py-1.5 text-xs"
+                className="btn btn-primary px-6 py-1.5 text-xs flex items-center gap-2"
               >
-                {isRunning ? '...' : 'Vérifier'}
+                {isRunning ? (
+                  <div className="w-3 h-3 border-2 border-black/20 border-t-black rounded-full animate-spin" />
+                ) : (
+                  <Play className="w-3 h-3 fill-current" />
+                )}
+                {isRunning ? 'Exécution...' : 'Vérifier'}
               </button>
             </div>
             
             <div className="flex-1">
               <CodeEditor 
-                value={code || (lang === 'javascript' ? '// Votre code JS ici' : '# Votre code Python ici')} 
+                value={code || starterCode || (lang === 'javascript' ? '// Votre code JS ici' : '# Votre code Python ici')} 
                 language={lang} 
                 onChange={(val) => setCode(val || '')}
               />
