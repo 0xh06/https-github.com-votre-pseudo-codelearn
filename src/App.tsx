@@ -12,6 +12,7 @@ import NotFound from './pages/NotFound';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Pricing from './pages/Pricing';
+import Languages from './pages/Languages';
 import Footer from './components/Footer';
 
 export default function App() {
@@ -31,6 +32,7 @@ export default function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/pricing" element={<Pricing />} />
+          <Route path="/languages" element={<Languages />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>

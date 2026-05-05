@@ -18,6 +18,7 @@ export default function Navbar() {
   const links = [
     { path: '/', label: 'Accueil' },
     { path: '/algorithms', label: 'Algorithmes' },
+    { path: '/languages', label: 'Langages' },
     { path: '/paths', label: 'Parcours' },
     { path: '/exercises', label: 'Exercices' },
     { path: '/flashcards', label: 'Révisions' },
