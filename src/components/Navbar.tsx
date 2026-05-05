@@ -1,13 +1,19 @@
 import { Link, useLocation } from 'react-router-dom';
 import { useStore } from '../store/useStore';
 import { getLevelInfo } from '../utils/levels';
+import { supabase } from '../lib/supabase';
 
 export default function Navbar() {
   const { pathname } = useLocation();
-  const { xp, srs } = useStore();
+  const { xp, srs, user, signOut } = useStore();
   const levelData = getLevelInfo(xp);
   
-  const dueCards = Object.values(srs).filter(item => item.nextReview <= Date.now()).length;
+  const dueCards = Object.values(srs).filter((item: any) => item.nextReview <= Date.now()).length;
+
+  const handleSignOut = async () => {
+    await supabase.auth.signOut();
+    signOut();
+  };
 
   const links = [
     { path: '/', label: 'Accueil' },
@@ -42,7 +48,7 @@ export default function Navbar() {
         </div>
 
         <div className="ml-auto flex items-center gap-4">
-          <div className="hidden md:flex flex-col items-end">
+          <div className="hidden md:flex flex-col items-end mr-2">
             <div className="text-xs text-[var(--yellow)] font-bold uppercase tracking-wider">
               Niv. {levelData.level}
             </div>
@@ -51,10 +57,20 @@ export default function Navbar() {
             </div>
           </div>
           
-          {/* Auth Button Placeholder */}
-          <button className="btn btn-primary px-4 py-1.5 text-sm">
-            Connexion
-          </button>
+          {user ? (
+            <div className="flex items-center gap-3">
+              <Link to="/profile" className="w-8 h-8 rounded-full bg-[var(--bg3)] border border-[var(--border)] flex items-center justify-center text-xs font-bold text-[var(--green)]">
+                {user.email?.[0].toUpperCase()}
+              </Link>
+              <button onClick={handleSignOut} className="text-xs text-[var(--text-dim)] hover:text-[var(--red)] transition-colors">
+                Déconnexion
+              </button>
+            </div>
+          ) : (
+            <Link to="/login" className="btn btn-primary px-4 py-1.5 text-sm">
+              Connexion
+            </Link>
+          )}
         </div>
       </div>
     </nav>

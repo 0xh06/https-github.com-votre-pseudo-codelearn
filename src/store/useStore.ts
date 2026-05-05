@@ -20,12 +20,17 @@ interface StoreState {
   srs: Record<string, SrsItem>;
   streakData: StreakData;
   lastAlgo: string | null;
+  user: any | null;
+  profile: any | null;
   addXp: (amount: number) => void;
   toggleFavorite: (id: string) => void;
   toggleCompleted: (id: number) => void;
   updateSrs: (id: string, quality: number) => void;
   setLastAlgo: (algoId: string) => void;
   checkStreak: () => void;
+  setUser: (user: any) => void;
+  setProfile: (profile: any) => void;
+  signOut: () => void;
 }
 
 const getNextInterval = (score: number, quality: number) => {
@@ -45,6 +50,8 @@ export const useStore = create<StoreState>()(
       srs: {},
       streakData: { count: 0, lastDate: null, history: [2, 5, 3, 7, 4, 8, 5] },
       lastAlgo: null,
+      user: null,
+      profile: null,
       
       addXp: (amount) => set((state) => ({ xp: state.xp + amount })),
       
@@ -94,7 +101,11 @@ export const useStore = create<StoreState>()(
           newHist.push(1);
           return { streakData: { count: 1, lastDate: today, history: newHist } };
         }
-      })
+      }),
+
+      setUser: (user) => set({ user }),
+      setProfile: (profile) => set({ profile }),
+      signOut: () => set({ user: null, profile: null })
     }),
     {
       name: 'codelearn-storage',

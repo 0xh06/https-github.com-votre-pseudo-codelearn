@@ -6,6 +6,8 @@ import Exercises from './pages/Exercises';
 import Flashcards from './pages/Flashcards';
 import Paths from './pages/Paths';
 import NotFound from './pages/NotFound';
+import Login from './pages/Login';
+import Signup from './pages/Signup';
 import Footer from './components/Footer';
 
 export default function App() {
@@ -19,6 +21,8 @@ export default function App() {
           <Route path="/exercises" element={<Exercises />} />
           <Route path="/flashcards" element={<Flashcards />} />
           <Route path="/paths" element={<Paths />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
