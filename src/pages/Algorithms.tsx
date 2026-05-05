@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { ALGORITHMS } from '../data/content';
 import Seo from '../components/Seo';
 
@@ -19,11 +20,11 @@ export default function Algorithms() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {ALGORITHMS.map((algo) => (
-          <motion.div
-            key={algo.id}
-            whileHover={{ y: -5 }}
-            className="card group cursor-pointer"
-          >
+          <Link key={algo.id} to={`/algorithms/${algo.id}`}>
+            <motion.div
+              whileHover={{ y: -5 }}
+              className="card group cursor-pointer h-full"
+            >
             <div className="flex justify-between items-start mb-4">
               <span className={`badge ${
                 algo.difficulty === 'Débutant' ? 'bg-green-500/10 text-[var(--green)]' : 
@@ -41,6 +42,7 @@ export default function Algorithms() {
               {algo.description}
             </p>
           </motion.div>
+          </Link>
         ))}
       </div>
     </div>

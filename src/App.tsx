@@ -2,6 +2,7 @@ import { Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import Algorithms from './pages/Algorithms';
+import AlgorithmDetail from './pages/AlgorithmDetail';
 import Exercises from './pages/Exercises';
 import Flashcards from './pages/Flashcards';
 import Paths from './pages/Paths';
@@ -18,6 +19,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/algorithms" element={<Algorithms />} />
+          <Route path="/algorithms/:id" element={<AlgorithmDetail />} />
           <Route path="/exercises" element={<Exercises />} />
           <Route path="/flashcards" element={<Flashcards />} />
           <Route path="/paths" element={<Paths />} />
