@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import { ALGORITHMS } from '../data/content';
 import Seo from '../components/Seo';
 
 export default function Home() {
@@ -78,6 +79,34 @@ export default function Home() {
             <div className="text-sm text-[var(--text-dim)] uppercase tracking-wider font-semibold">Connectés</div>
           </div>
         </motion.div>
+
+        {/* FEATURED SECTION */}
+        <div className="my-32">
+          <div className="flex justify-between items-end mb-10">
+            <div>
+              <h2 className="text-3xl font-bold mb-2">Algorithmes Populaires</h2>
+              <p className="text-[var(--text-dim)]">Commencez par les bases incontournables.</p>
+            </div>
+            <Link to="/algorithms" className="text-[var(--green)] font-bold hover:underline">Voir tout →</Link>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {ALGORITHMS.slice(0, 3).map((algo, i) => (
+              <Link key={algo.id} to={`/algorithms/${algo.id}`}>
+                <motion.div 
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.1 }}
+                  className="card group hover:border-[var(--green)]"
+                >
+                  <div className="text-xs font-bold text-[var(--green)] mb-2 uppercase tracking-widest">{algo.category}</div>
+                  <h3 className="text-xl font-bold mb-3 group-hover:text-[var(--green)] transition-colors">{algo.name}</h3>
+                  <p className="text-sm text-[var(--text-dim)] line-clamp-2">{algo.description}</p>
+                </motion.div>
+              </Link>
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   );
