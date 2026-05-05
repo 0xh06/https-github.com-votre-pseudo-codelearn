@@ -14,6 +14,7 @@ import Signup from './pages/Signup';
 import Pricing from './pages/Pricing';
 import Languages from './pages/Languages';
 import Footer from './components/Footer';
+import Chatbot from './components/Chatbot';
 
 export default function App() {
   return (
@@ -35,8 +36,9 @@ export default function App() {
           <Route path="/languages" element={<Languages />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
+        <Chatbot />
+        <Footer />
       </main>
-      <Footer />
     </div>
   );
 }

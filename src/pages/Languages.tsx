@@ -24,6 +24,28 @@ const LANGUAGES = [
     pros: ['Lecture facile', 'Bibliothèques IA (PyTorch)', 'Multi-usage'],
     usages: ['Intelligence Artificielle', 'Data Science', 'Automatisation'],
     code: `def hello():\n    print("Hello World")`
+  },
+  {
+    id: 'java',
+    name: 'Java',
+    icon: <Cpu className="w-8 h-8 text-red-400" />,
+    color: 'red',
+    tagline: 'Écrire une fois, exécuter partout',
+    desc: 'Robuste, orienté objet et utilisé par les plus grandes entreprises pour leurs systèmes critiques.',
+    pros: ['Performance stable', 'Sécurité forte', 'Énorme marché entreprise'],
+    usages: ['Apps Android', 'Systèmes Bancaires', 'Big Data'],
+    code: `public class Main {\n  public static void main(String[] args) {\n    System.out.println("Hello");\n  }\n}`
+  },
+  {
+    id: 'cpp',
+    name: 'C++',
+    icon: <Code2 className="w-8 h-8 text-indigo-400" />,
+    color: 'indigo',
+    tagline: 'Performance brute et contrôle',
+    desc: 'Le choix ultime quand chaque milliseconde compte. Offre un contrôle total sur le matériel.',
+    pros: ['Vitesse extrême', 'Gestion mémoire fine', 'Standard industriel'],
+    usages: ['Jeux Vidéo (Unreal Engine)', 'Systèmes Embarqués', 'Moteurs de calcul'],
+    code: `#include <iostream>\nint main() {\n  std::cout << "Hello";\n  return 0;\n}`
   }
 ];
 
@@ -114,19 +136,23 @@ export default function Languages() {
                 <th className="p-6">Caractéristique</th>
                 <th className="p-6">JavaScript</th>
                 <th className="p-6">Python</th>
+                <th className="p-6">Java</th>
+                <th className="p-6">C++</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-[var(--border)]">
               {[
-                { feature: 'Vitesse d\'exécution', js: 'Très rapide (V8 Engine)', py: 'Modérée (Interprété)' },
-                { feature: 'Facilité d\'apprentissage', js: 'Moyenne', py: 'Élevée (Débutants)' },
-                { feature: 'Typage', js: 'Dynamique (Faible)', py: 'Dynamique (Fort)' },
-                { feature: 'Popularité (Marché)', js: 'N°1 (Web)', py: 'N°1 (IA/Data)' },
+                { feature: 'Vitesse', js: '🚀 Très Rapide', py: '🐢 Modérée', java: '⚡ Rapide', cpp: '🔥 Extrême' },
+                { feature: 'Apprentissage', js: 'Moyenne', py: 'Facile', java: 'Difficile', cpp: 'Très Difficile' },
+                { feature: 'Usage principal', js: 'Web / Fullstack', py: 'IA / Data', java: 'Entreprise / Android', cpp: 'Jeux / Systèmes' },
+                { feature: 'Gestion Mémoire', js: 'Automatique', py: 'Automatique', java: 'Automatique', cpp: 'Manuelle (Pointeurs)' },
               ].map((row, i) => (
-                <tr key={i} className="hover:bg-[var(--bg3)]/50 transition-colors">
-                  <td className="p-6 text-sm font-bold text-[var(--text-bright)]">{row.feature}</td>
-                  <td className="p-6 text-sm text-[var(--text-dim)]">{row.js}</td>
-                  <td className="p-6 text-sm text-[var(--text-dim)]">{row.py}</td>
+                <tr key={i} className="hover:bg-[var(--bg3)]/50 transition-colors text-[10px] md:text-sm">
+                  <td className="p-6 font-bold text-[var(--text-bright)]">{row.feature}</td>
+                  <td className="p-6 text-[var(--text-dim)]">{row.js}</td>
+                  <td className="p-6 text-[var(--text-dim)]">{row.py}</td>
+                  <td className="p-6 text-[var(--text-dim)]">{row.java}</td>
+                  <td className="p-6 text-[var(--text-dim)]">{row.cpp}</td>
                 </tr>
               ))}
             </tbody>

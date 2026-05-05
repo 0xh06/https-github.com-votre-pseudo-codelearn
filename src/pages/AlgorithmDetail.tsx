@@ -5,6 +5,7 @@ import CodeEditor from '../components/CodeEditor';
 import Seo from '../components/Seo';
 import { useState } from 'react';
 import { executeCode } from '../utils/piston';
+import { Play, Terminal as TerminalIcon, Info } from 'lucide-react';
 
 export default function AlgorithmDetail() {
   const { id } = useParams();
@@ -94,9 +95,14 @@ export default function AlgorithmDetail() {
               <button 
                 onClick={handleRun}
                 disabled={isRunning}
-                className="btn btn-primary px-4 py-1.5 text-xs"
+                className="btn btn-primary px-4 py-1.5 text-xs flex items-center gap-2"
               >
-                {isRunning ? '...' : 'Exécuter'}
+                {isRunning ? (
+                  <div className="w-3 h-3 border-2 border-black/20 border-t-black rounded-full animate-spin" />
+                ) : (
+                  <Play className="w-3 h-3 fill-current" />
+                )}
+                {isRunning ? 'Exécution...' : 'Exécuter'}
               </button>
             </div>
             

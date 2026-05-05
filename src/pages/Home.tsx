@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
+import { ChevronRight, Sparkles, Bot, Zap, Brain } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { ALGORITHMS } from '../data/content';
 import Seo from '../components/Seo';
@@ -39,12 +40,24 @@ export default function Home() {
             La plateforme francophone interactive pour apprendre les algorithmes, les structures de données et les langages.
           </p>
           <div className="flex gap-4 justify-center flex-wrap">
-            <Link to="/algorithms" className="btn btn-primary px-8 py-3 rounded-full text-lg">
+            <Link to="/algorithms" className="btn btn-primary px-8 py-3 rounded-full text-lg flex items-center gap-2 group">
               🚀 Démarrer l'apprentissage
+              <ChevronRight className="group-hover:translate-x-1 transition-transform" />
             </Link>
             <Link to="/exercises" className="btn btn-secondary px-8 py-3 rounded-full text-lg">
               ⚡ S'entraîner
             </Link>
+          </div>
+
+          <div className="mt-12 flex items-center justify-center gap-8 text-[var(--text-dim)] text-sm font-medium">
+            <div className="flex items-center gap-2">
+              <div className="w-2 h-2 bg-[var(--green)] rounded-full animate-pulse" />
+              Assistant IA disponible
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-2 h-2 bg-[var(--blue)] rounded-full" />
+              100% Interactif
+            </div>
           </div>
         </motion.div>
 
