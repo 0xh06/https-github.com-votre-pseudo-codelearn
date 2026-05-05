@@ -1,0 +1,54 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --bg: #0d1117;
+    --bg2: #161b22;
+    --bg3: #21262d;
+    --border: #30363d;
+    --text: #c9d1d9;
+    --text-bright: #ffffff;
+    --text-dim: #8b949e;
+    --green: #39d353;
+    --blue: #58a6ff;
+    --purple: #bc8cff;
+    --yellow: #e3b341;
+    --red: #f85149;
+  }
+
+  body {
+    @apply bg-[var(--bg)] text-[var(--text)] antialiased selection:bg-[var(--green)] selection:text-black;
+    font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold text-[var(--text-bright)];
+  }
+}
+
+@layer components {
+  .btn {
+    @apply flex items-center justify-center gap-2 rounded-md font-semibold transition-all duration-200 border border-[var(--border)] bg-[var(--bg3)] text-[var(--text-bright)] hover:border-[var(--text-dim)] hover:bg-[var(--border)] active:scale-95;
+  }
+  .btn-primary {
+    @apply bg-[var(--green)] text-black border-[var(--green)] hover:bg-[#2ea043] hover:border-[#2ea043] hover:text-black;
+  }
+  .btn-secondary {
+    @apply bg-transparent text-[var(--text-bright)] border-[var(--border)] hover:bg-[var(--bg3)] hover:border-[var(--text-dim)];
+  }
+  .card {
+    @apply bg-[var(--bg2)] border border-[var(--border)] rounded-xl p-6 transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-[rgba(0,0,0,0.5)] hover:border-[var(--text-dim)];
+  }
+  .badge {
+    @apply px-2.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider;
+  }
+}
+
+@layer utilities {
+  .glow-green {
+    text-shadow: 0 0 20px rgba(57,211,83,0.4);
+  }
+  .glow-blue {
+    text-shadow: 0 0 20px rgba(88,166,255,0.4);
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "name": "CodeLearn",
+  "short_name": "CodeLearn",
+  "description": "Interactive platform to learn algorithms, data structures, and programming languages.",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#0d1117",
+  "theme_color": "#39d353",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
