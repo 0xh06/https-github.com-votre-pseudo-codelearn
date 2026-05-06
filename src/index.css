@@ -1,64 +1,102 @@
 @import "tailwindcss";
 
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@700;800;900&display=swap');
+
 @layer base {
   :root {
-    --bg: #0d1117;
-    --bg2: #161b22;
-    --bg3: #21262d;
-    --border: #30363d;
-    --text: #c9d1d9;
-    --text-bright: #ffffff;
-    --text-dim: #8b949e;
-    --green: #39d353;
-    --blue: #58a6ff;
-    --purple: #bc8cff;
-    --yellow: #e3b341;
-    --red: #f85149;
+    /* Premium Dark Palette (Deep Slate & Graphite) */
+    --bg: hsl(220, 25%, 5%);
+    --bg2: hsl(220, 25%, 8%);
+    --bg3: hsl(220, 25%, 12%);
+    --border: hsla(220, 20%, 20%, 0.5);
+    
+    --text: hsl(210, 20%, 80%);
+    --text-bright: hsl(0, 0%, 100%);
+    --text-dim: hsl(210, 15%, 60%);
+    
+    /* Signature Colors */
+    --green: #2ecc71;
+    --green-glow: hsla(145, 63%, 49%, 0.3);
+    --blue: #3498db;
+    --blue-glow: hsla(204, 70%, 53%, 0.3);
+    --purple: #9b59b6;
+    --purple-glow: hsla(282, 44%, 53%, 0.3);
+    --yellow: #f1c40f;
+    --red: #e74c3c;
+
+    --font-display: 'Outfit', sans-serif;
+    --font-sans: 'Inter', sans-serif;
+
+    --glass-bg: hsla(220, 25%, 8%, 0.8);
+    --glass-border: hsla(220, 20%, 30%, 0.2);
   }
 
   .light-theme {
-    --bg: #ffffff;
-    --bg2: #f6f8fa;
-    --bg3: #ebf0f4;
-    --border: #d0d7de;
-    --text: #24292f;
-    --text-bright: #1f2328;
-    --text-dim: #57606a;
+    --bg: hsl(210, 20%, 98%);
+    --bg2: hsl(210, 20%, 95%);
+    --bg3: hsl(210, 20%, 90%);
+    --border: hsla(210, 20%, 80%, 0.5);
+    --text: hsl(210, 20%, 20%);
+    --text-bright: hsl(210, 20%, 10%);
+    --text-dim: hsl(210, 15%, 40%);
+    --glass-bg: hsla(210, 20%, 98%, 0.8);
+    --glass-border: hsla(210, 20%, 80%, 0.3);
   }
 
   body {
     @apply bg-[var(--bg)] text-[var(--text)] antialiased selection:bg-[var(--green)] selection:text-black;
-    font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+    font-family: var(--font-sans);
   }
 
-  h1, h2, h3, h4, h5, h6 {
-    @apply font-bold text-[var(--text-bright)];
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    @apply tracking-tight text-[var(--text-bright)];
+  }
+
+  /* Custom Smooth Scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--bg);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--bg3);
+    border-radius: 10px;
+    border: 2px solid var(--bg);
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--text-dim);
   }
 }
 
 @layer components {
   .btn {
-    @apply flex items-center justify-center gap-2 rounded-md font-semibold transition-all duration-200 border border-[var(--border)] bg-[var(--bg3)] text-[var(--text-bright)] hover:border-[var(--text-dim)] hover:bg-[var(--border)] active:scale-95;
+    @apply flex items-center justify-center gap-2 rounded-xl px-5 py-2.5 font-bold transition-all duration-300 border border-[var(--border)] bg-[var(--bg3)] text-[var(--text-bright)] hover:scale-[1.02] active:scale-95 disabled:opacity-50 disabled:pointer-events-none;
   }
   .btn-primary {
-    @apply bg-[var(--green)] text-black border-[var(--green)] hover:bg-[#2ea043] hover:border-[#2ea043] hover:text-black;
+    @apply bg-[var(--green)] text-black border-[var(--green)] hover:shadow-[0_0_20px_var(--green-glow)];
   }
   .btn-secondary {
-    @apply bg-transparent text-[var(--text-bright)] border-[var(--border)] hover:bg-[var(--bg3)] hover:border-[var(--text-dim)];
+    @apply bg-[var(--glass-bg)] backdrop-blur-md border-[var(--glass-border)] text-[var(--text-bright)] hover:bg-[var(--bg3)];
   }
   .card {
-    @apply bg-[var(--bg2)] border border-[var(--border)] rounded-xl p-6 transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-[rgba(0,0,0,0.5)] hover:border-[var(--text-dim)];
+    @apply bg-[var(--bg2)] border border-[var(--border)] rounded-2xl p-6 transition-all duration-300 hover:border-[var(--text-dim)]/30 hover:shadow-2xl hover:shadow-black/50;
+  }
+  .glass {
+    @apply bg-[var(--glass-bg)] backdrop-blur-xl border border-[var(--glass-border)];
   }
   .badge {
-    @apply px-2.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider;
+    @apply px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest border border-current bg-current/10;
   }
 }
 
 @layer utilities {
-  .glow-green {
-    text-shadow: 0 0 20px rgba(57,211,83,0.4);
-  }
-  .glow-blue {
-    text-shadow: 0 0 20px rgba(88,166,255,0.4);
+  .text-glow-green { text-shadow: 0 0 15px var(--green-glow); }
+  .text-glow-blue { text-shadow: 0 0 15px var(--blue-glow); }
+  .premium-gradient {
+    @apply bg-gradient-to-br from-white via-white to-gray-500 bg-clip-text text-transparent;
   }
 }
+

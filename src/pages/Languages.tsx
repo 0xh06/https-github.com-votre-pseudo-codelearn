@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { useStore } from '../store/useStore';
 import Seo from '../components/Seo';
-import { ChevronRight, Star, Zap, Globe, Cpu, Code2, Terminal, BookOpen, TrendingUp } from 'lucide-react';
+import { ChevronRight, Star, Zap, Globe, Cpu, Code2, Terminal, BookOpen, TrendingUp, Sparkles, Box, Layout } from 'lucide-react';
 
 const LANGS = [
   {
@@ -149,19 +149,19 @@ const DOMAIN_MAP: Record<string, string[]> = {
 
 function Bar({ value, color, label }: { value: number; color: string; label: string }) {
   return (
-    <div className="space-y-1">
+    <div className="space-y-1.5">
       <div className="flex justify-between text-[10px]">
-        <span className="text-[var(--text-dim)] font-bold uppercase tracking-wider">{label}</span>
-        <span className="font-black" style={{ color }}>{value}/100</span>
+        <span className="text-[var(--text-dim)] font-black uppercase tracking-widest">{label}</span>
+        <span className="font-black" style={{ color }}>{value}%</span>
       </div>
-      <div className="h-1.5 bg-[var(--bg3)] rounded-full overflow-hidden">
+      <div className="h-1.5 bg-[var(--bg3)] rounded-full overflow-hidden shadow-inner">
         <motion.div
           initial={{ width: 0 }}
           whileInView={{ width: `${value}%` }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8, ease: 'easeOut' }}
+          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
           className="h-full rounded-full"
-          style={{ backgroundColor: color }}
+          style={{ backgroundColor: color, boxShadow: `0 0 10px ${color}40` }}
         />
       </div>
     </div>
@@ -170,9 +170,14 @@ function Bar({ value, color, label }: { value: number; color: string; label: str
 
 function DifficultyDots({ level }: { level: number }) {
   return (
-    <div className="flex gap-1">
+    <div className="flex gap-1.5">
       {[1,2,3,4,5].map(i => (
-        <div key={i} className={`w-2 h-2 rounded-full transition-colors ${i <= level ? 'bg-[var(--green)]' : 'bg-[var(--bg3)]'}`} />
+        <motion.div 
+          key={i} 
+          initial={false}
+          animate={{ scale: i <= level ? 1.1 : 1, opacity: i <= level ? 1 : 0.2 }}
+          className={`w-2.5 h-2.5 rounded-full ${i <= level ? 'bg-[var(--green)] shadow-[0_0_8px_var(--green-glow)]' : 'bg-[var(--text-dim)]'}`} 
+        />
       ))}
     </div>
   );
@@ -185,177 +190,226 @@ export default function Languages() {
   const filtered = domain === 'Tous' ? LANGS : LANGS.filter(l => DOMAIN_MAP[domain]?.includes(l.id));
 
   return (
-    <div className="container mx-auto px-4 py-12 max-w-7xl">
+    <div className="container mx-auto px-4 py-16 max-w-7xl relative">
       <Seo title="Guide des Langages" description="Comparez JavaScript, Python, Java, C++, C# et C pour choisir le langage adapté à vos objectifs." />
 
+      {/* Decorative elements */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-px bg-gradient-to-r from-transparent via-[var(--border)] to-transparent opacity-50" />
+      
       {/* Hero */}
-      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-12">
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[var(--green)]/10 border border-[var(--green)]/20 text-xs font-bold text-[var(--green)] mb-4">
-          <Globe className="w-3.5 h-3.5" />
-          {uiLang === 'fr' ? '6 langages supportés sur la plateforme' : '6 languages supported on the platform'}
+      <motion.div 
+        initial={{ opacity: 0, y: 30 }} 
+        animate={{ opacity: 1, y: 0 }} 
+        className="text-center mb-16 relative"
+      >
+        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-2xl glass mb-6 shadow-xl border-[var(--green)]/20">
+          <Sparkles className="w-4 h-4 text-[var(--green)] animate-pulse" />
+          <span className="text-xs font-black tracking-widest text-[var(--green)] uppercase">
+            {uiLang === 'fr' ? 'Standard 100k€ — Curriculum Expert' : '100k€ Standard — Expert Curriculum'}
+          </span>
         </div>
-        <h1 className="text-5xl md:text-6xl font-black mb-4 bg-gradient-to-br from-white via-white to-[var(--text-dim)] bg-clip-text text-transparent">
-          {uiLang === 'fr' ? 'Quel langage choisir ?' : 'Which language to choose?'}
+        
+        <h1 className="text-5xl md:text-7xl font-black mb-6 premium-gradient font-[var(--font-display)] leading-tight">
+          {uiLang === 'fr' ? 'Choisissez votre' : 'Choose your'} <br />
+          <span className="text-[var(--green)] text-glow-green">ADN de Codeur</span>
         </h1>
-        <p className="text-[var(--text-dim)] text-lg max-w-2xl mx-auto">
+        
+        <p className="text-[var(--text-dim)] text-lg md:text-xl max-w-3xl mx-auto font-medium leading-relaxed">
           {uiLang === 'fr'
-            ? 'Compare les forces, usages et syntaxes de chaque langage. Tous sont pratiquables directement sur AlgoMaster.'
-            : 'Compare the strengths, uses and syntax of each language. All are directly available on AlgoMaster.'}
+            ? 'Une exploration immersive des 6 piliers technologiques mondiaux. Maîtrisez le langage qui propulsera votre carrière.'
+            : 'An immersive exploration of the 6 global technological pillars. Master the language that will propel your career.'}
         </p>
       </motion.div>
 
       {/* Domain Filter */}
-      <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="flex flex-wrap gap-2 justify-center mb-10">
-        {DOMAINS.map(d => (
-          <button
-            key={d}
-            onClick={() => setDomain(d)}
-            className={`px-4 py-1.5 rounded-full text-xs font-bold border transition-all ${domain === d ? 'bg-[var(--green)] text-black border-[var(--green)]' : 'bg-[var(--bg2)] text-[var(--text-dim)] border-[var(--border)] hover:border-[var(--green)]/40'}`}
-          >
-            {d}
-          </button>
-        ))}
-      </motion.div>
+      <div className="sticky top-20 z-50 flex justify-center mb-12 pointer-events-none">
+        <motion.div 
+          initial={{ opacity: 0, y: 10 }} 
+          animate={{ opacity: 1, y: 0 }} 
+          className="flex flex-wrap gap-2 justify-center p-1.5 glass rounded-2xl shadow-2xl pointer-events-auto border-white/5"
+        >
+          {DOMAINS.map(d => (
+            <button
+              key={d}
+              onClick={() => setDomain(d)}
+              className={`px-6 py-2 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${
+                domain === d 
+                  ? 'bg-[var(--green)] text-black shadow-lg shadow-green-500/20' 
+                  : 'text-[var(--text-dim)] hover:text-white hover:bg-white/5'
+              }`}
+            >
+              {d}
+            </button>
+          ))}
+        </motion.div>
+      </div>
 
       {/* Language Cards Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 mb-16">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-24">
         <AnimatePresence mode="popLayout">
           {filtered.map((lang, i) => (
             <motion.div
               key={lang.id}
               layout
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.9 }}
-              transition={{ delay: i * 0.05, type: 'spring', stiffness: 150 }}
-              whileHover={{ y: -4 }}
-              className="group relative rounded-2xl border bg-[var(--bg2)] overflow-hidden cursor-pointer transition-all hover:border-[var(--green)]/50"
-              style={{ borderColor: 'var(--border)' }}
+              transition={{ delay: i * 0.05, type: 'spring', stiffness: 100, damping: 15 }}
+              className="group relative"
             >
               <Link to={`/languages/${lang.id}`} className="block h-full">
-              {/* Top color accent */}
-              <div className="h-1 w-full" style={{ backgroundColor: lang.color }} />
+                <div className="card h-full flex flex-col relative overflow-hidden group-hover:border-white/20">
+                  {/* Visual Background Accent */}
+                  <div 
+                    className="absolute -top-24 -right-24 w-48 h-48 rounded-full opacity-0 group-hover:opacity-10 transition-opacity duration-700 pointer-events-none"
+                    style={{ backgroundColor: lang.color, filter: 'blur(60px)' }}
+                  />
+                  
+                  {/* Top Bar Accent */}
+                  <div className="absolute top-0 left-0 right-0 h-1" style={{ backgroundColor: lang.color }} />
 
-              {/* Glow */}
-              <div
-                className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-                style={{ background: `radial-gradient(ellipse at top, ${lang.color}12 0%, transparent 60%)` }}
-              />
+                  <div className="relative z-10">
+                    <div className="flex items-start justify-between mb-6">
+                      <div className="flex items-center gap-4">
+                        <div className="w-14 h-14 rounded-2xl bg-[var(--bg3)] flex items-center justify-center text-3xl border border-[var(--border)] group-hover:rotate-6 transition-transform duration-500 shadow-xl">
+                          {lang.icon}
+                        </div>
+                        <div>
+                          <h2 className="text-2xl font-black text-[var(--text-bright)] tracking-tight">{lang.name}</h2>
+                          <div className="flex items-center gap-1.5">
+                            <Box className="w-3 h-3" style={{ color: lang.color }} />
+                            <span className="text-[10px] font-black uppercase tracking-tighter" style={{ color: lang.color }}>{lang.tagline}</span>
+                          </div>
+                        </div>
+                      </div>
+                      <span className={`badge ${
+                        lang.level === 'Débutant' ? 'text-green-400' :
+                        lang.level === 'Intermédiaire' ? 'text-yellow-400' :
+                        'text-red-400'}`}>
+                        {lang.level}
+                      </span>
+                    </div>
 
-              <div className="p-6">
-                {/* Header */}
-                <div className="flex items-start justify-between mb-4">
-                  <div className="flex items-center gap-3">
-                    <span className="text-3xl">{lang.icon}</span>
-                    <div>
-                      <h2 className="text-xl font-black text-[var(--text-bright)]">{lang.name}</h2>
-                      <p className="text-xs font-medium italic" style={{ color: lang.color }}>{lang.tagline}</p>
+                    <p className="text-sm text-[var(--text-dim)] leading-relaxed mb-8 font-medium line-clamp-3">
+                      {lang.desc}
+                    </p>
+
+                    <div className="space-y-4 mb-8 flex-1">
+                      <Bar value={lang.popularity} color={lang.color} label={uiLang === 'fr' ? 'Demande Marché' : 'Market Demand'} />
+                      <Bar value={lang.perf} color={lang.color} label={uiLang === 'fr' ? 'Efficacité Runtime' : 'Runtime Efficiency'} />
+                    </div>
+
+                    <div className="flex items-center justify-between p-4 bg-[var(--bg3)]/50 rounded-2xl border border-white/5 mt-auto">
+                      <div className="flex flex-col">
+                        <span className="text-[10px] font-black uppercase tracking-widest text-[var(--text-dim)] mb-1">Difficulté</span>
+                        <DifficultyDots level={lang.difficulty} />
+                      </div>
+                      <div className="p-2 rounded-xl bg-[var(--bg)] border border-[var(--border)] group-hover:translate-x-1 transition-transform" style={{ color: lang.color }}>
+                        <ChevronRight className="w-5 h-5" />
+                      </div>
                     </div>
                   </div>
-                  <span className={`text-[9px] font-black px-2 py-1 rounded-full border ${
-                    lang.level === 'Débutant' ? 'bg-green-500/10 text-green-400 border-green-500/20' :
-                    lang.level === 'Intermédiaire' ? 'bg-yellow-500/10 text-yellow-400 border-yellow-500/20' :
-                    'bg-red-500/10 text-red-400 border-red-500/20'}`}>
-                    {lang.level}
-                  </span>
                 </div>
-
-                <p className="text-xs text-[var(--text-dim)] leading-relaxed mb-5 line-clamp-2">{lang.desc}</p>
-
-                {/* Stats bars */}
-                <div className="space-y-2 mb-5">
-                  <Bar value={lang.popularity} color={lang.color} label={uiLang === 'fr' ? 'Popularité' : 'Popularity'} />
-                  <Bar value={lang.perf} color={lang.color} label={uiLang === 'fr' ? 'Performance' : 'Performance'} />
-                </div>
-
-                {/* Difficulty */}
-                <div className="flex items-center justify-between mb-5">
-                  <span className="text-[10px] text-[var(--text-dim)] font-bold uppercase tracking-wider">
-                    {uiLang === 'fr' ? 'Difficulté' : 'Difficulty'}
-                  </span>
-                  <DifficultyDots level={lang.difficulty} />
-                </div>
-
-                {/* Meta chips */}
-                <div className="flex flex-wrap gap-1.5 mb-5">
-                  {[lang.typing, lang.paradigm, lang.compiled].map(m => (
-                    <span key={m} className="text-[9px] px-2 py-0.5 rounded-full bg-[var(--bg3)] border border-[var(--border)] text-[var(--text-dim)] font-medium">
-                      {m}
-                    </span>
-                  ))}
-                </div>
-
-                {/* Actions */}
-                <div className="flex items-center gap-2 pt-4 border-t border-[var(--border)] mt-auto">
-                  <div
-                    className="flex-1 text-xs py-1.5 rounded-lg font-black text-center flex items-center justify-center gap-1 transition-all"
-                    style={{ background: lang.color + '20', color: lang.color, border: `1px solid ${lang.color}40` }}
-                  >
-                    {uiLang === 'fr' ? 'Voir le cours complet' : 'View full course'} <ChevronRight className="w-3 h-3" />
-                  </div>
-                </div>
-              </div>
               </Link>
             </motion.div>
           ))}
         </AnimatePresence>
       </div>
 
-
-
-      {/* Comparison Table */}
-      <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="rounded-2xl border border-[var(--border)] bg-[var(--bg2)] overflow-hidden mb-12">
-        <div className="p-6 border-b border-[var(--border)] bg-[var(--bg3)]">
-          <h3 className="text-xl font-black">{uiLang === 'fr' ? '📊 Tableau Comparatif' : '📊 Comparison Table'}</h3>
+      {/* Comparison Section - High fidelity */}
+      <motion.div 
+        initial={{ opacity: 0, y: 40 }} 
+        whileInView={{ opacity: 1, y: 0 }} 
+        viewport={{ once: true }}
+        className="mb-24"
+      >
+        <div className="flex items-center gap-4 mb-8">
+          <div className="w-12 h-12 rounded-2xl bg-[var(--blue)]/10 flex items-center justify-center border border-[var(--blue)]/20">
+            <Layout className="w-6 h-6 text-[var(--blue)]" />
+          </div>
+          <div>
+            <h2 className="text-3xl font-black">{uiLang === 'fr' ? 'Matrice de Comparaison' : 'Comparison Matrix'}</h2>
+            <p className="text-[var(--text-dim)] text-sm font-medium">Analyse comparative des critères d'ingénierie critiques.</p>
+          </div>
         </div>
-        <div className="overflow-x-auto">
-          <table className="w-full text-left min-w-[700px]">
-            <thead>
-              <tr className="border-b border-[var(--border)]">
-                <th className="p-4 text-xs font-black uppercase tracking-widest text-[var(--text-dim)]">Critère</th>
-                {LANGS.map(l => (
-                  <th key={l.id} className="p-4 text-xs font-black uppercase tracking-widest" style={{ color: l.color }}>
-                    {l.icon} {l.name}
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-[var(--border)]">
-              {[
-                { label: 'Vitesse', vals: ['🚀 Très rapide', '🐢 Modérée', '⚡ Rapide', '🔥 Extrême', '⚡ Rapide', '🔥 Extrême'] },
-                { label: 'Courbe apprentissage', vals: ['Facile', 'Très facile', 'Modérée', 'Difficile', 'Modérée', 'Très difficile'] },
-                { label: 'Typage', vals: ['Dynamique', 'Dynamique', 'Statique fort', 'Statique fort', 'Statique fort', 'Statique'] },
-                { label: 'Gestion mémoire', vals: ['GC auto', 'GC auto', 'GC (JVM)', 'Manuelle', 'GC (CLR)', 'Manuelle'] },
-                { label: 'Usage principal', vals: ['Web / Node', 'IA / Data', 'Entreprise', 'Jeux / Sys.', 'Unity / .NET', 'OS / Embarqué'] },
-                { label: 'Popularité (TIOBE)', vals: ['#2', '#1', '#4', '#3', '#5', '#11'] },
-              ].map((row, i) => (
-                <tr key={i} className="hover:bg-[var(--bg3)]/50 transition-colors">
-                  <td className="p-4 text-xs font-black text-[var(--text-bright)]">{row.label}</td>
-                  {row.vals.map((v, j) => (
-                    <td key={j} className="p-4 text-xs text-[var(--text-dim)]">{v}</td>
+
+        <div className="glass rounded-3xl overflow-hidden border-white/5 shadow-3xl">
+          <div className="overflow-x-auto">
+            <table className="w-full text-left min-w-[800px]">
+              <thead>
+                <tr className="bg-white/5">
+                  <th className="p-6 text-[10px] font-black uppercase tracking-widest text-[var(--text-dim)] border-b border-white/5">Paramètre</th>
+                  {LANGS.map(l => (
+                    <th key={l.id} className="p-6 text-xs font-black uppercase tracking-widest border-b border-white/5" style={{ color: l.color }}>
+                      <div className="flex items-center gap-2">
+                        <span className="text-xl">{l.icon}</span>
+                        {l.name}
+                      </div>
+                    </th>
                   ))}
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody className="divide-y divide-white/5">
+                {[
+                  { label: 'Vitesse d\'Exécution', icon: <Zap className="w-3.5 h-3.5" />, vals: ['⚡ Modérée', '🐢 Basse', '⚡ Haute', '🔥 Extrême', '⚡ Haute', '🔥 Extrême'] },
+                  { label: 'Courbe Apprentissage', icon: <TrendingUp className="w-3.5 h-3.5" />, vals: ['Simple', 'Très Simple', 'Modérée', 'Complexe', 'Modérée', 'Expert'] },
+                  { label: 'Type de Typage', icon: <Code2 className="w-3.5 h-3.5" />, vals: ['Dynamique', 'Dynamique', 'Statique Fort', 'Statique Fort', 'Statique Fort', 'Statique'] },
+                  { label: 'Écosystème / Libs', icon: <Globe className="w-3.5 h-3.5" />, vals: ['Titanesque', 'IA / Data', 'Entreprise', 'Natifs / GFX', 'Jeux / .NET', 'Hardware'] },
+                ].map((row, i) => (
+                  <tr key={i} className="hover:bg-white/[0.02] transition-colors group">
+                    <td className="p-6">
+                      <div className="flex items-center gap-3">
+                        <div className="p-2 rounded-lg bg-white/5 text-[var(--text-dim)] group-hover:text-white transition-colors">
+                          {row.icon}
+                        </div>
+                        <span className="text-xs font-black text-[var(--text-bright)]">{row.label}</span>
+                      </div>
+                    </td>
+                    {row.vals.map((v, j) => (
+                      <td key={j} className="p-6 text-[11px] font-bold text-[var(--text-dim)] group-hover:text-[var(--text)] transition-colors">{v}</td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       </motion.div>
 
-      {/* CTA */}
-      <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center p-10 rounded-2xl border border-[var(--green)]/20 bg-[var(--green)]/5">
-        <h3 className="text-2xl font-black mb-3">{uiLang === 'fr' ? 'Prêt à pratiquer ?' : 'Ready to practice?'}</h3>
-        <p className="text-[var(--text-dim)] text-sm mb-6">
-          {uiLang === 'fr' ? 'Tous ces langages sont disponibles dans l\'éditeur intégré. Choisissez votre algorithme et codez directement.' : 'All these languages are available in the integrated editor. Pick an algorithm and code directly.'}
-        </p>
-        <div className="flex flex-wrap gap-3 justify-center">
-          <Link to="/algorithms" className="btn btn-primary px-6 py-2.5 font-black flex items-center gap-2">
-            <Star className="w-4 h-4" /> {uiLang === 'fr' ? 'Explorer les Algorithmes' : 'Explore Algorithms'}
-          </Link>
-          <Link to="/exercises" className="btn px-6 py-2.5 font-black flex items-center gap-2 border border-[var(--border)] hover:border-[var(--green)]/40">
-            <Cpu className="w-4 h-4" /> {uiLang === 'fr' ? 'Aller aux Exercices' : 'Go to Exercises'}
-          </Link>
+      {/* CTA Section - Ultra Premium */}
+      <motion.div 
+        initial={{ opacity: 0, scale: 0.95 }} 
+        whileInView={{ opacity: 1, scale: 1 }} 
+        viewport={{ once: true }}
+        className="relative rounded-[40px] overflow-hidden p-12 md:p-20 text-center border border-white/10"
+      >
+        {/* Background blobs */}
+        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-[var(--green)]/10 to-[var(--blue)]/10 -z-10" />
+        <div className="absolute -top-1/2 -left-1/2 w-full h-full bg-[var(--green)]/5 blur-[120px] rounded-full animate-pulse" />
+        <div className="absolute -bottom-1/2 -right-1/2 w-full h-full bg-[var(--blue)]/5 blur-[120px] rounded-full animate-pulse delay-1000" />
+        
+        <div className="relative z-10 max-w-2xl mx-auto">
+          <h3 className="text-4xl md:text-5xl font-black mb-6 premium-gradient">
+            {uiLang === 'fr' ? 'Lancez votre première Quête' : 'Launch your first Quest'}
+          </h3>
+          <p className="text-[var(--text-dim)] text-lg mb-10 font-medium">
+            {uiLang === 'fr' 
+              ? 'Ne vous contentez pas de lire. Pratiquez avec nos algorithmes interactifs et débloquez votre potentiel.' 
+              : 'Don\'t just read. Practice with our interactive algorithms and unlock your potential.'}
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link to="/algorithms" className="btn btn-primary px-10 py-4 text-sm font-black rounded-2xl flex items-center gap-3">
+              <Terminal className="w-5 h-5" /> 
+              {uiLang === 'fr' ? 'Explorer les Algorithmes' : 'Explore Algorithms'}
+            </Link>
+            <Link to="/paths" className="btn btn-secondary px-10 py-4 text-sm font-black rounded-2xl flex items-center gap-3">
+              <Map className="w-5 h-5" />
+              {uiLang === 'fr' ? 'Voir les Roadmaps' : 'View Roadmaps'}
+            </Link>
+          </div>
         </div>
       </motion.div>
     </div>
   );
 }
+
