@@ -4,6 +4,7 @@ import { ALGORITHMS } from '../data/content';
 import CodeEditor from '../components/CodeEditor';
 import AlgorithmVisualizer from '../components/AlgorithmVisualizer';
 import Seo from '../components/Seo';
+import PremiumModal from '../components/PremiumModal';
 import { useState, useEffect } from 'react';
 import { executeCode } from '../utils/piston';
 import { useStore } from '../store/useStore';
@@ -11,7 +12,7 @@ import { t } from '../utils/i18n';
 import {
   Play, Maximize2, Minimize2, Lightbulb, SquareSquare, ChevronDown,
   CheckCircle2, BookOpen, Eye, Code2, Zap, Target, Clock, Database,
-  ArrowLeft, Info
+  ArrowLeft, Info, Sparkles, Trophy, ChevronRight, Terminal, Share2
 } from 'lucide-react';
 import { Panel, PanelGroup, PanelResizeHandle } from 'react-resizable-panels';
 
@@ -36,19 +37,9 @@ const USE_CASES: Record<string, string[]> = {
   'kadane':         ['Max sous-tableau de gains boursiers', 'Analyse de séquences de données', 'Problèmes de sous-chaînes maximales'],
 };
 
-const PREREQUISITES: Record<string, string[]> = {
-  'bubble-sort':    ['Tableaux', 'Boucles imbriquées'],
-  'quick-sort':     ['Récursivité', 'Partitionnement', 'Bubble Sort'],
-  'merge-sort':     ['Récursivité', 'Fusion de tableaux'],
-  'binary-search':  ['Tableaux triés', 'Pointeurs/indices'],
-  'bfs':            ['Graphes', 'Files (Queue)', 'Sets'],
-  'fibonacci-dp':   ['Récursivité', 'Mémoïsation', 'Programmation Dynamique'],
-  'kadane':         ['Tableaux', 'Boucle simple', 'Variables d\'état'],
-};
-
 export default function AlgorithmDetail() {
   const { id } = useParams();
-  const { uiLang } = useStore();
+  const { uiLang, addXp } = useStore();
   const algo = ALGORITHMS.find(a => a.id === id);
   const [activeTab, setActiveTab] = useState<Tab>('comprendre');
   const [lang, setLang] = useState('js');
@@ -58,6 +49,7 @@ export default function AlgorithmDetail() {
   const [isFocusMode, setIsFocusMode] = useState(false);
   const [showSolution, setShowSolution] = useState(false);
   const [hintLevel, setHintLevel] = useState(0);
+  const [showSuccess, setShowSuccess] = useState(false);
 
   useEffect(() => {
     if (algo) {
@@ -70,165 +62,168 @@ export default function AlgorithmDetail() {
   }, [algo, lang, id]);
 
   if (!algo) return (
-    <div className="container mx-auto py-20 text-center text-[var(--text-dim)]">
-      Algorithme non trouvé. <Link to="/algorithms" className="text-[var(--green)]">Retour</Link>
+    <div className="container mx-auto py-20 text-center">
+      <div className="text-6xl mb-6">🕵️‍♂️</div>
+      <h1 className="text-2xl font-black mb-4">Algorithme non trouvé</h1>
+      <Link to="/algorithms" className="btn btn-primary">← Retour au catalogue</Link>
     </div>
   );
 
   const hasVisualizer = ['bubble-sort', 'quick-sort', 'binary-search'].includes(algo.id);
 
+  const checkSuccess = (out: string) => {
+    // Simple heuristic to detect success for sorting/search
+    const successKeywords = ['trié', 'sorted', 'found', 'trouvé', 'correct', 'success', '✅'];
+    const isSuccess = successKeywords.some(kw => out.toLowerCase().includes(kw));
+    
+    if (isSuccess && !showSuccess) {
+      addXp(250);
+      setShowSuccess(true);
+    }
+  };
+
   const handleRun = async () => {
     setIsRunning(true);
-    setOutput('Exécution en cours...\n');
+    setOutput('🚀 Exécution du kernel en cours...\n');
     let isTimeout = false;
     const timeoutId = setTimeout(() => {
       isTimeout = true;
       setIsRunning(false);
-      setOutput(prev => prev + '\n❌ Timeout > 5s. Boucle infinie ?');
+      setOutput(prev => prev + '\n❌ Timeout > 5s. Boucle infinie détectée.');
     }, 5000);
+
     try {
       const currentCode = code || (algo.starter as any)[lang] || algo.starter.js;
       const result = await executeCode(currentCode, lang);
       if (!isTimeout) {
         clearTimeout(timeoutId);
-        setOutput(result.output || 'Code exécuté avec succès (pas de sortie).');
+        const finalOutput = result.output || 'Code exécuté avec succès.';
+        setOutput(finalOutput);
+        checkSuccess(finalOutput);
       }
     } catch (err) {
       if (!isTimeout) {
         clearTimeout(timeoutId);
-        setOutput(`❌ Erreur: ${err instanceof Error ? err.message : String(err)}`);
+        setOutput(`❌ Runtime Error: ${err instanceof Error ? err.message : String(err)}`);
       }
     }
     setIsRunning(false);
   };
 
   const handleRevealSolution = () => {
-    if (confirm('Voir la solution ? Essayez d\'abord par vous-même !')) {
+    if (confirm('Révéler la solution Maître ? Vous ne gagnerez pas de bonus d\'XP.')) {
       setShowSolution(true);
       setCode((algo as any)[lang] || algo.js);
     }
   };
 
   const tabs: { id: Tab; label: string; icon: React.ReactNode }[] = [
-    { id: 'comprendre', label: t('tab_understand', uiLang),  icon: <BookOpen className="w-3.5 h-3.5" /> },
-    { id: 'visualiser', label: t('tab_visualize', uiLang),   icon: <Eye className="w-3.5 h-3.5" /> },
-    { id: 'implementer', label: t('tab_implement', uiLang),  icon: <Code2 className="w-3.5 h-3.5" /> },
-    { id: 'defis', label: t('tab_challenges', uiLang),       icon: <Zap className="w-3.5 h-3.5" /> },
+    { id: 'comprendre', label: t('tab_understand', uiLang),  icon: <BookOpen className="w-4 h-4" /> },
+    { id: 'visualiser', label: t('tab_visualize', uiLang),   icon: <Eye className="w-4 h-4" /> },
+    { id: 'implementer', label: t('tab_implement', uiLang),  icon: <Terminal className="w-4 h-4" /> },
+    { id: 'defis', label: t('tab_challenges', uiLang),       icon: <Zap className="w-4 h-4" /> },
   ];
 
   const useCases = USE_CASES[algo.id] || [];
-  const prereqs = PREREQUISITES[algo.id] || [];
   const langInfo = LANG_INFO[lang];
 
   // ===== TAB: COMPRENDRE =====
   const TabComprendre = (
-    <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="space-y-6">
-      {/* Header */}
+    <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="space-y-10">
       <div>
-        <h1 className="text-2xl md:text-3xl font-black mb-3 text-[var(--text-bright)]">{algo.name}</h1>
-        <div className="flex flex-wrap gap-2 mb-4">
-          <span className="badge bg-green-500/10 text-[var(--green)] border border-green-500/20">{algo.difficulty}</span>
-          <span className="badge bg-blue-500/10 text-blue-400 border border-blue-500/20 flex items-center gap-1">
-            <Clock className="w-3 h-3" /> {algo.timeO}
-          </span>
-          <span className="badge bg-purple-500/10 text-purple-400 border border-purple-500/20 flex items-center gap-1">
-            <Database className="w-3 h-3" /> {algo.spaceO}
-          </span>
+        <div className="flex items-center gap-2 mb-4">
+          <span className="badge text-[var(--green)] bg-[var(--green)]/10 border-[var(--green)]/20">{algo.difficulty}</span>
+          <span className="text-[10px] font-black uppercase tracking-widest text-[var(--text-dim)]">Expert System</span>
         </div>
-        <p className="text-[var(--text)] leading-relaxed">{algo.description}</p>
+        <h1 className="text-4xl md:text-5xl font-[var(--font-display)] font-black premium-gradient mb-6 leading-tight">
+          {algo.name}
+        </h1>
+        <p className="text-lg text-[var(--text)] leading-relaxed font-medium">
+          {algo.description}
+        </p>
       </div>
 
-      {/* Prerequisites */}
-      {prereqs.length > 0 && (
-        <div className="p-4 bg-blue-500/5 border border-blue-500/20 rounded-xl">
-          <h3 className="text-xs font-black uppercase tracking-widest text-blue-400 mb-2 flex items-center gap-1.5">
-            <Info className="w-3.5 h-3.5" /> {t('algo_prerequisites', uiLang)}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="p-8 rounded-3xl glass border-white/5 shadow-xl relative overflow-hidden">
+          <div className="absolute top-0 right-0 p-4 opacity-5"><Clock size={64} /></div>
+          <h3 className="text-xs font-black uppercase tracking-[0.2em] text-[var(--text-dim)] mb-6 flex items-center gap-2">
+            <Clock size={14} className="text-[var(--blue)]" /> Complexité Temporelle
           </h3>
-          <div className="flex flex-wrap gap-2">
-            {prereqs.map(p => (
-              <span key={p} className="text-xs px-2.5 py-1 bg-blue-500/10 text-blue-300 rounded-full border border-blue-500/20 font-medium">{p}</span>
-            ))}
-          </div>
+          <div className="text-4xl font-black mb-4 text-white">{algo.timeO}</div>
+          <p className="text-sm text-[var(--text-dim)] leading-relaxed">{algo.complexityDesc.split('.')[0]}.</p>
         </div>
-      )}
 
-      {/* Complexity Table */}
-      <div className="p-4 bg-[var(--bg3)] rounded-xl border border-[var(--border)]">
-        <h3 className="font-black mb-3 uppercase text-[10px] tracking-widest text-[var(--text-dim)]">{t('algo_complexity', uiLang)}</h3>
-        <div className="grid grid-cols-2 gap-3 mb-3">
-          <div className="p-3 bg-[var(--bg)] rounded-lg border border-[var(--border)] text-center">
-            <div className="text-lg font-black text-[var(--green)]">{algo.timeO}</div>
-            <div className="text-[10px] text-[var(--text-dim)] uppercase tracking-wider">{t('algo_time', uiLang)}</div>
-          </div>
-          <div className="p-3 bg-[var(--bg)] rounded-lg border border-[var(--border)] text-center">
-            <div className="text-lg font-black text-purple-400">{algo.spaceO}</div>
-            <div className="text-[10px] text-[var(--text-dim)] uppercase tracking-wider">{t('algo_space', uiLang)}</div>
-          </div>
+        <div className="p-8 rounded-3xl glass border-white/5 shadow-xl relative overflow-hidden">
+          <div className="absolute top-0 right-0 p-4 opacity-5"><Database size={64} /></div>
+          <h3 className="text-xs font-black uppercase tracking-[0.2em] text-[var(--text-dim)] mb-6 flex items-center gap-2">
+            <Database size={14} className="text-purple-400" /> Espace Mémoire
+          </h3>
+          <div className="text-4xl font-black mb-4 text-white">{algo.spaceO}</div>
+          <p className="text-sm text-[var(--text-dim)] leading-relaxed">Utilisation d'espace additionnel constant ou proportionnel.</p>
         </div>
-        <p className="text-sm text-[var(--text-bright)] leading-relaxed">{algo.complexityDesc}</p>
       </div>
 
-      {/* Steps */}
       <div>
-        <h3 className="font-black mb-4 uppercase text-[10px] tracking-widest text-[var(--text-dim)]">{t('algo_how_it_works', uiLang)}</h3>
-        <ol className="space-y-3">
+        <h3 className="text-xs font-black uppercase tracking-[0.2em] text-[var(--text-dim)] mb-8 flex items-center gap-2">
+          <Sparkles size={14} className="text-yellow-400" /> Logique Algorithmique
+        </h3>
+        <div className="space-y-6">
           {algo.steps.map((step: string, i: number) => (
-            <li key={i} className="flex gap-3 items-start">
-              <span className="w-6 h-6 rounded-full bg-[var(--green)]/10 border border-[var(--green)]/30 flex items-center justify-center text-xs font-black shrink-0 text-[var(--green)]">
+            <div key={i} className="flex gap-6 group">
+              <div className="shrink-0 w-10 h-10 rounded-2xl glass border-white/10 flex items-center justify-center text-sm font-black shadow-lg group-hover:scale-110 transition-transform">
                 {i + 1}
-              </span>
-              <span className="text-sm text-[var(--text)] leading-relaxed pt-0.5">{step}</span>
-            </li>
+              </div>
+              <div className="pt-2">
+                <p className="text-[var(--text)] leading-relaxed font-medium">{step}</p>
+              </div>
+            </div>
           ))}
-        </ol>
+        </div>
       </div>
 
-      {/* Real Use Cases */}
       {useCases.length > 0 && (
-        <div className="p-4 bg-[var(--green)]/5 border border-[var(--green)]/20 rounded-xl">
-          <h3 className="text-xs font-black uppercase tracking-widest text-[var(--green)] mb-3 flex items-center gap-1.5">
-            <Target className="w-3.5 h-3.5" /> {t('algo_real_use_cases', uiLang)}
+        <div className="p-8 rounded-[32px] bg-[var(--green)]/[0.03] border border-[var(--green)]/10">
+          <h3 className="text-xs font-black uppercase tracking-[0.2em] text-[var(--green)] mb-6 flex items-center gap-2">
+            <Target size={14} /> Applications Industrielles
           </h3>
-          <ul className="space-y-2">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {useCases.map((uc, i) => (
-              <li key={i} className="text-sm text-[var(--text)] flex items-start gap-2">
-                <span className="text-[var(--green)] mt-0.5 shrink-0">→</span> {uc}
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-
-      {/* Hints */}
-      {algo.hints && (
-        <div>
-          <h3 className="font-black mb-4 uppercase text-[10px] tracking-widest text-[var(--text-dim)] flex items-center gap-2">
-            <Lightbulb className="w-4 h-4 text-[var(--yellow)]" /> {t('algo_hints', uiLang)}
-          </h3>
-          <div className="space-y-2">
-            {algo.hints.map((hint: string, i: number) => (
-              <div key={i}>
-                {hintLevel >= i + 1 ? (
-                  <div className="p-3 bg-[var(--yellow)]/10 border border-[var(--yellow)]/30 rounded-lg text-sm text-[var(--text-bright)]">
-                    <span className="font-bold text-[var(--yellow)] mr-2">💡 {t('algo_hint_label', uiLang)} {i + 1} :</span> {hint}
-                  </div>
-                ) : (
-                  <button
-                    onClick={() => setHintLevel(i + 1)}
-                    disabled={hintLevel !== i}
-                    className={`w-full p-3 rounded-lg text-sm font-bold text-left transition-all flex items-center justify-between ${
-                      hintLevel === i
-                        ? 'bg-[var(--bg3)] hover:bg-[var(--bg2)] border border-[var(--border)] text-[var(--text-bright)]'
-                        : 'bg-[var(--bg)] border border-[var(--border)] opacity-40 cursor-not-allowed'
-                    }`}
-                  >
-                    <span>{t('algo_unlock_hint', uiLang)} {i + 1}</span>
-                    <ChevronDown className="w-4 h-4" />
-                  </button>
-                )}
+              <div key={i} className="flex items-start gap-3 p-3 rounded-2xl bg-white/5 border border-white/5">
+                <div className="w-1.5 h-1.5 rounded-full bg-[var(--green)] mt-1.5 shrink-0" />
+                <span className="text-sm font-medium opacity-90">{uc}</span>
               </div>
             ))}
           </div>
+        </div>
+      )}
+
+      {algo.hints && (
+        <div className="space-y-4">
+          <h3 className="text-xs font-black uppercase tracking-[0.2em] text-[var(--text-dim)] mb-6 flex items-center gap-2">
+            <Lightbulb size={14} className="text-yellow-400" /> Indices de Résolution
+          </h3>
+          {algo.hints.map((hint: string, i: number) => (
+            <div key={i}>
+              {hintLevel >= i + 1 ? (
+                <motion.div 
+                  initial={{ opacity: 0, scale: 0.98 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  className="p-6 rounded-2xl glass border-yellow-500/20 text-sm font-medium"
+                >
+                  <span className="text-yellow-400 font-black mr-2">INDICE {i + 1} :</span> {hint}
+                </motion.div>
+              ) : (
+                <button
+                  onClick={() => setHintLevel(i + 1)}
+                  disabled={hintLevel !== i}
+                  className="w-full p-4 rounded-2xl glass border-white/5 text-sm font-black flex items-center justify-between hover:bg-white/5 transition-all disabled:opacity-30 group"
+                >
+                  <span className="text-[var(--text-dim)] group-hover:text-white transition-colors">Débloquer l'indice {i + 1}</span>
+                  <ChevronDown className="w-4 h-4 opacity-50 group-hover:translate-y-0.5 transition-transform" />
+                </button>
+              )}
+            </div>
+          ))}
         </div>
       )}
     </motion.div>
@@ -236,19 +231,27 @@ export default function AlgorithmDetail() {
 
   // ===== TAB: VISUALISER =====
   const TabVisualiser = (
-    <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="space-y-4">
+    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-8">
       {hasVisualizer ? (
-        <>
-          <div className="p-3 bg-[var(--bg3)] rounded-lg border border-[var(--border)] text-sm text-[var(--text-dim)]">
-            🎬 {t('viz_tip', uiLang)}
+        <div className="space-y-6">
+          <div className="p-6 rounded-2xl glass border-white/5 flex items-center gap-4 shadow-lg">
+            <div className="w-10 h-10 rounded-xl bg-[var(--blue)]/10 flex items-center justify-center text-[var(--blue)]">
+              <Zap size={20} />
+            </div>
+            <div>
+              <h4 className="text-sm font-black">Simulation Interactive</h4>
+              <p className="text-xs text-[var(--text-dim)] font-medium">Contrôlez l'exécution pas-à-pas pour visualiser les mutations de données.</p>
+            </div>
           </div>
           <AlgorithmVisualizer algoId={algo.id} />
-        </>
+        </div>
       ) : (
-        <div className="flex flex-col items-center justify-center py-16 text-center">
-          <Eye className="w-12 h-12 text-[var(--text-dim)] mb-4 opacity-40" />
-          <p className="text-[var(--text-dim)] text-sm">{t('viz_unavailable', uiLang)}</p>
-          <p className="text-[var(--text-dim)] text-xs mt-2 opacity-60">Pour l'instant, consultez l'onglet "Comprendre" pour voir les étapes détaillées.</p>
+        <div className="flex flex-col items-center justify-center py-24 text-center glass rounded-[40px] border-white/5">
+          <div className="w-20 h-20 rounded-full glass border-white/10 flex items-center justify-center text-[var(--text-dim)] mb-8 opacity-40">
+            <Eye size={32} />
+          </div>
+          <h3 className="text-2xl font-black mb-2">Visualisation non disponible</h3>
+          <p className="text-[var(--text-dim)] max-w-sm font-medium">Cet algorithme n'a pas encore de simulateur graphique. Consultez l'onglet <strong>Comprendre</strong> pour le schéma d'exécution.</p>
         </div>
       )}
     </motion.div>
@@ -256,53 +259,60 @@ export default function AlgorithmDetail() {
 
   // ===== TAB: IMPLEMENTER =====
   const TabImplementer = (
-    <div className={`card flex flex-col p-0 border-[var(--border)] overflow-hidden ${isFocusMode ? 'fixed inset-0 z-[9999] rounded-none' : ''}`}>
+    <div className={`flex flex-col h-full glass border-white/5 overflow-hidden shadow-2xl transition-all ${isFocusMode ? 'fixed inset-0 z-[10000] rounded-none' : 'rounded-[32px]'}`}>
       {/* Editor Toolbar */}
-      <div className="flex items-center justify-between p-3 border-b border-[var(--border)] bg-[var(--bg2)]">
-        <div className="flex gap-2 items-center flex-wrap">
+      <div className="flex items-center justify-between p-4 border-b border-white/5 bg-white/[0.02] backdrop-blur-xl">
+        <div className="flex gap-4 items-center">
+          <div className="flex items-center gap-2">
+            <div className="w-2.5 h-2.5 rounded-full bg-red-500/50" />
+            <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/50" />
+            <div className="w-2.5 h-2.5 rounded-full bg-[var(--green)]/50" />
+          </div>
+          <div className="h-4 w-px bg-white/10 mx-2" />
           <select
-            className="bg-[var(--bg3)] border border-[var(--border)] rounded-md px-2 py-1.5 text-xs font-bold outline-none cursor-pointer"
+            className="bg-white/5 border border-white/10 rounded-xl px-3 py-1.5 text-[10px] font-black uppercase tracking-widest outline-none cursor-pointer hover:bg-white/10 transition-colors"
             value={lang}
             onChange={(e) => setLang(e.target.value)}
           >
             {Object.entries(LANG_INFO).map(([v, { label }]) => (
-              <option key={v} value={v}>{label}</option>
+              <option key={v} value={v} className="bg-[var(--bg)]">{label}</option>
             ))}
           </select>
           {!showSolution ? (
-            <button onClick={handleRevealSolution} className="text-xs text-[var(--text-dim)] hover:text-[var(--yellow)] px-2 transition-colors">
-              {t('editor_see_solution', uiLang)}
+            <button onClick={handleRevealSolution} className="text-[10px] font-black uppercase tracking-widest text-[var(--text-dim)] hover:text-[var(--yellow)] px-2 transition-colors">
+              Solution
             </button>
           ) : (
-            <span className="text-xs text-[var(--green)] font-bold flex items-center gap-1">
-              <CheckCircle2 className="w-3 h-3" /> {t('editor_solution_shown', uiLang)}
+            <span className="text-[10px] font-black uppercase tracking-widest text-[var(--green)] flex items-center gap-1.5">
+              <CheckCircle2 size={12} /> Master Solved
             </span>
           )}
         </div>
-        <div className="flex items-center gap-2">
-          <button onClick={() => setIsFocusMode(!isFocusMode)} className="p-1.5 text-[var(--text-dim)] hover:text-white transition-colors" title={t('editor_fullscreen', uiLang)}>
-            {isFocusMode ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
+        <div className="flex items-center gap-3">
+          <button onClick={() => setIsFocusMode(!isFocusMode)} className="p-2 text-[var(--text-dim)] hover:text-white transition-colors glass border-white/5 rounded-xl">
+            {isFocusMode ? <Minimize2 size={18} /> : <Maximize2 size={18} />}
           </button>
           <button
             onClick={handleRun}
             disabled={isRunning}
-            className={`btn px-4 py-1.5 text-xs flex items-center gap-2 font-bold transition-all ${isRunning ? 'bg-red-500/20 text-red-400 border border-red-500/50' : 'btn-primary'}`}
+            className={`btn px-6 py-2.5 text-xs flex items-center gap-2 font-black rounded-xl transition-all shadow-lg ${isRunning ? 'bg-red-500/20 text-red-400 border-red-500/30' : 'btn-primary'}`}
           >
-            {isRunning ? <SquareSquare className="w-3 h-3 animate-pulse" /> : <Play className="w-3 h-3 fill-current" />}
-            {isRunning ? t('editor_stop', uiLang) : t('editor_run', uiLang)}
+            {isRunning ? <SquareSquare size={14} className="animate-pulse" /> : <Play size={14} className="fill-current" />}
+            {isRunning ? 'Arrêter' : 'Compiler & Run'}
           </button>
         </div>
       </div>
 
-      {/* Language-specific tip */}
+      {/* Language Tip */}
       {langInfo && (
-        <div className="px-4 py-2 border-b border-[var(--border)] bg-blue-500/5 text-xs text-blue-300 flex items-start gap-2">
-          <Info className="w-3.5 h-3.5 mt-0.5 shrink-0 text-blue-400" />
-          <span><strong className="text-blue-400">{langInfo.label} :</strong> {langInfo.note}</span>
+        <div className="px-6 py-2 bg-[var(--blue)]/5 border-b border-white/5 flex items-center gap-3">
+          <Info size={14} className="text-[var(--blue)]" />
+          <span className="text-[10px] font-black uppercase tracking-widest text-[var(--blue)]/80">Pro Tip :</span>
+          <span className="text-[10px] font-medium opacity-80">{langInfo.note}</span>
         </div>
       )}
 
-      {/* Monaco Editor */}
+      {/* Editor Content */}
       <div className="flex-1 min-h-[300px]">
         <CodeEditor
           value={code}
@@ -315,137 +325,157 @@ export default function AlgorithmDetail() {
         />
       </div>
 
-      {/* Terminal */}
-      <div className="bg-[#131313] border-t border-[var(--border)] p-4 h-[180px] font-mono text-sm overflow-auto">
-        <div className="text-[var(--text-dim)] mb-2 uppercase text-[10px] tracking-widest font-bold">{t('editor_terminal', uiLang)}</div>
-        <pre className={output.includes('❌') ? 'text-red-400' : 'text-[var(--text-bright)] whitespace-pre-wrap'}>
-          {output || t('editor_waiting', uiLang)}
-        </pre>
+      {/* Terminal - High Fidelity */}
+      <div className="bg-[#050505] border-t border-white/5 h-[220px] font-mono overflow-hidden flex flex-col">
+        <div className="px-6 py-3 border-b border-white/5 flex items-center justify-between bg-white/[0.01]">
+          <div className="flex items-center gap-2">
+            <Terminal size={14} className="text-[var(--green)]" />
+            <span className="text-[10px] font-black uppercase tracking-widest text-[var(--text-dim)]">Debug Console</span>
+          </div>
+          <div className="text-[10px] text-white/20 font-black">127.0.0.1:8080</div>
+        </div>
+        <div className="p-6 overflow-y-auto custom-scrollbar flex-1">
+          <pre className={`text-sm leading-relaxed ${output.includes('❌') ? 'text-red-400' : 'text-white/80'} whitespace-pre-wrap`}>
+            {output || '> Waiting for kernel input...'}
+          </pre>
+        </div>
       </div>
     </div>
   );
 
-  // ===== TAB: DEFIS =====
-  const challenges = (algo as any).challenges || [
-    { title: 'Cas de base', desc: 'Implémentez la version simple de l\'algorithme.', difficulty: 'Débutant' },
-    { title: 'Edge Cases', desc: 'Gérez les cas limites : tableau vide, un seul élément, doublons.', difficulty: 'Débutant' },
-    { title: 'Optimisation', desc: 'Pouvez-vous ajouter un flag d\'arrêt précoce si le tableau est déjà trié ?', difficulty: 'Intermédiaire' },
-  ];
-
-  const TabDefis = (
-    <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="space-y-4">
-      <div className="p-3 bg-[var(--bg3)] rounded-lg border border-[var(--border)] text-sm text-[var(--text)]">
-        {t('challenges_intro', uiLang)}
-      </div>
-      {challenges.map((c: any, i: number) => (
-        <div key={i} className="p-4 bg-[var(--bg3)] rounded-xl border border-[var(--border)] hover:border-[var(--green)]/30 transition-colors">
-          <div className="flex items-start justify-between gap-2 mb-2">
-            <h3 className="font-bold text-[var(--text-bright)]">Défi {i + 1} : {c.title}</h3>
-            <span className={`text-[10px] font-black px-2 py-0.5 rounded-full uppercase tracking-wider ${
-              c.difficulty === 'Débutant' ? 'bg-green-500/10 text-green-400 border border-green-500/20' :
-              c.difficulty === 'Intermédiaire' ? 'bg-yellow-500/10 text-yellow-400 border border-yellow-500/20' :
-              'bg-red-500/10 text-red-400 border border-red-500/20'
-            }`}>{c.difficulty}</span>
-          </div>
-          <p className="text-sm text-[var(--text-dim)] leading-relaxed">{c.desc}</p>
-          <button
-            onClick={() => setActiveTab('implementer')}
-            className="mt-3 text-xs text-[var(--green)] hover:underline font-bold"
-          >
-            {t('challenge_go', uiLang)}
-          </button>
-        </div>
-      ))}
-    </motion.div>
-  );
-
-  const tabContent: Record<Tab, React.ReactNode> = {
-    comprendre: TabComprendre,
-    visualiser: TabVisualiser,
-    implementer: TabImplementer,
-    defis: TabDefis,
-  };
-
   return (
-    <div className="container mx-auto px-4 py-6 flex flex-col min-h-[calc(100dvh-5rem)]">
-      <Seo title={algo.name} description={algo.description} />
+    <div className="container mx-auto px-4 py-8 max-w-7xl relative min-h-[calc(100vh-100px)] flex flex-col">
+      <Seo title={`${algo.name} — Expert Coding`} description={algo.description} />
+
+      {/* Background Decorative Blob */}
+      <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-[var(--green)]/5 blur-[120px] -z-10 rounded-full" />
 
       {!isFocusMode && (
-        <Link
-          to="/algorithms"
-          className="text-[var(--text-dim)] hover:text-[var(--green)] mb-5 inline-flex items-center gap-2 transition-colors text-sm"
-        >
-          <ArrowLeft className="w-4 h-4" /> {t('back_to_algos', uiLang)}
-        </Link>
-      )}
+        <div className="flex flex-col md:flex-row md:items-center justify-between mb-10 gap-6">
+          <Link to="/algorithms" className="inline-flex items-center gap-2 text-xs font-black uppercase tracking-widest text-[var(--text-dim)] hover:text-white transition-colors">
+            <ArrowLeft size={16} /> Back to Lab
+          </Link>
+          
+          <div className="flex gap-1 p-1 glass border-white/5 rounded-2xl shadow-xl overflow-x-auto custom-scrollbar no-scrollbar">
+            {tabs.map(tab => (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-black transition-all shrink-0 ${
+                  activeTab === tab.id ? 'bg-white/10 text-white shadow-lg' : 'text-[var(--text-dim)] hover:text-white'
+                }`}
+              >
+                {tab.icon} {tab.label}
+              </button>
+            ))}
+          </div>
 
-      {/* Tab Navigation */}
-      {!isFocusMode && (
-        <div className="flex gap-1 mb-6 p-1 bg-[var(--bg2)] rounded-xl border border-[var(--border)] w-fit">
-          {tabs.map(tab => (
-            <button
-              key={tab.id}
-              onClick={() => setActiveTab(tab.id)}
-              className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-bold transition-all ${
-                activeTab === tab.id
-                  ? 'bg-[var(--green)] text-black shadow-lg shadow-green-500/20'
-                  : 'text-[var(--text-dim)] hover:text-[var(--text-bright)] hover:bg-[var(--bg3)]'
-              }`}
-            >
-              {tab.icon}
-              <span className="hidden sm:inline">{tab.label}</span>
+          <div className="flex gap-2">
+            <button className="p-2.5 rounded-xl glass border-white/5 text-[var(--text-dim)] hover:text-white transition-colors">
+              <Share2 size={18} />
             </button>
-          ))}
+            <button className="p-2.5 rounded-xl glass border-white/5 text-[var(--text-dim)] hover:text-white transition-colors">
+              <Trophy size={18} />
+            </button>
+          </div>
         </div>
       )}
 
-      {/* Tab Content */}
-      <div className={`flex-1 ${activeTab === 'implementer' ? 'flex flex-col min-h-[600px]' : ''}`}>
+      {/* Content Wrapper */}
+      <div className={`flex-1 ${activeTab === 'implementer' ? 'h-full' : ''}`}>
         <AnimatePresence mode="wait">
           <motion.div
             key={activeTab}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.15 }}
-            className={activeTab === 'implementer' ? 'h-full flex flex-col' : ''}
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -15 }}
+            transition={{ duration: 0.3 }}
+            className={`h-full ${activeTab === 'implementer' ? 'flex flex-col' : ''}`}
           >
             {activeTab === 'implementer' ? (
-              <div className="flex-1 h-full">
-                <PanelGroup direction="horizontal" className="hidden lg:flex flex-1 min-h-0 h-full" style={{ minHeight: '600px' }}>
-                  <Panel defaultSize={35} minSize={25} className="pr-4 overflow-y-auto" style={{ scrollbarWidth: 'none' }}>
-                    <div className="card h-full overflow-y-auto p-6" style={{ scrollbarWidth: 'thin' }}>
+              <div className="flex-1 h-full min-h-[700px] mb-8">
+                <PanelGroup direction="horizontal" className="hidden lg:flex h-full border border-white/5 rounded-[40px] overflow-hidden shadow-2xl">
+                  <Panel defaultSize={35} minSize={25} className="bg-white/[0.01]">
+                    <div className="h-full overflow-y-auto p-10 custom-scrollbar">
                       {TabComprendre}
                     </div>
                   </Panel>
-                  <PanelResizeHandle className="w-2 flex items-center justify-center cursor-col-resize group">
-                    <div className="w-1 h-8 rounded-full bg-[var(--border)] group-hover:bg-[var(--green)] transition-colors" />
+                  <PanelResizeHandle className="w-1.5 flex items-center justify-center cursor-col-resize group bg-white/5">
+                    <div className="w-px h-12 bg-white/10 group-hover:bg-[var(--green)]/50 transition-colors" />
                   </PanelResizeHandle>
                   <Panel defaultSize={65} minSize={40}>
-                    <div className="h-full min-h-[420px]">{TabImplementer}</div>
+                    <div className="h-full p-4">
+                      {TabImplementer}
+                    </div>
                   </Panel>
                 </PanelGroup>
-                <div className="lg:hidden flex flex-col gap-4">
-                  <details className="card overflow-hidden group">
-                    <summary className="cursor-pointer list-none flex items-center justify-between gap-2 p-4 font-bold text-[var(--text-bright)]">
-                      <span>{t('course_and_hints', uiLang)}</span>
-                      <ChevronDown className="w-5 h-5 text-[var(--text-dim)] group-open:rotate-180 transition-transform" />
-                    </summary>
-                    <div className="px-4 pb-4 pt-2 border-t border-[var(--border)] max-h-[45vh] overflow-y-auto">
-                      {TabComprendre}
-                    </div>
-                  </details>
-                  <div className="min-h-[500px]">{TabImplementer}</div>
+
+                {/* Mobile/Small Screen Fallback */}
+                <div className="lg:hidden space-y-6">
+                  <div className="glass rounded-3xl p-6 border-white/5">
+                    <details className="group">
+                      <summary className="list-none flex items-center justify-between cursor-pointer">
+                        <h3 className="text-sm font-black uppercase tracking-widest">Enoncé & Aide</h3>
+                        <ChevronDown size={20} className="group-open:rotate-180 transition-transform" />
+                      </summary>
+                      <div className="mt-8">
+                        {TabComprendre}
+                      </div>
+                    </details>
+                  </div>
+                  <div className="h-[700px]">
+                    {TabImplementer}
+                  </div>
                 </div>
               </div>
             ) : (
-              <div className="card p-6 md:p-8 max-w-3xl">
-                {tabContent[activeTab]}
+              <div className="max-w-4xl mx-auto w-full pb-20">
+                {activeTab === 'comprendre' && TabComprendre}
+                {activeTab === 'visualiser' && TabVisualiser}
+                {activeTab === 'defis' && (
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {((algo as any).challenges || []).map((c: any, i: number) => (
+                      <div key={i} className="p-8 rounded-[32px] glass border-white/5 hover:border-white/20 transition-all group">
+                        <div className="flex items-center justify-between mb-6">
+                          <div className="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center text-xl shadow-lg">
+                            🏆
+                          </div>
+                          <span className={`text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest ${
+                            c.difficulty === 'Débutant' ? 'text-[var(--green)] bg-[var(--green)]/10' :
+                            c.difficulty === 'Intermédiaire' ? 'text-yellow-400 bg-yellow-400/10' : 'text-red-400 bg-red-400/10'
+                          }`}>
+                            {c.difficulty}
+                          </span>
+                        </div>
+                        <h3 className="text-xl font-black mb-3 text-white">Challenge {i + 1} : {c.title}</h3>
+                        <p className="text-sm text-[var(--text-dim)] font-medium leading-relaxed mb-8">{c.desc}</p>
+                        <button 
+                          onClick={() => setActiveTab('implementer')}
+                          className="flex items-center gap-2 text-xs font-black uppercase tracking-widest text-[var(--green)] group-hover:gap-4 transition-all"
+                        >
+                          Relever le défi <ChevronRight size={16} />
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
             )}
           </motion.div>
         </AnimatePresence>
       </div>
+
+      <PremiumModal 
+        isOpen={showSuccess}
+        onClose={() => setShowSuccess(false)}
+        title="Algorithme Validé !"
+        subtitle={`Félicitations, votre implémentation du ${algo.name} est fonctionnelle et optimisée.`}
+        xpEarned={250}
+        badge={{ icon: '🧠', name: 'Esprit Logique', color: '#3498db' }}
+        actionLabel="Voir d'autres défis"
+        onAction={() => { setShowSuccess(false); setActiveTab('defis'); }}
+      />
     </div>
   );
 }
+
