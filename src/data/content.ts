@@ -163,10 +163,11 @@ export const ALGORITHMS = [
 ];
 
 export const EXERCISES = [
+  {
     id: 1, title: 'Inverser une chaîne', level: 'Debutant', lang: 'Tous', desc: 'Écrivez une fonction qui inverse une chaîne de caractères. Attention: Votre algorithme doit être rapide O(N).',
     starter: { 
-      js: 'function reverseString(str) {\n  // 💡 Indice 1 : Convertissez la chaîne en tableau avec split(\\'\\')\n  // 💡 Indice 2 : Utilisez la méthode interne de tableau pour l\\'inverser\n  // 💡 Indice 3 : Reformez la chaîne avec join(\\'\\')\n  \n}', 
-      python: 'def reverse_string(s):\n    # 💡 Indice : En Python, on peut utiliser le slicing [::-1]\n    pass',
+      js: "function reverseString(str) {\n  // 💡 Indice 1 : Convertissez la chaîne en tableau avec split('')\n  // 💡 Indice 2 : Utilisez la méthode interne de tableau pour l'inverser\n  // 💡 Indice 3 : Reformez la chaîne avec join('')\n  \n}", 
+      python: "def reverse_string(s):\n    # 💡 Indice : En Python, on peut utiliser le slicing [::-1]\n    pass",
       c: '#include <string.h>\n#include <stdio.h>\n\nvoid reverseString(char* s) {\n    // TODO: Inverser la chaîne en place\n}',
       cpp: '#include <string>\n#include <algorithm>\n\nstd::string reverseString(std::string s) {\n    // TODO: Retourner la chaîne inversée\n    return s;\n}',
       csharp: 'using System;\n\npublic class Solution {\n    public static string ReverseString(string s) {\n        // TODO\n        return s;\n    }\n}',
@@ -295,6 +296,7 @@ let results = tests.map((t, i) => {
 });
 const allPassed = results.every(r => r.passed);
 console.log('__TEST_RESULTS__:' + JSON.stringify(results));
+      `,
       python: `
 import json, time
 tests = [

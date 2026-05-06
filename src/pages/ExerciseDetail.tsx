@@ -153,7 +153,7 @@ export default function ExerciseDetail() {
                     <div className="text-xs text-[var(--text-dim)] grid grid-cols-1 gap-1 pl-6">
                       <div><span className="opacity-50">Entrée :</span> <code className="text-[var(--text-bright)]">{t.input}</code></div>
                       <div><span className="opacity-50">Attendu :</span> <code className="text-green-400">{t.expected}</code></div>
-                      {!t.passed && <div><span className="opacity-50">Reçu :</span> <code className="text-red-400">{t.error ? \`Erreur: \${t.error}\` : String(t.actual)}</code></div>}
+                      {!t.passed && <div><span className="opacity-50">Reçu :</span> <code className="text-red-400">{t.error ? `Erreur: ${t.error}` : String(t.actual)}</code></div>}
                     </div>
                   </motion.div>
                 ))}

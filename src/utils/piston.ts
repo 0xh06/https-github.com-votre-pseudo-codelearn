@@ -55,7 +55,7 @@ export async function executeCode(sourceCode: string, lang: string) {
       worker.onerror = (err) => {
         clearTimeout(timeoutId);
         worker.terminate();
-        resolve({ output: \`❌ Erreur critique du Worker: \${err.message}\` });
+        resolve({ output: `❌ Erreur critique du Worker: ${err.message}` });
       };
     });
   }
