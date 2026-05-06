@@ -22,9 +22,10 @@ import {
 } from 'lucide-react';
 import { getLevelInfo } from '../utils/levels';
 import { t } from '../utils/i18n';
+import AvatarRenderer from './AvatarRenderer';
 
 export default function Navbar() {
-  const { xp, user, setUser, subscriptionPlan, uiLang, setUiLang } = useStore();
+  const { xp, user, setUser, subscriptionPlan, uiLang, setUiLang, avatar } = useStore();
   const location = useLocation();
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -137,8 +138,8 @@ export default function Navbar() {
                 onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
                 className="flex items-center gap-2 pl-2 pr-3 py-1.5 rounded-2xl bg-[var(--bg3)]/80 border border-[var(--border)] hover:border-[var(--green)]/50 transition-all shadow-lg"
               >
-                <div className="w-7 h-7 bg-gradient-to-br from-[var(--green)] to-[var(--blue)] rounded-xl flex items-center justify-center text-[10px] font-black text-black shadow-inner">
-                  {user.email?.[0].toUpperCase() || 'U'}
+                <div className="w-8 h-8 flex items-center justify-center">
+                  <AvatarRenderer config={avatar} size={32} />
                 </div>
                 <ChevronDown className={`w-3.5 h-3.5 text-[var(--text-dim)] transition-transform duration-300 ${isUserMenuOpen ? 'rotate-180' : ''}`} />
               </button>

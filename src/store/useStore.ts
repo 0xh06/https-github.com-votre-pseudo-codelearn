@@ -16,10 +16,21 @@ interface SrsItem {
 
 export type SubscriptionPlan = 'free' | 'pro';
 
+export type AvatarConfig = {
+  base: string;
+  hair: string;
+  eyes: string;
+  clothes: string;
+  accessory: string | null;
+};
+
 interface StoreState {
   xp: number;
   favorites: string[];
   completed: number[];
+  completedUniversal: string[]; // IDs like 'beginner-1', 'intermediate-2'
+  avatar: AvatarConfig;
+  unlockedAccessories: string[];
   srs: Record<string, SrsItem>;
   streakData: StreakData;
   lastAlgo: string | null;
@@ -30,12 +41,15 @@ interface StoreState {
   addXp: (amount: number) => void;
   toggleFavorite: (id: string) => void;
   toggleCompleted: (id: number) => void;
+  toggleUniversalCompleted: (id: string) => void;
+  updateAvatar: (config: Partial<AvatarConfig>) => void;
+  unlockAccessory: (id: string) => void;
   updateSrs: (id: string, quality: number) => void;
   setLastAlgo: (algoId: string) => void;
   checkStreak: () => void;
   setUser: (user: any) => void;
   setProfile: (profile: any) => void;
-  setSubscriptionPlan: (plan: SubscriptionPlan) => void;
+  setSubscriptionPlan: (plan: 'free' | 'pro') => void;
   setUiLang: (lang: Lang) => void;
   signOut: () => void;
 }
@@ -50,10 +64,19 @@ const getNextInterval = (score: number, quality: number) => {
 
 export const useStore = create<StoreState>()(
   persist(
-    (set, get) => ({
+    (set) => ({
       xp: 0,
       favorites: [],
       completed: [],
+      completedUniversal: [],
+      avatar: {
+        base: 'round',
+        hair: 'short',
+        eyes: 'neutral',
+        clothes: 'hoodie',
+        accessory: null
+      },
+      unlockedAccessories: ['classic-glasses'],
       srs: {},
       streakData: { count: 0, lastDate: null, history: [2, 5, 3, 7, 4, 8, 5] },
       lastAlgo: null,
@@ -64,6 +87,21 @@ export const useStore = create<StoreState>()(
 
       addXp: (amount) => set((state) => ({ xp: state.xp + amount })),
       
+      toggleUniversalCompleted: (id) => set((state) => ({
+        completedUniversal: state.completedUniversal.includes(id)
+          ? state.completedUniversal.filter(cid => cid !== id)
+          : [...state.completedUniversal, id]
+      })),
+
+      updateAvatar: (config) => set((state) => ({
+        avatar: { ...state.avatar, ...config }
+      })),
+
+      unlockAccessory: (id) => set((state) => ({
+        unlockedAccessories: state.unlockedAccessories.includes(id)
+          ? state.unlockedAccessories
+          : [...state.unlockedAccessories, id]
+      })),
       toggleFavorite: (id) => set((state) => ({
         favorites: state.favorites.includes(id)
           ? state.favorites.filter(fid => fid !== id)
