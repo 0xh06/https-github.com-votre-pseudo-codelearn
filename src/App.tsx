@@ -17,6 +17,7 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Pricing from './pages/Pricing';
 import Languages from './pages/Languages';
+import LanguageDetail from './pages/LanguageDetail';
 import Profile from './pages/Profile';
 import Settings from './pages/Settings';
 import Contact from './pages/Contact';
@@ -71,6 +72,7 @@ export default function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/pricing" element={<Pricing />} />
           <Route path="/languages" element={<Languages />} />
+          <Route path="/languages/:id" element={<LanguageDetail />} />
           <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
           <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
           <Route path="/flashcards" element={<ProtectedRoute><Flashcards /></ProtectedRoute>} />

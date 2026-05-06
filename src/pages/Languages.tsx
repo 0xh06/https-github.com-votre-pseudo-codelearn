@@ -180,12 +180,9 @@ function DifficultyDots({ level }: { level: number }) {
 
 export default function Languages() {
   const { uiLang } = useStore();
-  const [selected, setSelected] = useState<string | null>(null);
   const [domain, setDomain] = useState('Tous');
-  const [showCode, setShowCode] = useState<string | null>(null);
 
   const filtered = domain === 'Tous' ? LANGS : LANGS.filter(l => DOMAIN_MAP[domain]?.includes(l.id));
-  const selectedLang = LANGS.find(l => l.id === selected);
 
   return (
     <div className="container mx-auto px-4 py-12 max-w-7xl">
@@ -232,10 +229,10 @@ export default function Languages() {
               exit={{ opacity: 0, scale: 0.9 }}
               transition={{ delay: i * 0.05, type: 'spring', stiffness: 150 }}
               whileHover={{ y: -4 }}
-              className="group relative rounded-2xl border bg-[var(--bg2)] overflow-hidden cursor-pointer transition-all"
-              style={{ borderColor: selected === lang.id ? lang.color + '80' : 'var(--border)' }}
-              onClick={() => setSelected(selected === lang.id ? null : lang.id)}
+              className="group relative rounded-2xl border bg-[var(--bg2)] overflow-hidden cursor-pointer transition-all hover:border-[var(--green)]/50"
+              style={{ borderColor: 'var(--border)' }}
             >
+              <Link to={`/languages/${lang.id}`} className="block h-full">
               {/* Top color accent */}
               <div className="h-1 w-full" style={{ backgroundColor: lang.color }} />
 
@@ -289,101 +286,22 @@ export default function Languages() {
                 </div>
 
                 {/* Actions */}
-                <div className="flex items-center gap-2 pt-4 border-t border-[var(--border)]">
-                  <button
-                    onClick={e => { e.stopPropagation(); setShowCode(showCode === lang.id ? null : lang.id); }}
-                    className="flex-1 text-xs py-1.5 rounded-lg border border-[var(--border)] text-[var(--text-dim)] hover:text-[var(--text-bright)] hover:border-[var(--green)]/40 transition-all font-bold"
-                  >
-                    {showCode === lang.id ? '← Masquer' : '<> Voir code'}
-                  </button>
-                  <Link
-                    to="/algorithms"
-                    onClick={e => e.stopPropagation()}
+                <div className="flex items-center gap-2 pt-4 border-t border-[var(--border)] mt-auto">
+                  <div
                     className="flex-1 text-xs py-1.5 rounded-lg font-black text-center flex items-center justify-center gap-1 transition-all"
                     style={{ background: lang.color + '20', color: lang.color, border: `1px solid ${lang.color}40` }}
                   >
-                    {uiLang === 'fr' ? 'Pratiquer' : 'Practice'} <ChevronRight className="w-3 h-3" />
-                  </Link>
+                    {uiLang === 'fr' ? 'Voir le cours complet' : 'View full course'} <ChevronRight className="w-3 h-3" />
+                  </div>
                 </div>
-
-                {/* Code snippet (expandable) */}
-                <AnimatePresence>
-                  {showCode === lang.id && (
-                    <motion.div
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{ opacity: 1, height: 'auto' }}
-                      exit={{ opacity: 0, height: 0 }}
-                      className="overflow-hidden"
-                    >
-                      <div className="mt-4 bg-[#0d0d0d] rounded-xl p-4 border border-[var(--border)]">
-                        <div className="text-[9px] text-[var(--text-dim)] font-black uppercase tracking-widest mb-2" style={{ color: lang.color }}>
-                          Binary Search — {lang.name}
-                        </div>
-                        <pre className="text-[10px] text-white/75 font-mono leading-relaxed overflow-x-auto">{lang.code}</pre>
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
               </div>
+              </Link>
             </motion.div>
           ))}
         </AnimatePresence>
       </div>
 
-      {/* Detailed side-by-side (when one selected) */}
-      <AnimatePresence>
-        {selectedLang && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 20 }}
-            className="mb-16 rounded-2xl border bg-[var(--bg2)] overflow-hidden"
-            style={{ borderColor: selectedLang.color + '40' }}
-          >
-            <div className="p-5 border-b border-[var(--border)] flex items-center justify-between" style={{ background: selectedLang.color + '08' }}>
-              <div className="flex items-center gap-3">
-                <span className="text-2xl">{selectedLang.icon}</span>
-                <h3 className="font-black text-lg" style={{ color: selectedLang.color }}>{selectedLang.name} — Analyse détaillée</h3>
-              </div>
-              <button onClick={() => setSelected(null)} className="text-[var(--text-dim)] hover:text-white text-sm px-3 py-1 rounded-lg border border-[var(--border)] hover:border-[var(--green)]/30 transition-all">✕</button>
-            </div>
-            <div className="p-6 grid grid-cols-1 md:grid-cols-2 gap-8">
-              <div>
-                <h4 className="text-xs font-black uppercase tracking-widest text-[var(--green)] mb-3 flex items-center gap-2">
-                  <Zap className="w-3.5 h-3.5" /> {uiLang === 'fr' ? 'Points forts' : 'Strengths'}
-                </h4>
-                <ul className="space-y-2">
-                  {selectedLang.pros.map(p => (
-                    <li key={p} className="text-sm text-[var(--text)] flex items-start gap-2">
-                      <span className="text-[var(--green)] shrink-0 mt-0.5">✓</span> {p}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div>
-                <h4 className="text-xs font-black uppercase tracking-widest text-red-400 mb-3 flex items-center gap-2">
-                  <BookOpen className="w-3.5 h-3.5" /> {uiLang === 'fr' ? 'Limitations' : 'Limitations'}
-                </h4>
-                <ul className="space-y-2">
-                  {selectedLang.cons.map(c => (
-                    <li key={c} className="text-sm text-[var(--text)] flex items-start gap-2">
-                      <span className="text-red-400 shrink-0 mt-0.5">×</span> {c}
-                    </li>
-                  ))}
-                </ul>
-                <h4 className="text-xs font-black uppercase tracking-widest text-blue-400 mb-3 mt-6 flex items-center gap-2">
-                  <TrendingUp className="w-3.5 h-3.5" /> {uiLang === 'fr' ? 'Domaines' : 'Domains'}
-                </h4>
-                <div className="flex flex-wrap gap-2">
-                  {selectedLang.domains.map(d => (
-                    <span key={d} className="text-xs px-2.5 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-300 font-medium">{d}</span>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+
 
       {/* Comparison Table */}
       <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="rounded-2xl border border-[var(--border)] bg-[var(--bg2)] overflow-hidden mb-12">
