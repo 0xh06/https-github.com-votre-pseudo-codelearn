@@ -146,10 +146,17 @@ export default function LanguageDetail() {
       </div>
 
       <AnimatePresence mode="wait">
-        {activeTab === 'cours' && (
-          <motion.div key="cours" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-            {/* Sidebar: sections & lessons */}
-            <div className="lg:col-span-1 space-y-2">
+        <motion.div
+          key={activeTab}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -10 }}
+          transition={{ duration: 0.2 }}
+        >
+          {activeTab === 'cours' && (
+            <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 items-start">
+              {/* Sidebar: sections & lessons */}
+              <div className="lg:col-span-1 space-y-2 sticky top-24">
               {lang.sections.map((section, si) => (
                 <div key={si} className="rounded-xl border border-[var(--border)] bg-[var(--bg2)] overflow-hidden">
                   <button
@@ -259,94 +266,97 @@ export default function LanguageDetail() {
                     </div>
 
                     {/* Navigation */}
-                    <div className="flex items-center justify-between pt-2">
+                    <div className="flex flex-col-reverse sm:flex-row items-center justify-between gap-4 pt-6 border-t border-[var(--border)] mt-8">
                       <button
                         onClick={() => {
                           if (activeLesson > 0) setActiveLesson(l => l - 1);
                           else if (activeSection > 0) { setActiveSection(s => s - 1); setActiveLesson(lang.sections[activeSection - 1].lessons.length - 1); }
                         }}
                         disabled={activeSection === 0 && activeLesson === 0}
-                        className="text-xs font-bold text-[var(--text-dim)] hover:text-[var(--text-bright)] flex items-center gap-1 disabled:opacity-30 transition-colors"
+                        className="text-xs font-bold text-[var(--text-dim)] hover:text-[var(--text-bright)] flex items-center gap-1 disabled:opacity-30 transition-colors w-full sm:w-auto justify-center"
                       >
-                        ← {uiLang === 'fr' ? 'Précédent' : 'Previous'}
+                        ← {uiLang === 'fr' ? 'Leçon précédente' : 'Previous lesson'}
                       </button>
 
                       <button
                         onClick={markComplete}
-                        className="flex items-center gap-2 px-5 py-2.5 rounded-xl font-black text-sm text-black transition-all hover:opacity-90"
-                        style={{ backgroundColor: lang.color }}
+                        className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-black text-sm text-black transition-all hover:opacity-90 shadow-lg"
+                        style={{ backgroundColor: lang.color, boxShadow: `0 4px 20px -5px ${lang.color}80` }}
                       >
-                        <CheckCircle2 className="w-4 h-4" />
                         {isCompleted(activeSection, activeLesson)
-                          ? (uiLang === 'fr' ? 'Suivant →' : 'Next →')
-                          : (uiLang === 'fr' ? 'Marquer complété' : 'Mark complete')}
+                          ? (uiLang === 'fr' ? 'Leçon suivante →' : 'Next lesson →')
+                          : (
+                            <>
+                              <CheckCircle2 className="w-4 h-4" />
+                              {uiLang === 'fr' ? 'Marquer complété' : 'Mark complete'}
+                            </>
+                          )}
                       </button>
                     </div>
                   </motion.div>
                 </AnimatePresence>
               )}
-            </div>
-          </motion.div>
-        )}
+          )}
 
-        {activeTab === 'algos' && (
-          <motion.div key="algos" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className="space-y-4">
-            <p className="text-[var(--text-dim)] text-sm">
-              {uiLang === 'fr'
-                ? `Tous ces algorithmes ont une implémentation dédiée en ${lang.name} dans l'éditeur.`
-                : `All these algorithms have a dedicated ${lang.name} implementation in the editor.`}
-            </p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {lang.algoExamples.map(algo => (
-                <Link key={algo.id} to={`/algorithms/${algo.id}`}>
-                  <div
-                    className="p-5 rounded-2xl border bg-[var(--bg2)] hover:border-opacity-60 transition-all group"
-                    style={{ borderColor: lang.color + '30' }}
-                    onMouseEnter={e => (e.currentTarget.style.borderColor = lang.color + '70')}
-                    onMouseLeave={e => (e.currentTarget.style.borderColor = lang.color + '30')}
-                  >
-                    <div className="flex items-center justify-between mb-3">
-                      <span className="text-2xl">{lang.icon}</span>
-                      <Zap className="w-4 h-4" style={{ color: lang.color }} />
+          {activeTab === 'algos' && (
+            <div className="space-y-4">
+              <p className="text-[var(--text-dim)] text-sm mb-6">
+                {uiLang === 'fr'
+                  ? `Tous ces algorithmes ont une implémentation dédiée en ${lang.name} dans l'éditeur.`
+                  : `All these algorithms have a dedicated ${lang.name} implementation in the editor.`}
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {lang.algoExamples.map(algo => (
+                  <Link key={algo.id} to={`/algorithms/${algo.id}`}>
+                    <div
+                      className="p-6 rounded-2xl border bg-[var(--bg2)] hover:border-opacity-60 transition-all group h-full flex flex-col"
+                      style={{ borderColor: lang.color + '30' }}
+                      onMouseEnter={e => (e.currentTarget.style.borderColor = lang.color + '70')}
+                      onMouseLeave={e => (e.currentTarget.style.borderColor = lang.color + '30')}
+                    >
+                      <div className="flex items-center justify-between mb-4">
+                        <span className="text-3xl">{lang.icon}</span>
+                        <Zap className="w-5 h-5" style={{ color: lang.color }} />
+                      </div>
+                      <h3 className="text-lg font-black text-[var(--text-bright)] mb-2">{algo.name}</h3>
+                      <p className="text-sm text-[var(--text-dim)] mb-6 flex-1">{uiLang === 'fr' ? `Voir le code en ${lang.name}` : `View code in ${lang.name}`}</p>
+                      <div className="flex items-center gap-2 text-sm font-black group-hover:gap-3 transition-all" style={{ color: lang.color }}>
+                        {uiLang === 'fr' ? 'Coder maintenant' : 'Code now'} <ChevronRight className="w-4 h-4" />
+                      </div>
                     </div>
-                    <h3 className="font-black text-[var(--text-bright)] mb-1">{algo.name}</h3>
-                    <p className="text-xs text-[var(--text-dim)] mb-4">{uiLang === 'fr' ? `En ${lang.name}` : `In ${lang.name}`}</p>
-                    <div className="flex items-center gap-1 text-xs font-black group-hover:gap-2 transition-all" style={{ color: lang.color }}>
-                      {uiLang === 'fr' ? 'Coder' : 'Code it'} <ChevronRight className="w-3.5 h-3.5" />
-                    </div>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {activeTab === 'ressources' && (
+            <div className="space-y-4 max-w-3xl">
+              {lang.resources.map((r, i) => (
+                <a
+                  key={i}
+                  href={r.url.startsWith('/') ? undefined : r.url}
+                  onClick={r.url.startsWith('/') ? () => window.location.href = r.url : undefined}
+                  target={r.url.startsWith('/') ? undefined : '_blank'}
+                  rel="noreferrer"
+                  className="flex items-center gap-5 p-5 rounded-2xl border border-[var(--border)] bg-[var(--bg2)] hover:bg-[var(--bg3)] hover:border-opacity-60 transition-all group"
+                  style={{ borderLeftWidth: 4, borderLeftColor: lang.color }}
+                >
+                  <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0" style={{ background: lang.color + '15' }}>
+                    {r.type === 'doc' ? <FileText className="w-5 h-5" style={{ color: lang.color }} /> :
+                     r.type === 'video' ? <Video className="w-5 h-5" style={{ color: lang.color }} /> :
+                     <Zap className="w-5 h-5" style={{ color: lang.color }} />}
                   </div>
-                </Link>
+                  <div className="flex-1">
+                    <div className="font-black text-base text-[var(--text-bright)] mb-0.5">{r.title}</div>
+                    <div className="text-xs font-bold uppercase tracking-wider text-[var(--text-dim)]">{r.type}</div>
+                  </div>
+                  <ExternalLink className="w-5 h-5 text-[var(--text-dim)] group-hover:text-[var(--text-bright)] transition-colors" />
+                </a>
               ))}
             </div>
-          </motion.div>
-        )}
-
-        {activeTab === 'ressources' && (
-          <motion.div key="ressources" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className="space-y-3 max-w-2xl">
-            {lang.resources.map((r, i) => (
-              <a
-                key={i}
-                href={r.url.startsWith('/') ? undefined : r.url}
-                onClick={r.url.startsWith('/') ? () => window.location.href = r.url : undefined}
-                target={r.url.startsWith('/') ? undefined : '_blank'}
-                rel="noreferrer"
-                className="flex items-center gap-4 p-4 rounded-xl border border-[var(--border)] bg-[var(--bg2)] hover:border-opacity-60 transition-all group"
-                style={{ borderLeftWidth: 3, borderLeftColor: lang.color }}
-              >
-                <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: lang.color + '15' }}>
-                  {r.type === 'doc' ? <FileText className="w-4 h-4" style={{ color: lang.color }} /> :
-                   r.type === 'video' ? <Video className="w-4 h-4" style={{ color: lang.color }} /> :
-                   <Zap className="w-4 h-4" style={{ color: lang.color }} />}
-                </div>
-                <div className="flex-1">
-                  <div className="font-black text-sm text-[var(--text-bright)]">{r.title}</div>
-                  <div className="text-[10px] text-[var(--text-dim)] capitalize">{r.type}</div>
-                </div>
-                <ExternalLink className="w-4 h-4 text-[var(--text-dim)] group-hover:text-[var(--text-bright)] transition-colors" />
-              </a>
-            ))}
-          </motion.div>
-        )}
+          )}
+        </motion.div>
       </AnimatePresence>
     </div>
   );
