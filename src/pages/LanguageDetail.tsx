@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { LANGUAGE_COURSES } from '../data/languageContent';
 import { useStore } from '../store/useStore';
 import Seo from '../components/Seo';
-import { ArrowLeft, BookOpen, Code2, ExternalLink, ChevronRight, Play, CheckCircle2, Zap, FileText, Video } from 'lucide-react';
+import { ArrowLeft, BookOpen, Code2, ExternalLink, ChevronRight, Play, CheckCircle2, Zap, FileText, Video, AlertTriangle } from 'lucide-react';
 
 type Tab = 'cours' | 'algos' | 'ressources';
 
@@ -158,7 +158,10 @@ export default function LanguageDetail() {
                     style={activeSection === si ? { borderLeft: `3px solid ${lang.color}` } : {}}
                   >
                     <span className="text-base">{section.icon}</span>
-                    <span className="text-xs font-black text-[var(--text-bright)]">{section.title}</span>
+                    <div className="flex flex-col">
+                      <span className="text-xs font-black text-[var(--text-bright)]">{section.title}</span>
+                      {section.level && <span className="text-[9px] text-[var(--text-dim)] font-bold uppercase">{section.level}</span>}
+                    </div>
                     <span className="ml-auto text-[9px] text-[var(--text-dim)]">
                       {section.lessons.filter((_, li) => isCompleted(si, li)).length}/{section.lessons.length}
                     </span>
@@ -205,11 +208,29 @@ export default function LanguageDetail() {
 
                     {/* Explanation */}
                     <div className="p-5 rounded-2xl border border-[var(--border)] bg-[var(--bg2)]">
-                      <h3 className="text-xs font-black uppercase tracking-widest text-[var(--text-dim)] mb-3">
-                        📖 {uiLang === 'fr' ? 'Explication' : 'Explanation'}
+                      <h3 className="text-xs font-black uppercase tracking-widest text-[var(--text-dim)] mb-3 flex items-center gap-2">
+                        <BookOpen className="w-4 h-4" /> {uiLang === 'fr' ? 'Explication Détaillée' : 'Detailed Explanation'}
                       </h3>
-                      <p className="text-sm text-[var(--text)] leading-relaxed">{currentLesson.explanation}</p>
+                      <div className="text-sm text-[var(--text)] leading-relaxed whitespace-pre-wrap">{currentLesson.explanation}</div>
                     </div>
+
+                    {currentLesson.realWorldUseCase && (
+                      <div className="p-5 rounded-2xl border border-blue-500/20 bg-blue-500/5">
+                        <h3 className="text-xs font-black uppercase tracking-widest text-blue-400 mb-3 flex items-center gap-2">
+                          <Zap className="w-4 h-4" /> {uiLang === 'fr' ? 'Cas d\'usage réel' : 'Real-world Use Case'}
+                        </h3>
+                        <div className="text-sm text-blue-100 leading-relaxed whitespace-pre-wrap">{currentLesson.realWorldUseCase}</div>
+                      </div>
+                    )}
+
+                    {currentLesson.commonErrors && (
+                      <div className="p-5 rounded-2xl border border-red-500/20 bg-red-500/5">
+                        <h3 className="text-xs font-black uppercase tracking-widest text-red-400 mb-3 flex items-center gap-2">
+                          <AlertTriangle className="w-4 h-4" /> {uiLang === 'fr' ? 'Erreurs Courantes & Pièges' : 'Common Errors & Pitfalls'}
+                        </h3>
+                        <div className="text-sm text-red-100 leading-relaxed whitespace-pre-wrap">{currentLesson.commonErrors}</div>
+                      </div>
+                    )}
 
                     {/* Code block */}
                     <div className="rounded-2xl border border-[var(--border)] overflow-hidden">
