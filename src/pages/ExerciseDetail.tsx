@@ -14,6 +14,7 @@ export default function ExerciseDetail() {
   const [lang, setLang] = useState<'js' | 'python'>('js');
   const [code, setCode] = useState('');
   const [output, setOutput] = useState('');
+  const [testResults, setTestResults] = useState<any[] | null>(null);
   const [isRunning, setIsRunning] = useState(false);
   const [isFocusMode, setIsFocusMode] = useState(false);
 
@@ -22,6 +23,7 @@ export default function ExerciseDetail() {
       const savedCode = localStorage.getItem(`exo-code-${id}-${lang}`);
       setCode(savedCode || (lang === 'js' ? (ex.starter as any).js : (ex.starter as any).python));
       setOutput('');
+      setTestResults(null);
     }
   }, [ex, lang, id]);
 
@@ -33,6 +35,7 @@ export default function ExerciseDetail() {
   const handleRun = async () => {
     setIsRunning(true);
     setOutput('Exécution des tests en cours...\n');
+    setTestResults(null);
     
     let isTimeout = false;
     const timeoutId = setTimeout(() => {
@@ -43,13 +46,21 @@ export default function ExerciseDetail() {
 
     try {
       const codeToRun = code || (lang === 'js' ? (ex.starter as any).js : (ex.starter as any).python);
-      // Append test assertions dynamically
       const fullCode = currentTests ? `${codeToRun}\n\n${currentTests}` : codeToRun;
       
       const result = await executeCode(fullCode, lang);
       if (!isTimeout) {
         clearTimeout(timeoutId);
-        setOutput(result.output || 'Exécuté avec succès (aucune sortie console).');
+        
+        let outText = result.output || '';
+        const testMatch = outText.match(/__TEST_RESULTS__:(\[.*\])/);
+        if (testMatch) {
+          try {
+            setTestResults(JSON.parse(testMatch[1]));
+            outText = outText.replace(/__TEST_RESULTS__:\[.*\]\n?/, '');
+          } catch(e) {}
+        }
+        setOutput(outText || 'Exécuté avec succès (aucune sortie console).');
       }
     } catch (err) {
       if (!isTimeout) {
@@ -102,14 +113,35 @@ export default function ExerciseDetail() {
         />
       </div>
 
-      <div className="bg-[#1e1e1e] border-t border-[var(--border)] p-4 h-[250px] font-mono text-sm overflow-auto">
-        <div className="flex items-center gap-2 mb-3">
-          <div className="text-[var(--text-dim)] uppercase text-[10px] tracking-widest font-bold">Résultats des Tests</div>
-          {output.includes('SUCCESS') && <span className="bg-green-500/20 text-green-400 text-[10px] px-2 py-0.5 rounded font-bold">PASSED</span>}
+      <div className="bg-[#1e1e1e] border-t border-[var(--border)] h-[250px] overflow-auto flex flex-col">
+        <div className="flex items-center gap-2 p-3 border-b border-[var(--border)] sticky top-0 bg-[#1e1e1e] z-10">
+          <div className="text-[var(--text-dim)] uppercase text-[10px] tracking-widest font-bold">Résultats d'exécution</div>
+          {testResults && testResults.every(r => r.passed) && <span className="bg-green-500/20 text-green-400 text-[10px] px-2 py-0.5 rounded font-bold">ALL TESTS PASSED</span>}
         </div>
-        <pre className={output.includes('❌') ? 'text-red-400' : 'text-[var(--text-bright)]'}>
-          {output || '> Cliquez sur "Vérifier la solution" pour exécuter les cas de tests.'}
-        </pre>
+        
+        <div className="p-4 flex-1">
+          {testResults ? (
+            <div className="space-y-3">
+              {testResults.map((t, i) => (
+                <div key={i} className={`p-3 rounded border ${t.passed ? 'bg-green-500/5 border-green-500/20' : 'bg-red-500/5 border-red-500/20'}`}>
+                  <div className="flex items-center gap-2 font-bold text-xs mb-2">
+                    {t.passed ? <CheckCircle2 className="w-4 h-4 text-green-500" /> : <div className="w-4 h-4 rounded-full bg-red-500 flex items-center justify-center text-[10px] text-white">×</div>}
+                    <span className={t.passed ? 'text-green-400' : 'text-red-400'}>Test Case {t.id}</span>
+                  </div>
+                  <div className="text-xs text-[var(--text-dim)] grid grid-cols-1 gap-1 pl-6">
+                    <div><span className="opacity-50">Entrée :</span> <code className="text-[var(--text-bright)]">{t.input}</code></div>
+                    <div><span className="opacity-50">Attendu :</span> <code className="text-green-400">{t.expected}</code></div>
+                    {!t.passed && <div><span className="opacity-50">Reçu :</span> <code className="text-red-400">{t.error ? \`Erreur: \${t.error}\` : String(t.actual)}</code></div>}
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <pre className={output.includes('❌') ? 'text-red-400 text-sm font-mono' : 'text-[var(--text-bright)] text-sm font-mono'}>
+              {output || '> Cliquez sur "Vérifier la solution" pour exécuter le code.'}
+            </pre>
+          )}
+        </div>
       </div>
     </div>
   );

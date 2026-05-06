@@ -166,17 +166,19 @@ const tests = [
   { in: "AlgoMaster", expected: "retsamoglA" },
   { in: "a", expected: "a" }
 ];
-let passed = 0;
-tests.forEach((t, i) => {
-  const res = reverseString(t.in);
-  if(res === t.expected) {
-    console.log('✅ Test ' + (i+1) + ' passé');
-    passed++;
-  } else {
-    console.log('❌ Test ' + (i+1) + ' échoué. Entrée: ' + t.in + ', Attendu: ' + t.expected + ', Reçu: ' + res);
+let results = tests.map((t, i) => {
+  let res, passed = false, error = null;
+  try {
+    res = reverseString(t.in);
+    passed = (res === t.expected);
+  } catch(e) {
+    error = e.message;
   }
+  return { id: i+1, input: t.in, expected: t.expected, actual: res, passed, error };
 });
-if(passed === tests.length) console.log('\\n🎉 SUCCESS: Tous les tests sont validés !');
+const allPassed = results.every(r => r.passed);
+console.log('__TEST_RESULTS__:' + JSON.stringify(results));
+if(allPassed) console.log('\\n🎉 SUCCESS: Tous les tests sont validés !');
 else console.log('\\n⚠️ FAILURE: Certains tests ont échoué.');
       `,
       python: `
