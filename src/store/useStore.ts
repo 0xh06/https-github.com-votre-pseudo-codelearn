@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+import type { Lang } from '../utils/i18n';
 
 interface StreakData {
   count: number;
@@ -25,6 +26,7 @@ interface StoreState {
   user: any | null;
   profile: any | null;
   subscriptionPlan: SubscriptionPlan;
+  uiLang: Lang;
   addXp: (amount: number) => void;
   toggleFavorite: (id: string) => void;
   toggleCompleted: (id: number) => void;
@@ -34,6 +36,7 @@ interface StoreState {
   setUser: (user: any) => void;
   setProfile: (profile: any) => void;
   setSubscriptionPlan: (plan: SubscriptionPlan) => void;
+  setUiLang: (lang: Lang) => void;
   signOut: () => void;
 }
 
@@ -57,6 +60,7 @@ export const useStore = create<StoreState>()(
       user: null,
       profile: null,
       subscriptionPlan: 'free',
+      uiLang: 'fr',
 
       addXp: (amount) => set((state) => ({ xp: state.xp + amount })),
       
@@ -111,6 +115,7 @@ export const useStore = create<StoreState>()(
       setUser: (user) => set({ user }),
       setProfile: (profile) => set({ profile }),
       setSubscriptionPlan: (plan) => set({ subscriptionPlan: plan }),
+      setUiLang: (lang) => set({ uiLang: lang }),
       signOut: () => set({ user: null, profile: null })
     }),
     {

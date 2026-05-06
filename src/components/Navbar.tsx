@@ -20,9 +20,10 @@ import {
   Sun
 } from 'lucide-react';
 import { getLevelInfo } from '../utils/levels';
+import { t } from '../utils/i18n';
 
 export default function Navbar() {
-  const { xp, user, setUser, subscriptionPlan } = useStore();
+  const { xp, user, setUser, subscriptionPlan, uiLang, setUiLang } = useStore();
   const location = useLocation();
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -46,11 +47,11 @@ export default function Navbar() {
   };
 
   const navLinks = [
-    { name: 'Algorithmes', path: '/algorithms', icon: <Brain className="w-4 h-4" /> },
-    { name: 'Exercices', path: '/exercises', icon: <Terminal className="w-4 h-4" /> },
-    { name: 'Roadmap', path: '/paths', icon: <Map className="w-4 h-4" /> },
-    { name: 'Langages', path: '/languages', icon: <Globe className="w-4 h-4" /> },
-    { name: 'Tarifs', path: '/pricing', icon: <CreditCard className="w-4 h-4" /> },
+    { name: t('nav_algorithms', uiLang), path: '/algorithms', icon: <Brain className="w-4 h-4" /> },
+    { name: t('nav_exercises', uiLang),  path: '/exercises',  icon: <Terminal className="w-4 h-4" /> },
+    { name: t('nav_roadmap', uiLang),    path: '/paths',      icon: <Map className="w-4 h-4" /> },
+    { name: t('nav_languages', uiLang),  path: '/languages',  icon: <Globe className="w-4 h-4" /> },
+    { name: t('nav_pricing', uiLang),    path: '/pricing',    icon: <CreditCard className="w-4 h-4" /> },
   ];
 
   return (
@@ -84,6 +85,16 @@ export default function Navbar() {
         </div>
 
         <div className="flex items-center gap-4">
+          {/* Language Toggle */}
+          <button
+            onClick={() => setUiLang(uiLang === 'fr' ? 'en' : 'fr')}
+            className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-[var(--bg3)] border border-[var(--border)] hover:border-[var(--green)]/50 transition-all text-xs font-black text-[var(--text-dim)] hover:text-[var(--text-bright)]"
+            title={uiLang === 'fr' ? 'Switch to English' : 'Passer en Français'}
+          >
+            <span className="text-base leading-none">{uiLang === 'fr' ? '🇫🇷' : '🇬🇧'}</span>
+            <span className="hidden sm:inline">{uiLang === 'fr' ? 'FR' : 'EN'}</span>
+          </button>
+
           <button onClick={() => setIsDark(!isDark)} className="p-2 text-[var(--text-dim)] hover:text-[var(--text-bright)] transition-colors rounded-full hover:bg-[var(--bg3)]">
             {isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
           </button>
@@ -123,7 +134,7 @@ export default function Navbar() {
                     className="absolute right-0 mt-2 w-56 bg-[var(--bg2)] border border-[var(--border)] rounded-2xl shadow-2xl overflow-hidden py-2"
                   >
                     <div className="px-4 py-3 border-b border-[var(--border)] mb-2">
-                      <div className="text-xs text-[var(--text-dim)] mb-1">Connecté en tant que</div>
+                      <div className="text-xs text-[var(--text-dim)] mb-1">{t('nav_connected', uiLang)}</div>
                       <div className="text-sm font-bold truncate text-[var(--text-bright)]">{user.email}</div>
                     </div>
                     <Link 
@@ -132,14 +143,14 @@ export default function Navbar() {
                       className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-[var(--text-dim)] hover:bg-[var(--bg3)] transition-colors"
                     >
                       <User className="w-4 h-4" />
-                      Mon Dashboard
+                      {t('nav_dashboard', uiLang)}
                     </Link>
                     <button 
                       onClick={handleLogout}
                       className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-red-400 hover:bg-red-400/10 transition-colors"
                     >
                       <LogOut className="w-4 h-4" />
-                      Déconnexion
+                      {t('nav_logout', uiLang)}
                     </button>
                   </motion.div>
                 )}
@@ -189,6 +200,14 @@ export default function Navbar() {
                 {link.name}
               </Link>
             ))}
+            {/* Mobile lang toggle */}
+            <button
+              onClick={() => setUiLang(uiLang === 'fr' ? 'en' : 'fr')}
+              className="flex items-center gap-3 p-4 rounded-xl border border-[var(--border)] bg-[var(--bg2)] text-lg font-bold"
+            >
+              <span className="text-xl">{uiLang === 'fr' ? '🇬🇧' : '🇫🇷'}</span>
+              {uiLang === 'fr' ? 'Switch to English' : 'Passer en Français'}
+            </button>
           </motion.div>
         )}
       </AnimatePresence>

@@ -6,6 +6,8 @@ import AlgorithmVisualizer from '../components/AlgorithmVisualizer';
 import Seo from '../components/Seo';
 import { useState, useEffect } from 'react';
 import { executeCode } from '../utils/piston';
+import { useStore } from '../store/useStore';
+import { t } from '../utils/i18n';
 import {
   Play, Maximize2, Minimize2, Lightbulb, SquareSquare, ChevronDown,
   CheckCircle2, BookOpen, Eye, Code2, Zap, Target, Clock, Database,
@@ -46,6 +48,7 @@ const PREREQUISITES: Record<string, string[]> = {
 
 export default function AlgorithmDetail() {
   const { id } = useParams();
+  const { uiLang } = useStore();
   const algo = ALGORITHMS.find(a => a.id === id);
   const [activeTab, setActiveTab] = useState<Tab>('comprendre');
   const [lang, setLang] = useState('js');
@@ -107,10 +110,10 @@ export default function AlgorithmDetail() {
   };
 
   const tabs: { id: Tab; label: string; icon: React.ReactNode }[] = [
-    { id: 'comprendre', label: 'Comprendre', icon: <BookOpen className="w-3.5 h-3.5" /> },
-    { id: 'visualiser', label: 'Visualiser', icon: <Eye className="w-3.5 h-3.5" /> },
-    { id: 'implementer', label: 'Implémenter', icon: <Code2 className="w-3.5 h-3.5" /> },
-    { id: 'defis', label: 'Défis', icon: <Zap className="w-3.5 h-3.5" /> },
+    { id: 'comprendre', label: t('tab_understand', uiLang),  icon: <BookOpen className="w-3.5 h-3.5" /> },
+    { id: 'visualiser', label: t('tab_visualize', uiLang),   icon: <Eye className="w-3.5 h-3.5" /> },
+    { id: 'implementer', label: t('tab_implement', uiLang),  icon: <Code2 className="w-3.5 h-3.5" /> },
+    { id: 'defis', label: t('tab_challenges', uiLang),       icon: <Zap className="w-3.5 h-3.5" /> },
   ];
 
   const useCases = USE_CASES[algo.id] || [];
@@ -139,7 +142,7 @@ export default function AlgorithmDetail() {
       {prereqs.length > 0 && (
         <div className="p-4 bg-blue-500/5 border border-blue-500/20 rounded-xl">
           <h3 className="text-xs font-black uppercase tracking-widest text-blue-400 mb-2 flex items-center gap-1.5">
-            <Info className="w-3.5 h-3.5" /> Prérequis
+            <Info className="w-3.5 h-3.5" /> {t('algo_prerequisites', uiLang)}
           </h3>
           <div className="flex flex-wrap gap-2">
             {prereqs.map(p => (
@@ -151,15 +154,15 @@ export default function AlgorithmDetail() {
 
       {/* Complexity Table */}
       <div className="p-4 bg-[var(--bg3)] rounded-xl border border-[var(--border)]">
-        <h3 className="font-black mb-3 uppercase text-[10px] tracking-widest text-[var(--text-dim)]">Analyse de Complexité</h3>
+        <h3 className="font-black mb-3 uppercase text-[10px] tracking-widest text-[var(--text-dim)]">{t('algo_complexity', uiLang)}</h3>
         <div className="grid grid-cols-2 gap-3 mb-3">
           <div className="p-3 bg-[var(--bg)] rounded-lg border border-[var(--border)] text-center">
             <div className="text-lg font-black text-[var(--green)]">{algo.timeO}</div>
-            <div className="text-[10px] text-[var(--text-dim)] uppercase tracking-wider">Temps</div>
+            <div className="text-[10px] text-[var(--text-dim)] uppercase tracking-wider">{t('algo_time', uiLang)}</div>
           </div>
           <div className="p-3 bg-[var(--bg)] rounded-lg border border-[var(--border)] text-center">
             <div className="text-lg font-black text-purple-400">{algo.spaceO}</div>
-            <div className="text-[10px] text-[var(--text-dim)] uppercase tracking-wider">Espace</div>
+            <div className="text-[10px] text-[var(--text-dim)] uppercase tracking-wider">{t('algo_space', uiLang)}</div>
           </div>
         </div>
         <p className="text-sm text-[var(--text-bright)] leading-relaxed">{algo.complexityDesc}</p>
@@ -167,7 +170,7 @@ export default function AlgorithmDetail() {
 
       {/* Steps */}
       <div>
-        <h3 className="font-black mb-4 uppercase text-[10px] tracking-widest text-[var(--text-dim)]">Comment ça marche ?</h3>
+        <h3 className="font-black mb-4 uppercase text-[10px] tracking-widest text-[var(--text-dim)]">{t('algo_how_it_works', uiLang)}</h3>
         <ol className="space-y-3">
           {algo.steps.map((step: string, i: number) => (
             <li key={i} className="flex gap-3 items-start">
@@ -184,7 +187,7 @@ export default function AlgorithmDetail() {
       {useCases.length > 0 && (
         <div className="p-4 bg-[var(--green)]/5 border border-[var(--green)]/20 rounded-xl">
           <h3 className="text-xs font-black uppercase tracking-widest text-[var(--green)] mb-3 flex items-center gap-1.5">
-            <Target className="w-3.5 h-3.5" /> Cas d'usage réels
+            <Target className="w-3.5 h-3.5" /> {t('algo_real_use_cases', uiLang)}
           </h3>
           <ul className="space-y-2">
             {useCases.map((uc, i) => (
@@ -200,14 +203,14 @@ export default function AlgorithmDetail() {
       {algo.hints && (
         <div>
           <h3 className="font-black mb-4 uppercase text-[10px] tracking-widest text-[var(--text-dim)] flex items-center gap-2">
-            <Lightbulb className="w-4 h-4 text-[var(--yellow)]" /> Indices progressifs
+            <Lightbulb className="w-4 h-4 text-[var(--yellow)]" /> {t('algo_hints', uiLang)}
           </h3>
           <div className="space-y-2">
             {algo.hints.map((hint: string, i: number) => (
               <div key={i}>
                 {hintLevel >= i + 1 ? (
                   <div className="p-3 bg-[var(--yellow)]/10 border border-[var(--yellow)]/30 rounded-lg text-sm text-[var(--text-bright)]">
-                    <span className="font-bold text-[var(--yellow)] mr-2">💡 Indice {i + 1} :</span> {hint}
+                    <span className="font-bold text-[var(--yellow)] mr-2">💡 {t('algo_hint_label', uiLang)} {i + 1} :</span> {hint}
                   </div>
                 ) : (
                   <button
@@ -219,7 +222,7 @@ export default function AlgorithmDetail() {
                         : 'bg-[var(--bg)] border border-[var(--border)] opacity-40 cursor-not-allowed'
                     }`}
                   >
-                    <span>Débloquer l&apos;indice {i + 1}</span>
+                    <span>{t('algo_unlock_hint', uiLang)} {i + 1}</span>
                     <ChevronDown className="w-4 h-4" />
                   </button>
                 )}
@@ -237,14 +240,14 @@ export default function AlgorithmDetail() {
       {hasVisualizer ? (
         <>
           <div className="p-3 bg-[var(--bg3)] rounded-lg border border-[var(--border)] text-sm text-[var(--text-dim)]">
-            🎬 Utilisez les boutons pour naviguer étape par étape, ou appuyez sur <strong className="text-[var(--text-bright)]">Jouer</strong> pour voir l'animation complète.
+            🎬 {t('viz_tip', uiLang)}
           </div>
           <AlgorithmVisualizer algoId={algo.id} />
         </>
       ) : (
         <div className="flex flex-col items-center justify-center py-16 text-center">
           <Eye className="w-12 h-12 text-[var(--text-dim)] mb-4 opacity-40" />
-          <p className="text-[var(--text-dim)] text-sm">Visualiseur interactif à venir pour cet algorithme.</p>
+          <p className="text-[var(--text-dim)] text-sm">{t('viz_unavailable', uiLang)}</p>
           <p className="text-[var(--text-dim)] text-xs mt-2 opacity-60">Pour l'instant, consultez l'onglet "Comprendre" pour voir les étapes détaillées.</p>
         </div>
       )}
@@ -268,16 +271,16 @@ export default function AlgorithmDetail() {
           </select>
           {!showSolution ? (
             <button onClick={handleRevealSolution} className="text-xs text-[var(--text-dim)] hover:text-[var(--yellow)] px-2 transition-colors">
-              Voir solution
+              {t('editor_see_solution', uiLang)}
             </button>
           ) : (
             <span className="text-xs text-[var(--green)] font-bold flex items-center gap-1">
-              <CheckCircle2 className="w-3 h-3" /> Solution affichée
+              <CheckCircle2 className="w-3 h-3" /> {t('editor_solution_shown', uiLang)}
             </span>
           )}
         </div>
         <div className="flex items-center gap-2">
-          <button onClick={() => setIsFocusMode(!isFocusMode)} className="p-1.5 text-[var(--text-dim)] hover:text-white transition-colors" title="Mode plein écran">
+          <button onClick={() => setIsFocusMode(!isFocusMode)} className="p-1.5 text-[var(--text-dim)] hover:text-white transition-colors" title={t('editor_fullscreen', uiLang)}>
             {isFocusMode ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
           </button>
           <button
@@ -286,7 +289,7 @@ export default function AlgorithmDetail() {
             className={`btn px-4 py-1.5 text-xs flex items-center gap-2 font-bold transition-all ${isRunning ? 'bg-red-500/20 text-red-400 border border-red-500/50' : 'btn-primary'}`}
           >
             {isRunning ? <SquareSquare className="w-3 h-3 animate-pulse" /> : <Play className="w-3 h-3 fill-current" />}
-            {isRunning ? 'Stop' : 'Exécuter'}
+            {isRunning ? t('editor_stop', uiLang) : t('editor_run', uiLang)}
           </button>
         </div>
       </div>
@@ -314,9 +317,9 @@ export default function AlgorithmDetail() {
 
       {/* Terminal */}
       <div className="bg-[#131313] border-t border-[var(--border)] p-4 h-[180px] font-mono text-sm overflow-auto">
-        <div className="text-[var(--text-dim)] mb-2 uppercase text-[10px] tracking-widest font-bold">Terminal</div>
+        <div className="text-[var(--text-dim)] mb-2 uppercase text-[10px] tracking-widest font-bold">{t('editor_terminal', uiLang)}</div>
         <pre className={output.includes('❌') ? 'text-red-400' : 'text-[var(--text-bright)] whitespace-pre-wrap'}>
-          {output || '> En attente... Cliquez sur Exécuter pour tester votre code.'}
+          {output || t('editor_waiting', uiLang)}
         </pre>
       </div>
     </div>
@@ -332,7 +335,7 @@ export default function AlgorithmDetail() {
   const TabDefis = (
     <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="space-y-4">
       <div className="p-3 bg-[var(--bg3)] rounded-lg border border-[var(--border)] text-sm text-[var(--text)]">
-        🎯 Testez votre compréhension avec ces défis progressifs. Revenez à l'onglet <strong className="text-[var(--green)]">Implémenter</strong> pour coder votre solution.
+        {t('challenges_intro', uiLang)}
       </div>
       {challenges.map((c: any, i: number) => (
         <div key={i} className="p-4 bg-[var(--bg3)] rounded-xl border border-[var(--border)] hover:border-[var(--green)]/30 transition-colors">
@@ -349,7 +352,7 @@ export default function AlgorithmDetail() {
             onClick={() => setActiveTab('implementer')}
             className="mt-3 text-xs text-[var(--green)] hover:underline font-bold"
           >
-            → Aller coder
+            {t('challenge_go', uiLang)}
           </button>
         </div>
       ))}
@@ -372,7 +375,7 @@ export default function AlgorithmDetail() {
           to="/algorithms"
           className="text-[var(--text-dim)] hover:text-[var(--green)] mb-5 inline-flex items-center gap-2 transition-colors text-sm"
         >
-          <ArrowLeft className="w-4 h-4" /> Retour aux algorithmes
+          <ArrowLeft className="w-4 h-4" /> {t('back_to_algos', uiLang)}
         </Link>
       )}
 
@@ -425,7 +428,7 @@ export default function AlgorithmDetail() {
                 <div className="lg:hidden flex flex-col gap-4">
                   <details className="card overflow-hidden group">
                     <summary className="cursor-pointer list-none flex items-center justify-between gap-2 p-4 font-bold text-[var(--text-bright)]">
-                      <span>Cours & Indices</span>
+                      <span>{t('course_and_hints', uiLang)}</span>
                       <ChevronDown className="w-5 h-5 text-[var(--text-dim)] group-open:rotate-180 transition-transform" />
                     </summary>
                     <div className="px-4 pb-4 pt-2 border-t border-[var(--border)] max-h-[45vh] overflow-y-auto">
