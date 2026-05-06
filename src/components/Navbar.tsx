@@ -7,7 +7,7 @@ import {
   Code2, 
   Terminal, 
   Brain, 
-  Map, 
+  Map as MapIcon, 
   CreditCard, 
   LogOut, 
   ChevronDown,
@@ -50,7 +50,7 @@ export default function Navbar() {
   const navLinks = [
     { name: t('nav_algorithms', uiLang), path: '/algorithms', icon: <Brain className="w-4 h-4" /> },
     { name: t('nav_exercises', uiLang),  path: '/exercises',  icon: <Terminal className="w-4 h-4" /> },
-    { name: t('nav_roadmap', uiLang),    path: '/paths',      icon: <Map className="w-4 h-4" /> },
+    { name: t('nav_roadmap', uiLang),    path: '/paths',      icon: <MapIcon className="w-4 h-4" /> },
     { name: t('nav_languages', uiLang),  path: '/languages',  icon: <Globe className="w-4 h-4" /> },
     { name: t('nav_pricing', uiLang),    path: '/pricing',    icon: <CreditCard className="w-4 h-4" /> },
   ];

@@ -7,7 +7,7 @@ import Seo from '../components/Seo';
 import PremiumModal from '../components/PremiumModal';
 import { 
   ArrowLeft, BookOpen, Code2, ExternalLink, ChevronRight, Play, CheckCircle2, 
-  Zap, FileText, Video, AlertTriangle, Map, Trophy, Target, Sparkles, Star,
+  Zap, FileText, Video, AlertTriangle, Map as MapIcon, Trophy, Target, Sparkles, Star,
   Lock, ArrowRight, MousePointer2
 } from 'lucide-react';
 
@@ -67,7 +67,7 @@ export default function LanguageDetail() {
   const isCompleted = (si: number, li: number) => completedLessons.has(`${si}-${li}`);
 
   const tabs: { id: Tab; label: string; icon: React.ReactNode }[] = [
-    { id: 'cours', label: uiLang === 'fr' ? 'Quêtes' : 'Quests', icon: <Map className="w-4 h-4" /> },
+    { id: 'cours', label: uiLang === 'fr' ? 'Quêtes' : 'Quests', icon: <MapIcon className="w-4 h-4" /> },
     { id: 'algos', label: uiLang === 'fr' ? 'Défis' : 'Challenges', icon: <Zap className="w-4 h-4" /> },
     { id: 'ressources', label: uiLang === 'fr' ? 'Bibliothèque' : 'Library', icon: <BookOpen className="w-4 h-4" /> },
   ];
@@ -153,7 +153,7 @@ export default function LanguageDetail() {
               <div className="lg:col-span-4 space-y-4">
                 <div className="flex items-center justify-between px-4 mb-4">
                   <h3 className="text-xs font-black uppercase tracking-widest text-[var(--text-dim)] flex items-center gap-2">
-                    <Map size={14} className="text-[var(--green)]" /> {uiLang === 'fr' ? 'Carte du Monde' : 'World Map'}
+                    <MapIcon size={14} className="text-[var(--green)]" /> {uiLang === 'fr' ? 'Carte du Monde' : 'World Map'}
                   </h3>
                 </div>
                 

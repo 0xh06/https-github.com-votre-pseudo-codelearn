@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { useStore } from '../store/useStore';
 import Seo from '../components/Seo';
-import { ChevronRight, Star, Zap, Globe, Cpu, Code2, Terminal, BookOpen, TrendingUp, Sparkles, Box, Layout } from 'lucide-react';
+import { ChevronRight, Star, Zap, Globe, Cpu, Code2, Terminal, BookOpen, TrendingUp, Sparkles, Box, Layout, Map as MapIcon } from 'lucide-react';
 
 const LANGS = [
   {
@@ -403,7 +403,7 @@ export default function Languages() {
               {uiLang === 'fr' ? 'Explorer les Algorithmes' : 'Explore Algorithms'}
             </Link>
             <Link to="/paths" className="btn btn-secondary px-10 py-4 text-sm font-black rounded-2xl flex items-center gap-3">
-              <Map className="w-5 h-5" />
+              <MapIcon className="w-5 h-5" />
               {uiLang === 'fr' ? 'Voir les Roadmaps' : 'View Roadmaps'}
             </Link>
           </div>
