@@ -4,6 +4,7 @@ import confetti from 'canvas-confetti';
 import { EXERCISES } from '../data/content';
 import CodeEditor from '../components/CodeEditor';
 import Seo from '../components/Seo';
+import { useStore } from '../store/useStore';
 import { useState, useEffect } from 'react';
 import { executeCode } from '../utils/piston';
 import { Play, Maximize2, Minimize2, CheckCircle2, SquareSquare, ChevronDown } from 'lucide-react';
@@ -11,6 +12,7 @@ import { Panel, PanelGroup, PanelResizeHandle } from 'react-resizable-panels';
 
 export default function ExerciseDetail() {
   const { id } = useParams();
+  const { addXp, completed, toggleCompleted } = useStore();
   const ex = EXERCISES.find(e => e.id === Number(id));
   const [lang, setLang] = useState<'js' | 'python'>('js');
   const [code, setCode] = useState('');
@@ -61,6 +63,10 @@ export default function ExerciseDetail() {
             setTestResults(parsed);
             if (parsed.every((r: any) => r.passed)) {
               confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 }, colors: ['#10b981', '#3b82f6', '#8b5cf6'] });
+              if (!completed.includes(ex.id)) {
+                addXp(50);
+                toggleCompleted(ex.id);
+              }
             }
             outText = outText.replace(/__TEST_RESULTS__:\[.*\]\n?/, '');
           } catch(e) {}

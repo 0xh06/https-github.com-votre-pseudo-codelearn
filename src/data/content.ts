@@ -191,24 +191,28 @@ if(allPassed) console.log('\\n🎉 SUCCESS: Tous les tests sont validés !');
 else console.log('\\n⚠️ FAILURE: Certains tests ont échoué.');
       `,
       python: `
-# --- Tests Injections ---
+import json, time
 tests = [
-    ("hello", "olleh"),
-    ("AlgoMaster", "retsamoglA"),
-    ("a", "a")
+    ("hello", "olleh"), ("AlgoMaster", "retsamoglA"), ("a", "a"),
+    ("", ""), ("racecar", "racecar"), ("12345!?", "?!54321")
 ]
-passed = 0
+results = []
 for i, (inp, exp) in enumerate(tests):
-    res = reverse_string(inp)
-    if res == exp:
-        print(f"✅ Test {i+1} passé")
-        passed += 1
-    else:
-        print(f"❌ Test {i+1} échoué. Entrée: {inp}, Attendu: {exp}, Reçu: {res}")
-if passed == len(tests):
-    print("\\n🎉 SUCCESS: Tous les tests sont validés !")
-else:
-    print("\\n⚠️ FAILURE: Certains tests ont échoué.")
+    passed, err, res = False, None, None
+    t0 = time.time()
+    try:
+        res = reverse_string(inp)
+        passed = (res == exp)
+    except Exception as e:
+        err = str(e)
+    t1 = time.time()
+    if passed and (t1 - t0) > 0.02:
+        passed, err = False, "O(N) Requis: Exécution trop lente (>20ms)."
+    results.append({"id": i+1, "input": f'"{inp}"', "expected": f'"{exp}"', "actual": f'"{res}"' if res is not None else None, "passed": passed, "error": err})
+all_passed = all(r["passed"] for r in results)
+print("__TEST_RESULTS__:" + json.dumps(results))
+if all_passed: print("\\n🎉 SUCCESS: Tous les tests sont validés !")
+else: print("\\n⚠️ FAILURE: Certains tests ont échoué.")
       `
     }
   },
@@ -256,8 +260,28 @@ let results = tests.map((t, i) => {
 });
 const allPassed = results.every(r => r.passed);
 console.log('__TEST_RESULTS__:' + JSON.stringify(results));
-      `,
-      python: `print("Test désactivé en Python pour démo rapide")`
+      python: `
+import json, time
+tests = [
+    ([2,7,11,15], 9, [0,1]),
+    ([3,2,4], 6, [1,2]),
+    ([3,3], 6, [0,1]),
+]
+results = []
+for i, (nums, target, exp) in enumerate(tests):
+    passed, err, res = False, None, None
+    t0 = time.time()
+    try:
+        res = two_sum(nums, target)
+        passed = (res == exp or res == exp[::-1])
+    except Exception as e:
+        err = str(e)
+    t1 = time.time()
+    if passed and (t1 - t0) > 0.05:
+        passed, err = False, "O(N) Requis: Exécution trop lente."
+    results.append({"id": i+1, "input": f"nums={nums}, target={target}", "expected": str(exp), "actual": str(res) if res is not None else None, "passed": passed, "error": err})
+print("__TEST_RESULTS__:" + json.dumps(results))
+      `
     }
   }
 ];
