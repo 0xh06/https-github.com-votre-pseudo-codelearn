@@ -4,6 +4,10 @@ const LANGUAGE_MAP: Record<string, { language: string; version: string }> = {
   javascript: { language: 'javascript', version: '18.15.0' },
   js: { language: 'javascript', version: '18.15.0' },
   python: { language: 'python', version: '3.10.0' },
+  c: { language: 'c', version: '10.2.0' },
+  cpp: { language: 'c++', version: '10.2.0' },
+  csharp: { language: 'csharp', version: '6.12.0' },
+  java: { language: 'java', version: '15.0.2' },
 };
 
 export async function executeCode(sourceCode: string, lang: string) {

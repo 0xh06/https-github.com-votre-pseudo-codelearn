@@ -14,7 +14,7 @@ export default function ExerciseDetail() {
   const { id } = useParams();
   const { addXp, completed, toggleCompleted } = useStore();
   const ex = EXERCISES.find(e => e.id === Number(id));
-  const [lang, setLang] = useState<'js' | 'python'>('js');
+  const [lang, setLang] = useState<'js' | 'python' | 'c' | 'cpp' | 'csharp' | 'java'>('js');
   const [code, setCode] = useState('');
   const [output, setOutput] = useState('');
   const [testResults, setTestResults] = useState<any[] | null>(null);
@@ -24,7 +24,7 @@ export default function ExerciseDetail() {
   useEffect(() => {
     if (ex) {
       const savedCode = localStorage.getItem(`exo-code-${id}-${lang}`);
-      setCode(savedCode || (lang === 'js' ? (ex.starter as any).js : (ex.starter as any).python));
+      setCode(savedCode || (ex.starter as any)[lang] || (lang === 'js' ? (ex.starter as any).js : (ex.starter as any).python));
       setOutput('');
       setTestResults(null);
     }
@@ -33,7 +33,7 @@ export default function ExerciseDetail() {
   if (!ex) return <div className="container mx-auto py-20 text-center">Exercice non trouvé.</div>;
 
   const testCasesObj = (ex as any).tests || {};
-  const currentTests = lang === 'js' ? testCasesObj.js : testCasesObj.python;
+  const currentTests = testCasesObj[lang];
 
   const handleRun = async () => {
     setIsRunning(true);
@@ -48,7 +48,7 @@ export default function ExerciseDetail() {
     }, 5000);
 
     try {
-      const codeToRun = code || (lang === 'js' ? (ex.starter as any).js : (ex.starter as any).python);
+      const codeToRun = code || (ex.starter as any)[lang] || (lang === 'js' ? (ex.starter as any).js : (ex.starter as any).python);
       const fullCode = currentTests ? `${codeToRun}\n\n${currentTests}` : codeToRun;
       
       const result = await executeCode(fullCode, lang);
@@ -88,10 +88,14 @@ export default function ExerciseDetail() {
         <select 
           className="bg-[var(--bg3)] border border-[var(--border)] rounded-md px-3 py-1.5 text-xs font-bold outline-none cursor-pointer"
           value={lang}
-          onChange={(e) => setLang(e.target.value as 'js' | 'python')}
+          onChange={(e) => setLang(e.target.value as any)}
         >
           <option value="js">JavaScript</option>
           <option value="python">Python</option>
+          <option value="c">C</option>
+          <option value="cpp">C++</option>
+          <option value="csharp">C#</option>
+          <option value="java">Java</option>
         </select>
         
         <div className="flex gap-3">

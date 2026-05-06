@@ -23,7 +23,7 @@ export default function AlgorithmDetail() {
     // Reset state when changing algorithm or language
     if (algo) {
       const savedCode = localStorage.getItem(`algo-code-${id}-${lang}`);
-      setCode(savedCode || (lang === 'js' ? algo.starter.js : algo.starter.python));
+      setCode(savedCode || (algo.starter as any)[lang] || (lang === 'js' ? algo.starter.js : algo.starter.python));
       setShowSolution(false);
       setHintLevel(0);
       setOutput('');
@@ -45,7 +45,7 @@ export default function AlgorithmDetail() {
     }, 5000);
 
     try {
-      const currentCode = code || (lang === 'js' ? algo.starter.js : algo.starter.python);
+      const currentCode = code || (algo.starter as any)[lang] || (lang === 'js' ? algo.starter.js : algo.starter.python);
       const result = await executeCode(currentCode, lang);
       if (!isTimeout) {
         clearTimeout(timeoutId);
@@ -63,7 +63,7 @@ export default function AlgorithmDetail() {
   const handleRevealSolution = () => {
     if (confirm('Êtes-vous sûr de vouloir voir la solution complète ? Essayez de coder par vous-même d\'abord !')) {
       setShowSolution(true);
-      setCode(lang === 'js' ? algo.js : algo.python);
+      setCode((algo as any)[lang] || (lang === 'js' ? algo.js : algo.python));
     }
   };
 
@@ -78,6 +78,10 @@ export default function AlgorithmDetail() {
           >
             <option value="js">JavaScript</option>
             <option value="python">Python</option>
+            <option value="c">C</option>
+            <option value="cpp">C++</option>
+            <option value="csharp">C#</option>
+            <option value="java">Java</option>
           </select>
           
           {!showSolution ? (

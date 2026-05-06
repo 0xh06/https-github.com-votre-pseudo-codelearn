@@ -12,10 +12,18 @@ export const ALGORITHMS = [
     ],
     starter: {
       python: `def bubble_sort(arr):\n    # TODO: Implémenter le tri à bulles\n    return arr`,
-      js: `function bubbleSort(arr) {\n  // TODO: Implémenter le tri à bulles\n  return arr;\n}`
+      js: `function bubbleSort(arr) {\n  // TODO: Implémenter le tri à bulles\n  return arr;\n}`,
+      c: `#include <stdio.h>\n\nvoid bubbleSort(int arr[], int n) {\n    // TODO\n}`,
+      cpp: `#include <vector>\n#include <iostream>\n\nvoid bubbleSort(std::vector<int>& arr) {\n    // TODO\n}`,
+      csharp: `using System;\n\npublic class Solution {\n    public static int[] BubbleSort(int[] arr) {\n        // TODO\n        return arr;\n    }\n}`,
+      java: `public class Main {\n    public static void bubbleSort(int[] arr) {\n        // TODO\n    }\n}`
     },
     python: `def bubble_sort(arr):\n    n = len(arr)\n    for i in range(n):\n        for j in range(0, n-i-1):\n            if arr[j] > arr[j+1]:\n                arr[j], arr[j+1] = arr[j+1], arr[j]\n    return arr`,
-    js: `function bubbleSort(arr) {\n  for (let i = 0; i < arr.length; i++) {\n    for (let j = 0; j < arr.length - i - 1; j++) {\n      if (arr[j] > arr[j + 1]) [arr[j], arr[j+1]] = [arr[j+1], arr[j]];\n    }\n  }\n  return arr;\n}`
+    js: `function bubbleSort(arr) {\n  for (let i = 0; i < arr.length; i++) {\n    for (let j = 0; j < arr.length - i - 1; j++) {\n      if (arr[j] > arr[j + 1]) [arr[j], arr[j+1]] = [arr[j+1], arr[j]];\n    }\n  }\n  return arr;\n}`,
+    c: `void bubbleSort(int arr[], int n) {\n    for (int i = 0; i < n-1; i++) {\n        for (int j = 0; j < n-i-1; j++) {\n            if (arr[j] > arr[j+1]) {\n                int temp = arr[j];\n                arr[j] = arr[j+1];\n                arr[j+1] = temp;\n            }\n        }\n    }\n}`,
+    cpp: `void bubbleSort(std::vector<int>& arr) {\n    int n = arr.size();\n    for (int i = 0; i < n-1; i++) {\n        for (int j = 0; j < n-i-1; j++) {\n            if (arr[j] > arr[j+1]) std::swap(arr[j], arr[j+1]);\n        }\n    }\n}`,
+    csharp: `public static int[] BubbleSort(int[] arr) {\n    int n = arr.Length;\n    for (int i = 0; i < n - 1; i++) {\n        for (int j = 0; j < n - i - 1; j++) {\n            if (arr[j] > arr[j + 1]) {\n                int temp = arr[j];\n                arr[j] = arr[j + 1];\n                arr[j + 1] = temp;\n            }\n        }\n    }\n    return arr;\n}`,
+    java: `public static void bubbleSort(int[] arr) {\n    int n = arr.length;\n    for (int i = 0; i < n - 1; i++) {\n        for (int j = 0; j < n - i - 1; j++) {\n            if (arr[j] > arr[j + 1]) {\n                int temp = arr[j];\n                arr[j] = arr[j + 1];\n                arr[j + 1] = temp;\n            }\n        }\n    }\n}`
   },
   {
     id: "quick-sort", name: "Quick Sort", category: "Tri", timeO: "O(n log n)", spaceO: "O(log n)", difficulty: "Intermédiaire", color: "yellow",
@@ -155,9 +163,15 @@ export const ALGORITHMS = [
 ];
 
 export const EXERCISES = [
-  { 
     id: 1, title: 'Inverser une chaîne', level: 'Debutant', lang: 'Tous', desc: 'Écrivez une fonction qui inverse une chaîne de caractères. Attention: Votre algorithme doit être rapide O(N).',
-    starter: { js: 'function reverseString(str) {\n  // 💡 Indice 1 : Convertissez la chaîne en tableau avec split(\\'\\')\n  // 💡 Indice 2 : Utilisez la méthode interne de tableau pour l\\'inverser\n  // 💡 Indice 3 : Reformez la chaîne avec join(\\'\\')\n  \n}', python: 'def reverse_string(s):\n    # 💡 Indice : En Python, on peut utiliser le slicing [::-1]\n    pass' },
+    starter: { 
+      js: 'function reverseString(str) {\n  // 💡 Indice 1 : Convertissez la chaîne en tableau avec split(\\'\\')\n  // 💡 Indice 2 : Utilisez la méthode interne de tableau pour l\\'inverser\n  // 💡 Indice 3 : Reformez la chaîne avec join(\\'\\')\n  \n}', 
+      python: 'def reverse_string(s):\n    # 💡 Indice : En Python, on peut utiliser le slicing [::-1]\n    pass',
+      c: '#include <string.h>\n#include <stdio.h>\n\nvoid reverseString(char* s) {\n    // TODO: Inverser la chaîne en place\n}',
+      cpp: '#include <string>\n#include <algorithm>\n\nstd::string reverseString(std::string s) {\n    // TODO: Retourner la chaîne inversée\n    return s;\n}',
+      csharp: 'using System;\n\npublic class Solution {\n    public static string ReverseString(string s) {\n        // TODO\n        return s;\n    }\n}',
+      java: 'public class Solution {\n    public static String reverseString(String s) {\n        // TODO\n        return s;\n    }\n}'
+    },
     tests: {
       js: `
 // --- Tests Injections ---
@@ -213,6 +227,27 @@ all_passed = all(r["passed"] for r in results)
 print("__TEST_RESULTS__:" + json.dumps(results))
 if all_passed: print("\\n🎉 SUCCESS: Tous les tests sont validés !")
 else: print("\\n⚠️ FAILURE: Certains tests ont échoué.")
+      `,
+      c: `
+#include <string.h>
+#include <stdio.h>
+int main() {
+    char s1[] = "hello"; reverseString(s1);
+    if (strcmp(s1, "olleh") == 0) printf("__TEST_RESULTS__:[{\\"id\\":1,\\"input\\":\\"hello\\",\\"expected\\":\\"olleh\\",\\"actual\\":\\"%s\\",\\"passed\\":true}]", s1);
+    else printf("__TEST_RESULTS__:[{\\"id\\":1,\\"input\\":\\"hello\\",\\"expected\\":\\"olleh\\",\\"actual\\":\\"%s\\",\\"passed\\":false}]", s1);
+    return 0;
+}
+      `,
+      cpp: `
+#include <iostream>
+#include <string>
+int main() {
+    std::string s = "hello";
+    std::string res = reverseString(s);
+    if (res == "olleh") std::cout << "__TEST_RESULTS__:[{\\"id\\":1,\\"input\\":\\"hello\\",\\"expected\\":\\"olleh\\",\\"actual\\":\\"" << res << "\\",\\"passed\\":true}]";
+    else std::cout << "__TEST_RESULTS__:[{\\"id\\":1,\\"input\\":\\"hello\\",\\"expected\\":\\"olleh\\",\\"actual\\":\\"" << res << "\\",\\"passed\\":false}]";
+    return 0;
+}
       `
     }
   },
@@ -282,6 +317,21 @@ for i, (nums, target, exp) in enumerate(tests):
     results.append({"id": i+1, "input": f"nums={nums}, target={target}", "expected": str(exp), "actual": str(res) if res is not None else None, "passed": passed, "error": err})
 print("__TEST_RESULTS__:" + json.dumps(results))
       `
+    }
+  },
+  {
+    id: 4, title: 'Somme d\'un tableau', level: 'Debutant', lang: 'Tous', desc: 'Calculez la somme de tous les nombres d\'un tableau.',
+    starter: {
+      js: 'function sumArray(arr) {\n  return 0;\n}',
+      python: 'def sum_array(arr):\n    return 0',
+      c: 'int sumArray(int arr[], int n) {\n    return 0;\n}',
+      cpp: 'int sumArray(std::vector<int>& arr) {\n    return 0;\n}',
+      csharp: 'public static int SumArray(int[] arr) {\n    return 0;\n}',
+      java: 'public static int sumArray(int[] arr) {\n    return 0;\n}'
+    },
+    tests: {
+      js: `const tests = [{in: "[1,2,3]", expected: 6, args: [[1,2,3]]}];\nconst res = sumArray([1,2,3]);\nconsole.log('__TEST_RESULTS__:[{"id":1,"input":"[1,2,3]","expected":6,"actual":' + res + ',"passed":' + (res===6) + '}]');`,
+      python: `import json\nres = sum_array([1,2,3])\nprint('__TEST_RESULTS__:' + json.dumps([{"id":1,"input":"[1,2,3]","expected":6,"actual":res,"passed":res==6}]))`
     }
   }
 ];
