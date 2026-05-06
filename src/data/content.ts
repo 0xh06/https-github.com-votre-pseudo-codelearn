@@ -23,7 +23,13 @@ export const ALGORITHMS = [
     c: `void bubbleSort(int arr[], int n) {\n    for (int i = 0; i < n-1; i++) {\n        for (int j = 0; j < n-i-1; j++) {\n            if (arr[j] > arr[j+1]) {\n                int temp = arr[j];\n                arr[j] = arr[j+1];\n                arr[j+1] = temp;\n            }\n        }\n    }\n}`,
     cpp: `void bubbleSort(std::vector<int>& arr) {\n    int n = arr.size();\n    for (int i = 0; i < n-1; i++) {\n        for (int j = 0; j < n-i-1; j++) {\n            if (arr[j] > arr[j+1]) std::swap(arr[j], arr[j+1]);\n        }\n    }\n}`,
     csharp: `public static int[] BubbleSort(int[] arr) {\n    int n = arr.Length;\n    for (int i = 0; i < n - 1; i++) {\n        for (int j = 0; j < n - i - 1; j++) {\n            if (arr[j] > arr[j + 1]) {\n                int temp = arr[j];\n                arr[j] = arr[j + 1];\n                arr[j + 1] = temp;\n            }\n        }\n    }\n    return arr;\n}`,
-    java: `public static void bubbleSort(int[] arr) {\n    int n = arr.length;\n    for (int i = 0; i < n - 1; i++) {\n        for (int j = 0; j < n - i - 1; j++) {\n            if (arr[j] > arr[j + 1]) {\n                int temp = arr[j];\n                arr[j] = arr[j + 1];\n                arr[j + 1] = temp;\n            }\n        }\n    }\n}`
+    java: `public static void bubbleSort(int[] arr) {\n    int n = arr.length;\n    for (int i = 0; i < n - 1; i++) {\n        for (int j = 0; j < n - i - 1; j++) {\n            if (arr[j] > arr[j + 1]) {\n                int temp = arr[j];\n                arr[j] = arr[j + 1];\n                arr[j + 1] = temp;\n            }\n        }\n    }\n}`,
+    challenges: [
+      { title: 'Implémentation de base', desc: 'Implémentez le Bubble Sort qui trie [64, 34, 25, 12, 22, 11, 90] dans l\'ordre croissant.', difficulty: 'Débutant' },
+      { title: 'Arrêt précoce', desc: 'Optimisez votre implémentation avec un flag `swapped`. Si aucun échange n\'a eu lieu lors d\'une passe, le tableau est déjà trié !', difficulty: 'Débutant' },
+      { title: 'Tri d\'objets', desc: 'Modifiez votre Bubble Sort pour trier un tableau d\'objets [{name, age}] par âge croissant.', difficulty: 'Intermédiaire' },
+      { title: 'Tri décroissant', desc: 'Ajoutez un paramètre `ascending = true` à votre fonction pour supporter le tri dans les deux sens.', difficulty: 'Intermédiaire' },
+    ]
   },
   {
     id: "quick-sort", name: "Quick Sort", category: "Tri", timeO: "O(n log n)", spaceO: "O(log n)", difficulty: "Intermédiaire", color: "yellow",
@@ -40,7 +46,12 @@ export const ALGORITHMS = [
       js: `function quickSort(arr) {\n  // TODO: Implémenter le tri rapide\n  return arr;\n}`
     },
     python: `def quick_sort(arr):\n    if len(arr) <= 1: return arr\n    pivot = arr[len(arr) // 2]\n    return quick_sort([x for x in arr if x < pivot]) + [x for x in arr if x == pivot] + quick_sort([x for x in arr if x > pivot])`,
-    js: `function quickSort(arr) {\n  if (arr.length <= 1) return arr;\n  const pivot = arr[Math.floor(arr.length/2)];\n  return [...quickSort(arr.filter(x=>x<pivot)), ...arr.filter(x=>x===pivot), ...quickSort(arr.filter(x=>x>pivot))];\n}`
+    js: `function quickSort(arr) {\n  if (arr.length <= 1) return arr;\n  const pivot = arr[Math.floor(arr.length/2)];\n  return [...quickSort(arr.filter(x=>x<pivot)), ...arr.filter(x=>x===pivot), ...quickSort(arr.filter(x=>x>pivot))];\n}`,
+    challenges: [
+      { title: 'Quick Sort basique', desc: 'Implémentez quickSort([10, 7, 8, 9, 1, 5]). Choisissez le dernier élément comme pivot.', difficulty: 'Intermédiaire' },
+      { title: 'Partition in-place', desc: 'Implémentez la version in-place (sans créer de nouveaux tableaux) pour une complexité mémoire O(log n).', difficulty: 'Intermédiaire' },
+      { title: 'Pire cas', desc: 'Que se passe-t-il si l\'entrée est déjà triée ? Pourquoi ? Comment y remédier avec le choix aléatoire du pivot ?', difficulty: 'Avancé' },
+    ]
   },
   {
     id: "merge-sort", name: "Merge Sort", category: "Tri", timeO: "O(n log n)", spaceO: "O(n)", difficulty: "Intermédiaire", color: "yellow",
@@ -76,7 +87,12 @@ export const ALGORITHMS = [
       js: `function binarySearch(arr, target) {\n  // TODO: Retourner l'index de target, ou -1\n  return -1;\n}`
     },
     python: `def binary_search(arr, target):\n    l, r = 0, len(arr)-1\n    while l <= r:\n        m = (l+r)//2\n        if arr[m] == target: return m\n        if arr[m] < target: l = m+1\n        else: r = m-1\n    return -1`,
-    js: `function binarySearch(arr, target) {\n  let l=0, r=arr.length-1;\n  while(l<=r){\n    let m=Math.floor((l+r)/2);\n    if(arr[m]===target) return m;\n    arr[m]<target ? l=m+1 : r=m-1;\n  }\n  return -1;\n}`
+    js: `function binarySearch(arr, target) {\n  let l=0, r=arr.length-1;\n  while(l<=r){\n    let m=Math.floor((l+r)/2);\n    if(arr[m]===target) return m;\n    arr[m]<target ? l=m+1 : r=m-1;\n  }\n  return -1;\n}`,
+    challenges: [
+      { title: 'Recherche de base', desc: 'Utilisez Binary Search pour trouver 27 dans [3, 9, 10, 27, 38, 43, 82]. Retournez l\'index.', difficulty: 'Débutant' },
+      { title: 'Première occurrence', desc: 'Trouvez l\'index de la PREMIÈRE occurrence d\'un élément dans un tableau trié avec doublons.', difficulty: 'Intermédiaire' },
+      { title: 'Borne inférieure', desc: 'Implémentez une fonction `lowerBound(arr, target)` qui retourne l\'index de la plus petite valeur >= target.', difficulty: 'Avancé' },
+    ]
   },
   {
     id: "bfs", name: "BFS (Largeur)", category: "Graphes", timeO: "O(V+E)", spaceO: "O(V)", difficulty: "Intermédiaire", color: "yellow",
@@ -93,7 +109,12 @@ export const ALGORITHMS = [
       js: `function bfs(graph, start) {\n  // TODO: Parcours en largeur\n}`
     },
     python: `from collections import deque\ndef bfs(graph, start):\n    q, visited = deque([start]), {start}\n    while q:\n        node = q.popleft()\n        print(node)\n        for n in graph[node]:\n            if n not in visited:\n                visited.add(n)\n                q.append(n)`,
-    js: `function bfs(graph, start) {\n  const q = [start], visited = new Set([start]);\n  while(q.length){\n    const node = q.shift();\n    console.log(node);\n    (graph[node]||[]).forEach(n => {\n      if(!visited.has(n)){ visited.add(n); q.push(n); }\n    });\n  }\n}`
+    js: `function bfs(graph, start) {\n  const q = [start], visited = new Set([start]);\n  while(q.length){\n    const node = q.shift();\n    console.log(node);\n    (graph[node]||[]).forEach(n => {\n      if(!visited.has(n)){ visited.add(n); q.push(n); }\n    });\n  }\n}`,
+    challenges: [
+      { title: 'Traversal simple', desc: 'Utilisez BFS pour afficher tous les n\u0153uds du graphe : {A:[B,C], B:[D], C:[D,E], D:[], E:[]}.', difficulty: 'Intermédiaire' },
+      { title: 'Distance minimale', desc: 'Modifiez BFS pour retourner la distance (nombre de sauts) entre le n\u0153ud source et chaque autre n\u0153ud.', difficulty: 'Intermédiaire' },
+      { title: 'Chemin le plus court', desc: 'Reconstituez le chemin exact (liste de n\u0153uds) entre la source et une cible en mémorisant les parents de chaque n\u0153ud visité.', difficulty: 'Avancé' },
+    ]
   },
   
   // --- DYNAMIQUE ---
