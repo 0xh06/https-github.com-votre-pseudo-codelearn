@@ -4,6 +4,7 @@ import Seo from '../components/Seo';
 import { supabase } from '../lib/supabase';
 import { useStore } from '../store/useStore';
 import { Trophy, Medal, Crown, Flame } from 'lucide-react';
+import AvatarRenderer from '../components/AvatarRenderer';
 
 interface LeaderboardEntry {
   id: string;
@@ -96,8 +97,20 @@ export default function Leaderboard() {
           return (
             <div key={leader.id} className={`card p-4 ${colors[i]} border ${borders[i]} text-center ${heights[i]} flex flex-col items-center justify-center`}>
               <div className="text-3xl mb-2">{i === 1 ? '🥇' : i === 0 ? '🥈' : '🥉'}</div>
-              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[var(--green)] to-[var(--blue)] flex items-center justify-center text-sm font-bold text-black mb-2">
-                {leader.email[0].toUpperCase()}
+              <div className="w-16 h-16 flex items-center justify-center mb-2">
+                <AvatarRenderer 
+                  config={{
+                    skin: i === 0 ? 'tan' : i === 1 ? 'light' : 'brown',
+                    hair: i === 0 ? 'fluffy' : 'short',
+                    hairColor: i === 0 ? 'pink' : 'black',
+                    expression: 'happy',
+                    eyeColor: '#2D1B11',
+                    clothes: 'overalls',
+                    clothesColor: i === 0 ? '#E74C3C' : '#2980B9',
+                    accessory: i === 0 ? 'expert-crown' : i === 1 ? 'scholar-hat' : 'beginner-badge'
+                  }} 
+                  size={64} 
+                />
               </div>
               <div className="text-xs font-bold truncate w-full text-center">{maskEmail(leader.email)}</div>
               <div className="text-[var(--yellow)] font-black text-sm mt-1">{leader.xp.toLocaleString()} XP</div>
@@ -123,8 +136,20 @@ export default function Leaderboard() {
               }`}
             >
               <div className="w-8 flex items-center justify-center">{rankIcon(leader.rank)}</div>
-              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[var(--green)] to-[var(--blue)] flex items-center justify-center text-sm font-bold text-black shrink-0">
-                {leader.email[0].toUpperCase()}
+              <div className="w-12 h-12 flex items-center justify-center shrink-0">
+                <AvatarRenderer 
+                  config={isMe ? avatar : {
+                    skin: 'tan',
+                    hair: 'short',
+                    hairColor: 'black',
+                    expression: 'neutral',
+                    eyeColor: '#2D1B11',
+                    clothes: 'shirt',
+                    clothesColor: '#34495E',
+                    accessory: leader.rank <= 3 ? 'expert-crown' : null
+                  }} 
+                  size={48} 
+                />
               </div>
               <div className="flex-1 min-w-0">
                 <div className="font-bold text-sm truncate">

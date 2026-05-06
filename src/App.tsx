@@ -30,6 +30,9 @@ import FlashcardSession from './pages/FlashcardSession';
 
 import Footer from './components/Footer';
 import Chatbot from './components/Chatbot';
+import UIPolish from './components/UIPolish';
+import XPBubbles from './components/XPBubbles';
+import QuestWidget from './components/QuestWidget';
 
 export default function App() {
   const setUser = useStore(state => state.setUser);
@@ -48,6 +51,9 @@ export default function App() {
 
   return (
     <div className="min-h-screen flex flex-col bg-[var(--bg)] text-[var(--text)]">
+      <UIPolish />
+      <XPBubbles />
+      <QuestWidget />
       <Toaster 
         position="bottom-center" 
         toastOptions={{ 

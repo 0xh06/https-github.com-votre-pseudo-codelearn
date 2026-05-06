@@ -15,6 +15,7 @@ import {
 } from 'lucide-react';
 import { ALGORITHMS, EXERCISES } from '../data/content';
 import Seo from '../components/Seo';
+import HeroTerminal from '../components/HeroTerminal';
 
 export default function Home() {
   return (
@@ -62,6 +63,15 @@ export default function Home() {
               Explorer les algorithmes
             </Link>
           </div>
+
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.5, duration: 0.8 }}
+            className="mt-20 px-4"
+          >
+            <HeroTerminal />
+          </motion.div>
 
           <div className="mt-12 flex flex-wrap items-center justify-center gap-x-10 gap-y-3 text-[var(--text-dim)] text-sm font-medium">
             <div className="flex items-center gap-2">

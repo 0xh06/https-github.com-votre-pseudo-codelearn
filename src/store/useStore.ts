@@ -73,13 +73,13 @@ export const useStore = create<StoreState>()(
       completed: [],
       completedUniversal: [],
       avatar: {
-        skin: 'light',
-        hair: 'short',
-        hairColor: 'black',
+        skin: 'dark',
+        hair: 'fluffy',
+        hairColor: 'pink',
         expression: 'neutral',
         eyeColor: '#2C3E50',
-        clothes: 'hoodie',
-        clothesColor: '#34495E',
+        clothes: 'overalls',
+        clothesColor: '#E74C3C',
         accessory: null
       },
       unlockedAccessories: ['classic-glasses'],

@@ -14,6 +14,7 @@ export default function AvatarCreator() {
       { id: 'dark', color: '#8D5524' }
     ],
     hairColor: [
+      { id: 'pink', color: '#E84A74' },
       { id: 'black', color: '#1A1A2E' },
       { id: 'brown', color: '#6B3A2A' },
       { id: 'blonde', color: '#DAA520' },
@@ -23,9 +24,9 @@ export default function AvatarCreator() {
       { id: 'green', color: '#27AE60' },
       { id: 'white', color: '#ECF0F1' }
     ],
-    hair: ['short', 'long', 'spiky', 'curly', 'bun'],
+    hair: ['short', 'long', 'spiky', 'fluffy', 'bun'],
     expression: ['neutral', 'happy', 'cool', 'surprised'],
-    clothes: ['hoodie', 'shirt', 'jacket'],
+    clothes: ['hoodie', 'shirt', 'overalls'],
     clothesColor: [
       '#34495E', // dark blue/gray
       '#E74C3C', // red
