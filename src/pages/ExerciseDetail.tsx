@@ -1,5 +1,6 @@
 import { useParams, Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
+import confetti from 'canvas-confetti';
 import { EXERCISES } from '../data/content';
 import CodeEditor from '../components/CodeEditor';
 import Seo from '../components/Seo';
@@ -56,7 +57,11 @@ export default function ExerciseDetail() {
         const testMatch = outText.match(/__TEST_RESULTS__:(\[.*\])/);
         if (testMatch) {
           try {
-            setTestResults(JSON.parse(testMatch[1]));
+            const parsed = JSON.parse(testMatch[1]);
+            setTestResults(parsed);
+            if (parsed.every((r: any) => r.passed)) {
+              confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 }, colors: ['#10b981', '#3b82f6', '#8b5cf6'] });
+            }
             outText = outText.replace(/__TEST_RESULTS__:\[.*\]\n?/, '');
           } catch(e) {}
         }
@@ -122,19 +127,27 @@ export default function ExerciseDetail() {
         <div className="p-4 flex-1">
           {testResults ? (
             <div className="space-y-3">
-              {testResults.map((t, i) => (
-                <div key={i} className={`p-3 rounded border ${t.passed ? 'bg-green-500/5 border-green-500/20' : 'bg-red-500/5 border-red-500/20'}`}>
-                  <div className="flex items-center gap-2 font-bold text-xs mb-2">
-                    {t.passed ? <CheckCircle2 className="w-4 h-4 text-green-500" /> : <div className="w-4 h-4 rounded-full bg-red-500 flex items-center justify-center text-[10px] text-white">×</div>}
-                    <span className={t.passed ? 'text-green-400' : 'text-red-400'}>Test Case {t.id}</span>
-                  </div>
-                  <div className="text-xs text-[var(--text-dim)] grid grid-cols-1 gap-1 pl-6">
-                    <div><span className="opacity-50">Entrée :</span> <code className="text-[var(--text-bright)]">{t.input}</code></div>
-                    <div><span className="opacity-50">Attendu :</span> <code className="text-green-400">{t.expected}</code></div>
-                    {!t.passed && <div><span className="opacity-50">Reçu :</span> <code className="text-red-400">{t.error ? \`Erreur: \${t.error}\` : String(t.actual)}</code></div>}
-                  </div>
-                </div>
-              ))}
+              <AnimatePresence>
+                {testResults.map((t, i) => (
+                  <motion.div 
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: i * 0.1, type: 'spring', stiffness: 100 }}
+                    key={i} 
+                    className={`p-3 rounded border ${t.passed ? 'bg-green-500/5 border-green-500/20' : 'bg-red-500/5 border-red-500/20'}`}
+                  >
+                    <div className="flex items-center gap-2 font-bold text-xs mb-2">
+                      {t.passed ? <CheckCircle2 className="w-4 h-4 text-green-500" /> : <div className="w-4 h-4 rounded-full bg-red-500 flex items-center justify-center text-[10px] text-white">×</div>}
+                      <span className={t.passed ? 'text-green-400' : 'text-red-400'}>Test Case {t.id}</span>
+                    </div>
+                    <div className="text-xs text-[var(--text-dim)] grid grid-cols-1 gap-1 pl-6">
+                      <div><span className="opacity-50">Entrée :</span> <code className="text-[var(--text-bright)]">{t.input}</code></div>
+                      <div><span className="opacity-50">Attendu :</span> <code className="text-green-400">{t.expected}</code></div>
+                      {!t.passed && <div><span className="opacity-50">Reçu :</span> <code className="text-red-400">{t.error ? \`Erreur: \${t.error}\` : String(t.actual)}</code></div>}
+                    </div>
+                  </motion.div>
+                ))}
+              </AnimatePresence>
             </div>
           ) : (
             <pre className={output.includes('❌') ? 'text-red-400 text-sm font-mono' : 'text-[var(--text-bright)] text-sm font-mono'}>

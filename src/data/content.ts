@@ -156,23 +156,32 @@ export const ALGORITHMS = [
 
 export const EXERCISES = [
   { 
-    id: 1, title: 'Inverser une chaîne', level: 'Debutant', lang: 'Tous', desc: 'Écrivez une fonction qui inverse une chaîne de caractères.',
-    starter: { js: 'function reverseString(str) {\n  // Votre code ici\n  \n}', python: 'def reverse_string(s):\n    # Votre code ici\n    pass' },
+    id: 1, title: 'Inverser une chaîne', level: 'Debutant', lang: 'Tous', desc: 'Écrivez une fonction qui inverse une chaîne de caractères. Attention: Votre algorithme doit être rapide O(N).',
+    starter: { js: 'function reverseString(str) {\n  // 💡 Indice 1 : Convertissez la chaîne en tableau avec split(\\'\\')\n  // 💡 Indice 2 : Utilisez la méthode interne de tableau pour l\\'inverser\n  // 💡 Indice 3 : Reformez la chaîne avec join(\\'\\')\n  \n}', python: 'def reverse_string(s):\n    # 💡 Indice : En Python, on peut utiliser le slicing [::-1]\n    pass' },
     tests: {
       js: `
 // --- Tests Injections ---
 const tests = [
   { in: "hello", expected: "olleh" },
   { in: "AlgoMaster", expected: "retsamoglA" },
-  { in: "a", expected: "a" }
+  { in: "a", expected: "a" },
+  { in: "", expected: "" }, // Edge case: vide
+  { in: "racecar", expected: "racecar" }, // Palindrome
+  { in: "12345!?", expected: "?!54321" } // Caractères spéciaux
 ];
 let results = tests.map((t, i) => {
   let res, passed = false, error = null;
+  const t0 = performance.now();
   try {
     res = reverseString(t.in);
     passed = (res === t.expected);
   } catch(e) {
     error = e.message;
+  }
+  const t1 = performance.now();
+  if (passed && (t1 - t0) > 20) {
+    passed = false;
+    error = "O(N) Requis: Exécution trop lente (>20ms).";
   }
   return { id: i+1, input: t.in, expected: t.expected, actual: res, passed, error };
 });
@@ -217,13 +226,36 @@ else console.log('❌ Échec. Reçu : ' + JSON.stringify(res));
     }
   },
   { 
-    id: 3, title: 'Deux Sommes (Two Sum)', level: 'Intermediaire', lang: 'Tous', desc: 'Trouvez les indices de deux nombres d\'un tableau dont la somme vaut une cible.',
-    starter: { js: 'function twoSum(nums, target) {\n  // Retournez les indices [i, j]\n  \n}', python: 'def two_sum(nums, target):\n    # Retournez les indices [i, j]\n    pass' },
+    id: 3, title: 'Deux Sommes (Two Sum)', level: 'Intermediaire', lang: 'Tous', desc: 'Trouvez les indices de deux nombres d\'un tableau dont la somme vaut une cible. Votre algorithme DOIT utiliser une Map pour une complexité O(N).',
+    starter: { js: 'function twoSum(nums, target) {\n  // 💡 Indice 1 : Créez une nouvelle Map() pour stocker les nombres vus\n  // 💡 Indice 2 : Parcourez le tableau. Calculez le "complément" (target - nums[i])\n  // 💡 Indice 3 : Si le complément est dans la Map, retournez [map.get(complement), i]\n  \n}', python: 'def two_sum(nums, target):\n    # 💡 Indice : Utilisez un dictionnaire pour stocker les nombres vus\n    pass' },
     tests: {
       js: `
-const res = twoSum([2,7,11,15], 9);
-if(res && (res[0]===0 && res[1]===1 || res[0]===1 && res[1]===0)) console.log('✅ Test passé\\n🎉 SUCCESS');
-else console.log('❌ Échec. Reçu: ' + res);
+const largeArr = Array.from({length: 10000}, (_, i) => i);
+const tests = [
+  { in: "[[2,7,11,15], 9]", expected: "[0,1]", args: [[2,7,11,15], 9] },
+  { in: "[[3,2,4], 6]", expected: "[1,2]", args: [[3,2,4], 6] },
+  { in: "[[3,3], 6]", expected: "[0,1]", args: [[3,3], 6] },
+  { in: "[[...10000 éléments], 19997]", expected: "[9998,9999]", args: [largeArr, 19997] } // Stress test
+];
+let results = tests.map((t, i) => {
+  let res, passed = false, error = null;
+  const t0 = performance.now();
+  try {
+    res = twoSum(...t.args);
+    const resStr = JSON.stringify(res);
+    passed = (resStr === t.expected || resStr === JSON.stringify(JSON.parse(t.expected).reverse()));
+  } catch(e) {
+    error = e.message;
+  }
+  const t1 = performance.now();
+  if (passed && (t1 - t0) > 10) { // O(N^2) takes ~100ms+ for 10000 elements, O(N) takes <2ms
+    passed = false;
+    error = "O(N) Requis: Boucles imbriquées détectées (Trop lent).";
+  }
+  return { id: i+1, input: t.in, expected: t.expected, actual: JSON.stringify(res), passed, error };
+});
+const allPassed = results.every(r => r.passed);
+console.log('__TEST_RESULTS__:' + JSON.stringify(results));
       `,
       python: `print("Test désactivé en Python pour démo rapide")`
     }
