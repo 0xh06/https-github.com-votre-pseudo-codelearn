@@ -19,10 +19,11 @@ export default function ExerciseDetail() {
 
   useEffect(() => {
     if (ex) {
-      setCode(lang === 'js' ? (ex.starter as any).js : (ex.starter as any).python);
+      const savedCode = localStorage.getItem(`exo-code-${id}-${lang}`);
+      setCode(savedCode || (lang === 'js' ? (ex.starter as any).js : (ex.starter as any).python));
       setOutput('');
     }
-  }, [ex, lang]);
+  }, [ex, lang, id]);
 
   if (!ex) return <div className="container mx-auto py-20 text-center">Exercice non trouvé.</div>;
 
@@ -93,7 +94,11 @@ export default function ExerciseDetail() {
         <CodeEditor 
           value={code} 
           language={lang === 'js' ? 'javascript' : 'python'} 
-          onChange={(val) => setCode(val || '')}
+          onChange={(val) => {
+            const newCode = val || '';
+            setCode(newCode);
+            localStorage.setItem(`exo-code-${id}-${lang}`, newCode);
+          }}
         />
       </div>
 

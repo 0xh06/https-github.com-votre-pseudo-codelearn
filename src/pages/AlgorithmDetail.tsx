@@ -22,7 +22,8 @@ export default function AlgorithmDetail() {
   useEffect(() => {
     // Reset state when changing algorithm or language
     if (algo) {
-      setCode(lang === 'js' ? algo.starter.js : algo.starter.python);
+      const savedCode = localStorage.getItem(`algo-code-${id}-${lang}`);
+      setCode(savedCode || (lang === 'js' ? algo.starter.js : algo.starter.python));
       setShowSolution(false);
       setHintLevel(0);
       setOutput('');
@@ -128,7 +129,11 @@ export default function AlgorithmDetail() {
         <CodeEditor 
           value={code} 
           language={lang === 'js' ? 'javascript' : 'python'} 
-          onChange={(val) => setCode(val || '')}
+          onChange={(val) => {
+            const newCode = val || '';
+            setCode(newCode);
+            localStorage.setItem(`algo-code-${id}-${lang}`, newCode);
+          }}
         />
       </div>
 

@@ -10,37 +10,49 @@ export async function executeCode(sourceCode: string, lang: string) {
   // --- 1. LOCAL EXECUTION FOR JAVASCRIPT (100% RELIABLE) ---
   if (lang === 'js' || lang === 'javascript') {
     return new Promise((resolve) => {
-      const logs: string[] = [];
-      const oldLog = console.log;
+      // Construction du Web Worker pour exécuter le JS sans bloquer le thread principal (Premium UX)
+      const workerCode = `
+        let logs = [];
+        const originalLog = console.log;
+        console.log = (...args) => {
+          logs.push(args.map(a => typeof a === 'object' ? JSON.stringify(a) : String(a)).join(' '));
+        };
+        try {
+          let sourceCode = ${JSON.stringify(sourceCode)};
+          let finalCode = sourceCode;
+          if (sourceCode.includes('function bubbleSort') && !sourceCode.includes('bubbleSort([')) {
+            finalCode += "\\nconsole.log('Résultat du tri:', bubbleSort([5, 2, 9, 1, 5, 6]));";
+          } else if (sourceCode.includes('function binarySearch') && !sourceCode.includes('binarySearch([')) {
+            finalCode += "\\nconsole.log('Index trouvé:', binarySearch([1, 2, 3, 4, 5], 3));";
+          } else if (sourceCode.includes('function fib') && !sourceCode.includes('fib(')) {
+            finalCode += "\\nconsole.log('Fibonacci(7):', fib(7));";
+          }
+          const result = eval(finalCode);
+          if (logs.length === 0 && result !== undefined) logs.push(String(result));
+          postMessage({ type: 'success', output: logs.join('\\n') || 'Exécuté avec succès (pas de sortie).' });
+        } catch(err) {
+          postMessage({ type: 'error', output: \`Erreur d'exécution: \${err.message}\` });
+        }
+      `;
+      const blob = new Blob([workerCode], { type: 'application/javascript' });
+      const worker = new Worker(URL.createObjectURL(blob));
       
-      // Capture console.log
-      console.log = (...args) => {
-        logs.push(args.map(a => typeof a === 'object' ? JSON.stringify(a) : String(a)).join(' '));
+      const timeoutId = setTimeout(() => {
+        worker.terminate();
+        resolve({ output: '❌ Erreur fatale: Temps d\\'exécution dépassé (> 3s).\\nUne boucle infinie a été détectée et arrêtée par sécurité.' });
+      }, 3000);
+
+      worker.onmessage = (e) => {
+        clearTimeout(timeoutId);
+        worker.terminate();
+        resolve({ output: e.data.type === 'error' ? '❌ ' + e.data.output : e.data.output });
       };
-
-      try {
-        // Automatically add a function call if not present to show results
-        let finalCode = sourceCode;
-        if (sourceCode.includes('function bubbleSort') && !sourceCode.includes('bubbleSort([')) {
-          finalCode += "\nconsole.log('Résultat du tri:', bubbleSort([5, 2, 9, 1, 5, 6]));";
-        } else if (sourceCode.includes('function binarySearch') && !sourceCode.includes('binarySearch([')) {
-          finalCode += "\nconsole.log('Index trouvé:', binarySearch([1, 2, 3, 4, 5], 3));";
-        } else if (sourceCode.includes('function fib') && !sourceCode.includes('fib(')) {
-          finalCode += "\nconsole.log('Fibonacci(7):', fib(7));";
-        }
-
-        // Execute code
-        const result = eval(finalCode);
-        if (logs.length === 0 && result !== undefined) {
-          logs.push(String(result));
-        }
-        
-        console.log = oldLog;
-        resolve({ output: logs.join('\n') || 'Exécuté avec succès (pas de sortie).' });
-      } catch (err) {
-        console.log = oldLog;
-        resolve({ output: `Erreur d'exécution: ${err instanceof Error ? err.message : String(err)}` });
-      }
+      
+      worker.onerror = (err) => {
+        clearTimeout(timeoutId);
+        worker.terminate();
+        resolve({ output: \`❌ Erreur critique du Worker: \${err.message}\` });
+      };
     });
   }
 
