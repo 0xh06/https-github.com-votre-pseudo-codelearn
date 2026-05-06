@@ -17,10 +17,13 @@ interface SrsItem {
 export type SubscriptionPlan = 'free' | 'pro';
 
 export type AvatarConfig = {
-  base: string;
+  skin: string;
   hair: string;
-  eyes: string;
+  hairColor: string;
+  expression: string;
+  eyeColor: string;
   clothes: string;
+  clothesColor: string;
   accessory: string | null;
 };
 
@@ -70,10 +73,13 @@ export const useStore = create<StoreState>()(
       completed: [],
       completedUniversal: [],
       avatar: {
-        base: 'round',
+        skin: 'light',
         hair: 'short',
-        eyes: 'neutral',
+        hairColor: 'black',
+        expression: 'neutral',
+        eyeColor: '#2C3E50',
         clothes: 'hoodie',
+        clothesColor: '#34495E',
         accessory: null
       },
       unlockedAccessories: ['classic-glasses'],
