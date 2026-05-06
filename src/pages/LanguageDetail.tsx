@@ -4,7 +4,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { LANGUAGE_COURSES } from '../data/languageContent';
 import { useStore } from '../store/useStore';
 import Seo from '../components/Seo';
-import { ArrowLeft, BookOpen, Code2, ExternalLink, ChevronRight, Play, CheckCircle2, Zap, FileText, Video, AlertTriangle } from 'lucide-react';
+import { ArrowLeft, BookOpen, Code2, ExternalLink, ChevronRight, Play, CheckCircle2, Zap, FileText, Video, AlertTriangle, Map, Trophy, Target, Sparkles, Star } from 'lucide-react';
+import confetti from 'canvas-confetti';
 
 type Tab = 'cours' | 'algos' | 'ressources';
 
@@ -51,28 +52,44 @@ export default function LanguageDetail() {
   const totalLessons = lang.sections.reduce((acc, s) => acc + s.lessons.length, 0);
   const completedCount = completedLessons.size;
   const progressPct = Math.round((completedCount / totalLessons) * 100);
+  const currentXP = completedCount * 150;
+  const maxXP = totalLessons * 150;
+  const playerLevel = Math.floor(currentXP / 300) + 1;
 
   const currentSection = lang.sections[activeSection];
   const currentLesson = currentSection?.lessons[activeLesson];
 
   const markComplete = () => {
     const key = `${activeSection}-${activeLesson}`;
-    setCompletedLessons(prev => new Set([...prev, key]));
+    if (!completedLessons.has(key)) {
+      setCompletedLessons(prev => new Set([...prev, key]));
+      
+      // Confetti effect for gamification
+      confetti({
+        particleCount: 100,
+        spread: 70,
+        origin: { y: 0.8 },
+        colors: [lang.color, '#ffffff', '#ffd700']
+      });
+    }
+
     // Auto-advance
     if (activeLesson < currentSection.lessons.length - 1) {
       setActiveLesson(l => l + 1);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     } else if (activeSection < lang.sections.length - 1) {
       setActiveSection(s => s + 1);
       setActiveLesson(0);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
 
   const isCompleted = (si: number, li: number) => completedLessons.has(`${si}-${li}`);
 
   const tabs: { id: Tab; label: string; icon: React.ReactNode }[] = [
-    { id: 'cours', label: uiLang === 'fr' ? 'Cours' : 'Course', icon: <BookOpen className="w-3.5 h-3.5" /> },
-    { id: 'algos', label: uiLang === 'fr' ? 'Algorithmes' : 'Algorithms', icon: <Code2 className="w-3.5 h-3.5" /> },
-    { id: 'ressources', label: uiLang === 'fr' ? 'Ressources' : 'Resources', icon: <ExternalLink className="w-3.5 h-3.5" /> },
+    { id: 'cours', label: uiLang === 'fr' ? 'La Quête Principale' : 'Main Quest', icon: <Map className="w-4 h-4" /> },
+    { id: 'algos', label: uiLang === 'fr' ? 'Défis Algorithmes' : 'Algorithm Challenges', icon: <Code2 className="w-4 h-4" /> },
+    { id: 'ressources', label: uiLang === 'fr' ? 'Bibliothèque' : 'Library', icon: <BookOpen className="w-4 h-4" /> },
   ];
 
   return (
@@ -111,21 +128,35 @@ export default function LanguageDetail() {
               </div>
             </div>
           </div>
-          {/* Stats + Progress */}
-          <div className="shrink-0 space-y-3 min-w-[200px]">
-            <Bar value={lang.popularity} color={lang.color} label="Popularité" />
-            <Bar value={lang.perf} color={lang.color} label="Performance" />
-            <div className="space-y-1 mt-4">
+          {/* Stats + XP */}
+          <div className="shrink-0 space-y-4 min-w-[250px] p-4 bg-[var(--bg)]/50 rounded-xl border border-[var(--border)] backdrop-blur-md">
+            <div className="flex items-center gap-3 border-b border-[var(--border)] pb-3">
+              <div className="w-12 h-12 rounded-full flex items-center justify-center font-black text-xl border-2 shadow-lg" style={{ borderColor: lang.color, backgroundColor: lang.color + '20', color: lang.color }}>
+                {playerLevel}
+              </div>
+              <div>
+                <div className="text-[10px] font-black uppercase tracking-widest text-[var(--text-dim)]">Niveau Joueur</div>
+                <div className="text-lg font-black">{uiLang === 'fr' ? 'Aventurier' : 'Adventurer'}</div>
+              </div>
+            </div>
+
+            <div className="space-y-1.5">
+              <div className="flex justify-between text-[10px] font-bold uppercase tracking-wider">
+                <span className="flex items-center gap-1 text-yellow-500"><Star className="w-3 h-3 fill-current" /> XP Total</span>
+                <span className="text-white">{currentXP} / {maxXP}</span>
+              </div>
+              <div className="h-2 bg-[var(--bg3)] rounded-full overflow-hidden shadow-inner">
+                <motion.div animate={{ width: `${progressPct}%` }} transition={{ duration: 1, type: 'spring' }} className="h-full rounded-full bg-yellow-500" />
+              </div>
+            </div>
+
+            <div className="space-y-1 mt-4 pt-4 border-t border-[var(--border)]">
               <div className="flex justify-between text-[10px]">
                 <span className="text-[var(--text-dim)] font-bold uppercase tracking-wider">
-                  {uiLang === 'fr' ? 'Progression cours' : 'Course progress'}
+                  <Target className="w-3 h-3 inline mr-1" /> {uiLang === 'fr' ? 'Quêtes accomplies' : 'Quests completed'}
                 </span>
-                <span className="font-black text-[var(--green)]">{progressPct}%</span>
+                <span className="font-black text-[var(--green)]">{completedCount}/{totalLessons}</span>
               </div>
-              <div className="h-1.5 bg-[var(--bg3)] rounded-full overflow-hidden">
-                <motion.div animate={{ width: `${progressPct}%` }} transition={{ duration: 0.5 }} className="h-full rounded-full bg-[var(--green)]" />
-              </div>
-              <div className="text-[9px] text-[var(--text-dim)]">{completedCount}/{totalLessons} {uiLang === 'fr' ? 'leçons' : 'lessons'}</div>
             </div>
           </div>
         </div>
@@ -154,44 +185,59 @@ export default function LanguageDetail() {
           transition={{ duration: 0.2 }}
         >
           {activeTab === 'cours' && (
-            <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 items-start">
-              {/* Sidebar: sections & lessons */}
+            <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+              {/* Sidebar: Map of Knowledge */}
               <div className="lg:col-span-1 space-y-2 sticky top-24">
+                <div className="p-3 bg-[var(--bg3)] border border-[var(--border)] rounded-xl flex items-center justify-between shadow-sm">
+                  <span className="text-xs font-black uppercase tracking-widest text-[var(--text-dim)] flex items-center gap-2"><Map className="w-4 h-4"/> Carte du Monde</span>
+                  <span className="text-[9px] font-black text-[var(--green)] px-2 py-0.5 rounded-full bg-[var(--green)]/10">{progressPct}%</span>
+                </div>
               {lang.sections.map((section, si) => (
                 <div key={si} className="rounded-xl border border-[var(--border)] bg-[var(--bg2)] overflow-hidden">
                   <button
                     onClick={() => { setActiveSection(si); setActiveLesson(0); }}
-                    className="w-full flex items-center gap-2 px-4 py-3 text-left"
-                    style={activeSection === si ? { borderLeft: `3px solid ${lang.color}` } : {}}
+                    className="w-full flex items-center gap-3 px-4 py-3 text-left hover:bg-[var(--bg3)]/50 transition-colors"
+                    style={activeSection === si ? { background: lang.color + '10', borderLeft: `4px solid ${lang.color}` } : {}}
                   >
-                    <span className="text-base">{section.icon}</span>
-                    <div className="flex flex-col">
-                      <span className="text-xs font-black text-[var(--text-bright)]">{section.title}</span>
-                      {section.level && <span className="text-[9px] text-[var(--text-dim)] font-bold uppercase">{section.level}</span>}
+                    <div className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0 shadow-inner" style={{ background: 'var(--bg3)', border: '1px solid var(--border)' }}>
+                      <span className="text-lg">{section.icon}</span>
                     </div>
-                    <span className="ml-auto text-[9px] text-[var(--text-dim)]">
+                    <div className="flex flex-col flex-1">
+                      <span className="text-xs font-black text-[var(--text-bright)]">{section.title}</span>
+                      {section.level && <span className="text-[9px] font-bold uppercase mt-0.5" style={{ color: section.level === 'Expert' ? '#ef4444' : section.level === 'Intermédiaire' ? '#f59e0b' : '#3b82f6' }}>{section.level}</span>}
+                    </div>
+                    <span className="text-[9px] font-bold text-[var(--text-dim)]">
                       {section.lessons.filter((_, li) => isCompleted(si, li)).length}/{section.lessons.length}
                     </span>
                   </button>
                   {activeSection === si && (
-                    <div className="border-t border-[var(--border)]">
+                    <div className="border-t border-[var(--border)] bg-[var(--bg)]/50 p-2 space-y-1">
                       {section.lessons.map((lesson, li) => (
                         <button
                           key={li}
                           onClick={() => setActiveLesson(li)}
-                          className={`w-full flex items-center gap-2 px-4 py-2.5 text-left text-xs transition-colors ${activeLesson === li ? 'bg-[var(--bg3)]' : 'hover:bg-[var(--bg3)]/50'}`}
+                          className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-xs transition-all group ${activeLesson === li ? 'bg-[var(--bg2)] shadow-sm border border-[var(--border)]' : 'hover:bg-[var(--bg2)] border border-transparent'}`}
                         >
-                          {isCompleted(si, li)
-                            ? <CheckCircle2 className="w-3.5 h-3.5 shrink-0 text-green-400" />
-                            : <div className={`w-3.5 h-3.5 rounded-full border-2 shrink-0 ${activeLesson === li ? '' : 'border-[var(--border)]'}`} style={activeLesson === li ? { borderColor: lang.color } : {}} />}
-                          <span className={activeLesson === li ? 'font-bold text-[var(--text-bright)]' : 'text-[var(--text-dim)]'}>{lesson.title}</span>
+                          <div className="relative flex items-center justify-center">
+                            {isCompleted(si, li)
+                              ? <div className="w-5 h-5 rounded-full bg-green-500/20 flex items-center justify-center shrink-0"><CheckCircle2 className="w-3.5 h-3.5 text-green-400" /></div>
+                              : <div className={`w-5 h-5 rounded-full border-2 shrink-0 flex items-center justify-center ${activeLesson === li ? 'bg-[var(--bg)]' : 'border-[var(--border)] bg-[var(--bg3)] group-hover:border-white/20'}`} style={activeLesson === li ? { borderColor: lang.color } : {}}>
+                                  {activeLesson === li && <div className="w-2 h-2 rounded-full" style={{ backgroundColor: lang.color }} />}
+                                </div>}
+                          </div>
+                          <span className={activeLesson === li ? 'font-bold text-[var(--text-bright)]' : 'font-medium text-[var(--text-dim)] group-hover:text-white/80'}>{lesson.title}</span>
+                          
+                          {/* XP Badge */}
+                          <span className="ml-auto text-[8px] font-black text-yellow-500 bg-yellow-500/10 px-1.5 py-0.5 rounded opacity-0 group-hover:opacity-100 transition-opacity" style={activeLesson === li ? { opacity: 1 } : {}}>
+                            +150 XP
+                          </span>
                         </button>
                       ))}
                     </div>
                   )}
                 </div>
               ))}
-            </div>
+              </div>
 
             {/* Main lesson content */}
             <div className="lg:col-span-3 space-y-5">
@@ -273,22 +319,22 @@ export default function LanguageDetail() {
                           else if (activeSection > 0) { setActiveSection(s => s - 1); setActiveLesson(lang.sections[activeSection - 1].lessons.length - 1); }
                         }}
                         disabled={activeSection === 0 && activeLesson === 0}
-                        className="text-xs font-bold text-[var(--text-dim)] hover:text-[var(--text-bright)] flex items-center gap-1 disabled:opacity-30 transition-colors w-full sm:w-auto justify-center"
+                        className="text-xs font-bold text-[var(--text-dim)] hover:text-[var(--text-bright)] flex items-center gap-1 disabled:opacity-30 transition-colors w-full sm:w-auto justify-center px-4 py-2 rounded-lg hover:bg-[var(--bg3)]"
                       >
-                        ← {uiLang === 'fr' ? 'Leçon précédente' : 'Previous lesson'}
+                        ← {uiLang === 'fr' ? 'Quête précédente' : 'Previous quest'}
                       </button>
 
                       <button
                         onClick={markComplete}
-                        className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-black text-sm text-black transition-all hover:opacity-90 shadow-lg"
-                        style={{ backgroundColor: lang.color, boxShadow: `0 4px 20px -5px ${lang.color}80` }}
+                        className="w-full sm:w-auto flex items-center justify-center gap-2 px-8 py-3.5 rounded-xl font-black text-sm text-black transition-all hover:scale-105 shadow-xl"
+                        style={{ backgroundColor: isCompleted(activeSection, activeLesson) ? '#3b82f6' : lang.color, boxShadow: `0 4px 20px -5px ${isCompleted(activeSection, activeLesson) ? '#3b82f6' : lang.color}80` }}
                       >
                         {isCompleted(activeSection, activeLesson)
-                          ? (uiLang === 'fr' ? 'Leçon suivante →' : 'Next lesson →')
+                          ? (uiLang === 'fr' ? 'Prochaine quête →' : 'Next quest →')
                           : (
                             <>
-                              <CheckCircle2 className="w-4 h-4" />
-                              {uiLang === 'fr' ? 'Marquer complété' : 'Mark complete'}
+                              <Sparkles className="w-4 h-4" />
+                              {uiLang === 'fr' ? 'Compléter la quête (+150 XP)' : 'Complete Quest (+150 XP)'}
                             </>
                           )}
                       </button>
