@@ -39,7 +39,7 @@ export async function executeCode(sourceCode: string, lang: string) {
       
       const timeoutId = setTimeout(() => {
         worker.terminate();
-        resolve({ output: '❌ Erreur fatale: Temps d\\'exécution dépassé (> 3s).\\nUne boucle infinie a été détectée et arrêtée par sécurité.' });
+        resolve({ output: "❌ Erreur fatale: Temps d'exécution dépassé (> 3s).\\nUne boucle infinie a été détectée et arrêtée par sécurité." });
       }, 3000);
 
       worker.onmessage = (e) => {
