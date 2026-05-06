@@ -3,21 +3,32 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { ALGORITHMS } from '../data/content';
 import Seo from '../components/Seo';
-import { Search, Filter, ChevronRight, Clock, Layers } from 'lucide-react';
+import { useStore } from '../store/useStore';
+import { Search, Clock, Database, ChevronRight, Layers, Eye, Zap, CheckCircle2 } from 'lucide-react';
 
 const CATEGORIES = ['Tous', 'Tri', 'Recherche', 'Graphes', 'Dynamique', 'Arrays'];
 const DIFFICULTIES = ['Tous', 'Débutant', 'Intermédiaire', 'Avancé'];
 
-const diffColor = (d: string) => {
-  if (d === 'Débutant') return 'text-green-400 border-green-400/30 bg-green-400/5';
-  if (d === 'Intermédiaire') return 'text-yellow-400 border-yellow-400/30 bg-yellow-400/5';
-  return 'text-red-400 border-red-400/30 bg-red-400/5';
+const CATEGORY_ICONS: Record<string, string> = {
+  'Tri': '🔄', 'Recherche': '🔍', 'Graphes': '🕸️', 'Dynamique': '🧠', 'Arrays': '📊'
 };
+const CATEGORY_COLORS: Record<string, string> = {
+  'Tri': '#10b981', 'Recherche': '#3b82f6', 'Graphes': '#8b5cf6', 'Dynamique': '#f59e0b', 'Arrays': '#ef4444'
+};
+
+const diffStyle = (d: string) => {
+  if (d === 'Débutant') return { color: '#10b981', bg: 'rgba(16,185,129,0.08)', border: 'rgba(16,185,129,0.25)' };
+  if (d === 'Intermédiaire') return { color: '#f59e0b', bg: 'rgba(245,158,11,0.08)', border: 'rgba(245,158,11,0.25)' };
+  return { color: '#ef4444', bg: 'rgba(239,68,68,0.08)', border: 'rgba(239,68,68,0.25)' };
+};
+
+const HAS_VISUALIZER = new Set(['bubble-sort', 'quick-sort', 'binary-search']);
 
 export default function Algorithms() {
   const [search, setSearch] = useState('');
   const [category, setCategory] = useState('Tous');
   const [difficulty, setDifficulty] = useState('Tous');
+  const { completed, uiLang } = useStore();
 
   const filtered = useMemo(() => {
     return ALGORITHMS.filter(a => {
@@ -29,22 +40,72 @@ export default function Algorithms() {
     });
   }, [search, category, difficulty]);
 
+  const totalAlgos = ALGORITHMS.length;
+  const completedCount = ALGORITHMS.filter(a => completed.includes(a.id as any)).length;
+  const progressPct = Math.round((completedCount / totalAlgos) * 100);
+
   return (
-    <div className="container mx-auto px-4 py-12">
+    <div className="container mx-auto px-4 py-10">
       <Seo title="Algorithmes" description="Explorez tous les algorithmes essentiels avec visualisations et code." />
-      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mb-10">
-        <h1 className="text-4xl font-bold mb-3">Bibliothèque d'Algorithmes</h1>
-        <p className="text-[var(--text-dim)]">Maîtrisez les algorithmes fondamentaux avec du code et des explications claires.</p>
+
+      {/* Hero Header */}
+      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mb-8">
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
+          <div>
+            <h1 className="text-4xl md:text-5xl font-black mb-2 bg-gradient-to-r from-white to-[var(--text-dim)] bg-clip-text text-transparent">
+              {uiLang === 'fr' ? "Bibliothèque d'Algorithmes" : 'Algorithm Library'}
+            </h1>
+            <p className="text-[var(--text-dim)] text-sm">
+              {uiLang === 'fr' ? 'Maîtrisez les algorithmes fondamentaux avec visualisations interactives et pratique de code.' : 'Master fundamental algorithms with interactive visualizations and code practice.'}
+            </p>
+          </div>
+          {/* Global Progress */}
+          <div className="shrink-0 p-4 bg-[var(--bg2)] border border-[var(--border)] rounded-2xl min-w-[200px]">
+            <div className="text-xs text-[var(--text-dim)] uppercase tracking-widest font-bold mb-2">
+              {uiLang === 'fr' ? 'Progression globale' : 'Global Progress'}
+            </div>
+            <div className="flex items-center gap-3">
+              <div className="flex-1 h-2 bg-[var(--bg3)] rounded-full overflow-hidden">
+                <motion.div
+                  initial={{ width: 0 }}
+                  animate={{ width: `${progressPct}%` }}
+                  transition={{ duration: 1, delay: 0.5, ease: 'easeOut' }}
+                  className="h-full bg-gradient-to-r from-[var(--green)] to-teal-400 rounded-full"
+                />
+              </div>
+              <span className="text-sm font-black text-[var(--green)]">{progressPct}%</span>
+            </div>
+            <div className="text-[10px] text-[var(--text-dim)] mt-1.5">
+              {completedCount} / {totalAlgos} {uiLang === 'fr' ? 'complétés' : 'completed'}
+            </div>
+          </div>
+        </div>
+      </motion.div>
+
+      {/* Category Quick-Jump */}
+      <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05 }} className="flex flex-wrap gap-2 mb-6">
+        {CATEGORIES.filter(c => c !== 'Tous').map(c => (
+          <button
+            key={c}
+            onClick={() => setCategory(cat => cat === c ? 'Tous' : c)}
+            className={`flex items-center gap-2 px-3 py-1.5 rounded-xl border text-xs font-bold transition-all ${
+              category === c ? 'text-black border-transparent' : 'bg-[var(--bg2)] text-[var(--text-dim)] border-[var(--border)] hover:border-[var(--text-dim)]'
+            }`}
+            style={category === c ? { backgroundColor: CATEGORY_COLORS[c], borderColor: CATEGORY_COLORS[c] } : {}}
+          >
+            <span>{CATEGORY_ICONS[c]}</span> {c}
+          </button>
+        ))}
       </motion.div>
 
       {/* Search + Filters */}
-      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="space-y-4 mb-10">
+      <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="space-y-3 mb-8">
         <div className="relative">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[var(--text-dim)]" />
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--text-dim)]" />
           <input
             type="text"
-            placeholder="Rechercher un algorithme..."
-            className="w-full bg-[var(--bg2)] border border-[var(--border)] rounded-2xl py-3.5 pl-12 pr-4 focus:border-[var(--green)] outline-none transition-all text-sm"
+            placeholder={uiLang === 'fr' ? 'Rechercher un algorithme...' : 'Search an algorithm...'}
+            className="w-full bg-[var(--bg2)] border border-[var(--border)] rounded-2xl py-3 pl-11 pr-4 focus:border-[var(--green)] outline-none transition-all text-sm"
             value={search}
             onChange={e => setSearch(e.target.value)}
           />
@@ -52,33 +113,15 @@ export default function Algorithms() {
             <button onClick={() => setSearch('')} className="absolute right-4 top-1/2 -translate-y-1/2 text-[var(--text-dim)] hover:text-white text-xs">✕</button>
           )}
         </div>
-        <div className="flex flex-wrap gap-2 items-center">
-          <div className="flex items-center gap-1 text-xs text-[var(--text-dim)] font-bold uppercase tracking-widest mr-2">
-            <Filter className="w-3 h-3" /> Catégorie:
-          </div>
-          {CATEGORIES.map(c => (
-            <button
-              key={c}
-              onClick={() => setCategory(c)}
-              className={`px-4 py-1.5 rounded-full text-xs font-bold border transition-all ${
-                category === c
-                  ? 'bg-[var(--green)] text-black border-[var(--green)]'
-                  : 'bg-[var(--bg3)] text-[var(--text-dim)] border-[var(--border)] hover:border-[var(--text-dim)]'
-              }`}
-            >
-              {c}
-            </button>
-          ))}
-        </div>
-        <div className="flex flex-wrap gap-2 items-center">
-          <div className="flex items-center gap-1 text-xs text-[var(--text-dim)] font-bold uppercase tracking-widest mr-2">
-            <Layers className="w-3 h-3" /> Niveau:
+        <div className="flex flex-wrap items-center gap-2">
+          <div className="flex items-center gap-1 text-[10px] text-[var(--text-dim)] font-bold uppercase tracking-widest mr-1">
+            <Layers className="w-3 h-3" /> {uiLang === 'fr' ? 'Niveau :' : 'Level:'}
           </div>
           {DIFFICULTIES.map(d => (
             <button
               key={d}
               onClick={() => setDifficulty(d)}
-              className={`px-4 py-1.5 rounded-full text-xs font-bold border transition-all ${
+              className={`px-3 py-1 rounded-full text-[10px] font-bold border transition-all ${
                 difficulty === d
                   ? 'bg-[var(--green)] text-black border-[var(--green)]'
                   : 'bg-[var(--bg3)] text-[var(--text-dim)] border-[var(--border)] hover:border-[var(--text-dim)]'
@@ -87,61 +130,116 @@ export default function Algorithms() {
               {d}
             </button>
           ))}
-        </div>
-        <div className="text-xs text-[var(--text-dim)]">
-          {filtered.length} algorithme{filtered.length !== 1 ? 's' : ''} trouvé{filtered.length !== 1 ? 's' : ''}
+          <span className="ml-auto text-[10px] text-[var(--text-dim)]">
+            {filtered.length} {uiLang === 'fr' ? 'algorithme(s)' : 'algorithm(s)'}
+          </span>
         </div>
       </motion.div>
 
+      {/* Algorithm Cards */}
       <AnimatePresence mode="popLayout">
         {filtered.length === 0 ? (
-          <motion.div
-            key="empty"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="text-center py-20 text-[var(--text-dim)]"
-          >
+          <motion.div key="empty" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="text-center py-20 text-[var(--text-dim)]">
             <div className="text-5xl mb-4">🔍</div>
-            <div className="font-bold text-lg mb-2">Aucun résultat</div>
-            <div className="text-sm">Essayez d'autres filtres ou termes de recherche.</div>
+            <div className="font-bold text-lg mb-2">{uiLang === 'fr' ? 'Aucun résultat' : 'No results'}</div>
+            <div className="text-sm">{uiLang === 'fr' ? "Essayez d'autres filtres." : 'Try different filters.'}</div>
           </motion.div>
         ) : (
-          <motion.div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filtered.map((algo, i) => (
-              <motion.div
-                key={algo.id}
-                layout
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-                transition={{ delay: i * 0.05 }}
-              >
-                <Link to={`/algorithms/${algo.id}`}>
-                  <div className="card group h-full flex flex-col p-6 hover:border-[var(--green)]/50 transition-all cursor-pointer">
-                    <div className="flex justify-between items-start mb-3">
-                      <span className="text-[10px] font-bold text-[var(--text-dim)] uppercase tracking-widest bg-[var(--bg3)] px-2.5 py-1 rounded-full border border-[var(--border)]">
-                        {algo.category}
-                      </span>
-                      <span className={`text-[10px] font-bold px-2.5 py-1 rounded-full border ${diffColor(algo.difficulty)}`}>
-                        {algo.difficulty}
-                      </span>
-                    </div>
-                    <h3 className="text-xl font-bold mb-3 group-hover:text-[var(--green)] transition-colors">{algo.name}</h3>
-                    <p className="text-sm text-[var(--text-dim)] flex-1 mb-4 leading-relaxed line-clamp-2">{algo.description}</p>
-                    <div className="flex items-center justify-between mt-auto pt-4 border-t border-[var(--border)]">
-                      <div className="flex items-center gap-2 text-xs text-[var(--text-dim)]">
-                        <Clock className="w-3 h-3" />
-                        <span className="font-mono font-bold">{algo.timeO}</span>
+          <motion.div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
+            {filtered.map((algo, i) => {
+              const ds = diffStyle(algo.difficulty);
+              const catColor = CATEGORY_COLORS[algo.category] || '#10b981';
+              const isCompleted = completed.includes(algo.id as any);
+              const hasViz = HAS_VISUALIZER.has(algo.id);
+              return (
+                <motion.div
+                  key={algo.id}
+                  layout
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.9 }}
+                  transition={{ delay: i * 0.04, type: 'spring', stiffness: 120 }}
+                  whileHover={{ y: -4, transition: { duration: 0.2 } }}
+                >
+                  <Link to={`/algorithms/${algo.id}`} className="block h-full">
+                    <div
+                      className="relative h-full flex flex-col p-5 rounded-2xl border bg-[var(--bg2)] transition-all group overflow-hidden"
+                      style={{ borderColor: 'var(--border)' }}
+                      onMouseEnter={e => (e.currentTarget.style.borderColor = catColor + '60')}
+                      onMouseLeave={e => (e.currentTarget.style.borderColor = 'var(--border)')}
+                    >
+                      {/* Glow effect */}
+                      <div
+                        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                        style={{ background: `radial-gradient(ellipse at top left, ${catColor}10 0%, transparent 70%)` }}
+                      />
+
+                      {/* Top badges */}
+                      <div className="flex items-start justify-between gap-2 mb-4 relative">
+                        <div className="flex items-center gap-2">
+                          <span
+                            className="w-8 h-8 rounded-xl flex items-center justify-center text-base shrink-0"
+                            style={{ background: catColor + '15', border: `1px solid ${catColor}30` }}
+                          >
+                            {CATEGORY_ICONS[algo.category] || '📌'}
+                          </span>
+                          <span className="text-[9px] font-black uppercase tracking-widest" style={{ color: catColor }}>{algo.category}</span>
+                        </div>
+                        <div className="flex items-center gap-1.5">
+                          {hasViz && (
+                            <span className="flex items-center gap-1 text-[9px] font-bold px-2 py-0.5 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20">
+                              <Eye className="w-2.5 h-2.5" /> Viz
+                            </span>
+                          )}
+                          {isCompleted && (
+                            <span className="flex items-center gap-1 text-[9px] font-bold px-2 py-0.5 rounded-full bg-green-500/10 text-green-400 border border-green-500/20">
+                              <CheckCircle2 className="w-2.5 h-2.5" /> OK
+                            </span>
+                          )}
+                          <span
+                            className="text-[9px] font-black px-2.5 py-1 rounded-full border"
+                            style={{ color: ds.color, background: ds.bg, borderColor: ds.border }}
+                          >
+                            {algo.difficulty}
+                          </span>
+                        </div>
                       </div>
-                      <div className="flex items-center gap-1 text-[var(--green)] font-bold text-xs group-hover:gap-2 transition-all">
-                        Explorer <ChevronRight className="w-4 h-4" />
+
+                      {/* Name + desc */}
+                      <h3 className="text-lg font-black mb-2 group-hover:text-[var(--green)] transition-colors relative">{algo.name}</h3>
+                      <p className="text-xs text-[var(--text-dim)] flex-1 mb-4 leading-relaxed line-clamp-2 relative">{algo.description}</p>
+
+                      {/* Complexity chips */}
+                      <div className="flex items-center gap-2 mb-4 relative">
+                        <div className="flex items-center gap-1 text-[10px] font-mono font-black px-2 py-1 rounded-lg bg-[var(--bg3)] border border-[var(--border)]">
+                          <Clock className="w-3 h-3 text-[var(--text-dim)]" /> {algo.timeO}
+                        </div>
+                        <div className="flex items-center gap-1 text-[10px] font-mono font-black px-2 py-1 rounded-lg bg-[var(--bg3)] border border-[var(--border)]">
+                          <Database className="w-3 h-3 text-[var(--text-dim)]" /> {algo.spaceO}
+                        </div>
+                      </div>
+
+                      {/* CTA */}
+                      <div className="flex items-center justify-between pt-3 border-t border-[var(--border)] relative">
+                        <div className="flex items-center gap-1.5">
+                          {(algo as any).challenges && (
+                            <span className="text-[9px] text-[var(--text-dim)] flex items-center gap-1">
+                              <Zap className="w-2.5 h-2.5" /> {(algo as any).challenges.length} défis
+                            </span>
+                          )}
+                        </div>
+                        <span
+                          className="text-xs font-black flex items-center gap-1 transition-all group-hover:gap-2"
+                          style={{ color: catColor }}
+                        >
+                          {uiLang === 'fr' ? 'Explorer' : 'Explore'} <ChevronRight className="w-4 h-4" />
+                        </span>
                       </div>
                     </div>
-                  </div>
-                </Link>
-              </motion.div>
-            ))}
+                  </Link>
+                </motion.div>
+              );
+            })}
           </motion.div>
         )}
       </AnimatePresence>
