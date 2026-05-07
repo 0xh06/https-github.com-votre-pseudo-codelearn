@@ -163,10 +163,10 @@ export default function Algorithms() {
                 >
                   <Link to={`/algorithms/${algo.id}`} className="block h-full">
                     <div
-                      className="relative h-full flex flex-col p-5 rounded-2xl border bg-[var(--bg2)] transition-all group overflow-hidden"
-                      style={{ borderColor: 'var(--border)' }}
-                      onMouseEnter={e => (e.currentTarget.style.borderColor = catColor + '60')}
-                      onMouseLeave={e => (e.currentTarget.style.borderColor = 'var(--border)')}
+                      className="relative h-full flex flex-col p-5 rounded-2xl border border-white/5 bg-[var(--bg2)] transition-all group overflow-hidden hover:bg-[var(--bg3)]"
+                      style={{ borderColor: 'rgba(255,255,255,0.05)' }}
+                      onMouseEnter={e => (e.currentTarget.style.borderColor = catColor + '80')}
+                      onMouseLeave={e => (e.currentTarget.style.borderColor = 'rgba(255,255,255,0.05)')}
                     >
                       {/* Glow effect */}
                       <div

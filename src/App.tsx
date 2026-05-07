@@ -19,6 +19,7 @@ import Pricing from './pages/Pricing';
 import Languages from './pages/Languages';
 import LanguageDetail from './pages/LanguageDetail';
 import Profile from './pages/Profile';
+import AvatarCreatorPage from './pages/AvatarCreatorPage';
 import Settings from './pages/Settings';
 import Contact from './pages/Contact';
 import Privacy from './pages/Privacy';
@@ -80,6 +81,7 @@ export default function App() {
           <Route path="/languages" element={<Languages />} />
           <Route path="/languages/:id" element={<LanguageDetail />} />
           <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+          <Route path="/avatar" element={<ProtectedRoute><AvatarCreatorPage /></ProtectedRoute>} />
           <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
           <Route path="/flashcards" element={<ProtectedRoute><Flashcards /></ProtectedRoute>} />
           <Route path="/flashcards/session" element={<ProtectedRoute><FlashcardSession /></ProtectedRoute>} />

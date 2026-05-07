@@ -18,14 +18,15 @@ import {
   User,
   Moon,
   Sun,
-  Trophy
+  Trophy,
+  Paintbrush
 } from 'lucide-react';
 import { getLevelInfo } from '../utils/levels';
 import { t } from '../utils/i18n';
 import AvatarRenderer from './AvatarRenderer';
 
 export default function Navbar() {
-  const { xp, user, setUser, subscriptionPlan, uiLang, setUiLang, avatar } = useStore();
+  const { xp, user, setUser, subscriptionPlan, uiLang, setUiLang, avatar, completedUniversal } = useStore();
   const location = useLocation();
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -93,26 +94,6 @@ export default function Navbar() {
         </div>
 
         <div className="flex items-center gap-3">
-          {/* Level Progress (Always visible on desktop) */}
-          {user && (
-            <div className="hidden md:flex items-center gap-3 px-4 py-1.5 rounded-2xl bg-[var(--bg3)]/50 border border-[var(--border)] group cursor-help">
-              <div className="flex flex-col items-end">
-                <div className="text-[9px] text-[var(--yellow)] font-black uppercase tracking-widest flex items-center gap-1">
-                  <Trophy className="w-3 h-3" /> {uiLang === 'fr' ? 'Niveau' : 'Level'} {levelData.level}
-                </div>
-                <div className="w-20 h-1.5 bg-[var(--bg)] rounded-full mt-1 overflow-hidden">
-                  <motion.div 
-                    initial={{ width: 0 }}
-                    animate={{ width: `${(xp / levelData.max) * 100}%` }}
-                    className="h-full bg-gradient-to-r from-[var(--yellow)] to-orange-400 shadow-[0_0_8px_rgba(241,196,15,0.4)]" 
-                  />
-                </div>
-              </div>
-              <div className="w-7 h-7 rounded-lg bg-[var(--bg)] border border-[var(--border)] flex items-center justify-center text-[10px] font-black text-white group-hover:scale-110 transition-transform">
-                {levelData.level}
-              </div>
-            </div>
-          )}
 
           {/* Quick Actions */}
           <div className="flex items-center gap-2">
@@ -133,16 +114,31 @@ export default function Navbar() {
           </div>
 
           {user ? (
-            <div className="relative">
-              <button 
-                onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
-                className="flex items-center gap-2 pl-2 pr-3 py-1.5 rounded-2xl bg-[var(--bg3)]/80 border border-[var(--border)] hover:border-[var(--green)]/50 transition-all shadow-lg"
-              >
-                <div className="w-8 h-8 flex items-center justify-center">
-                  <AvatarRenderer config={avatar} size={32} />
-                </div>
-                <ChevronDown className={`w-3.5 h-3.5 text-[var(--text-dim)] transition-transform duration-300 ${isUserMenuOpen ? 'rotate-180' : ''}`} />
-              </button>
+            <div className="flex items-center gap-2 p-1 rounded-[20px] bg-[var(--bg3)]/50 border border-white/5">
+              {/* Level Badge - Integrated */}
+              <div className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-[14px] bg-[var(--bg)] border border-white/5">
+                <Trophy className="w-3.5 h-3.5 text-[var(--yellow)]" />
+                <span className="text-[11px] font-black text-white">{levelData.level}</span>
+              </div>
+
+              {/* Profile Pill */}
+              <div className="relative">
+                <button 
+                  onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
+                  className={`flex items-center gap-2.5 pl-1.5 pr-3 py-1.5 rounded-[16px] transition-all ${
+                    isUserMenuOpen ? 'bg-[var(--bg)] shadow-inner border-white/10' : 'hover:bg-white/5 border-transparent'
+                  } border`}
+                >
+                  <div className="w-8 h-8 rounded-full overflow-hidden bg-[var(--bg2)] border border-white/10 flex items-center justify-center shadow-lg">
+                    <AvatarRenderer config={avatar} size={32} />
+                  </div>
+                  <div className="hidden sm:block text-left">
+                    <div className="text-[10px] font-black text-[var(--text-bright)] leading-none truncate max-w-[80px]">
+                      {user.email?.split('@')[0]}
+                    </div>
+                  </div>
+                  <ChevronDown className={`w-3 h-3 text-[var(--text-dim)] transition-transform duration-300 ${isUserMenuOpen ? 'rotate-180' : ''}`} />
+                </button>
 
               <AnimatePresence>
                 {isUserMenuOpen && (
@@ -150,30 +146,68 @@ export default function Navbar() {
                     initial={{ opacity: 0, y: 15, scale: 0.95 }}
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     exit={{ opacity: 0, y: 15, scale: 0.95 }}
-                    className="absolute right-0 mt-3 w-64 glass rounded-2xl shadow-2xl overflow-hidden py-2"
+                    className="absolute right-0 mt-3 w-72 glass rounded-[32px] shadow-2xl overflow-hidden border-white/10"
                   >
-                    <div className="px-5 py-4 border-b border-[var(--border)] mb-2">
-                      <div className="text-[10px] font-black uppercase tracking-widest text-[var(--text-dim)] mb-1.5">{t('nav_connected', uiLang)}</div>
-                      <div className="text-sm font-bold truncate text-[var(--text-bright)]">{user.email}</div>
+                    {/* Identity Hub Header */}
+                    <div className="relative p-6 pb-4 overflow-hidden">
+                      <div className="absolute inset-0 profile-card-glow opacity-50 -z-10" />
+                      <div className="flex flex-col items-center text-center space-y-3">
+                        <div className="relative group/avatar">
+                          <div className="absolute inset-0 bg-[var(--green)]/20 blur-xl rounded-full opacity-0 group-hover/avatar:opacity-100 transition-opacity" />
+                          <AvatarRenderer config={avatar} size={80} />
+                          <Link 
+                            to="/avatar" 
+                            onClick={() => setIsUserMenuOpen(false)}
+                            className="absolute -right-2 -bottom-2 w-8 h-8 rounded-full bg-[var(--bg3)] border border-white/10 flex items-center justify-center text-[var(--green)] hover:scale-110 transition-transform shadow-lg"
+                            title="Personnaliser"
+                          >
+                            <Paintbrush size={14} />
+                          </Link>
+                        </div>
+                        <div>
+                          <div className="text-lg font-black text-[var(--text-bright)] tracking-tight">
+                            {user.email?.split('@')[0]}
+                          </div>
+                          <div className="text-[10px] font-black uppercase tracking-[0.2em] text-[var(--green)]">
+                            {levelData.name} • NIV.{levelData.level}
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                    <Link 
-                      to="/profile"
-                      onClick={() => setIsUserMenuOpen(false)}
-                      className="w-full flex items-center gap-3 px-5 py-3 text-xs font-bold text-[var(--text-dim)] hover:text-[var(--text-bright)] hover:bg-[var(--bg3)] transition-all"
-                    >
-                      <User className="w-4 h-4" />
-                      {t('nav_dashboard', uiLang)}
-                    </Link>
-                    <button 
-                      onClick={handleLogout}
-                      className="w-full flex items-center gap-3 px-5 py-3 text-xs font-bold text-red-400 hover:bg-red-400/5 transition-all"
-                    >
-                      <LogOut className="w-4 h-4" />
-                      {t('nav_logout', uiLang)}
-                    </button>
+
+                    {/* Stats Quick View */}
+                    <div className="px-6 py-4 grid grid-cols-2 gap-3 border-y border-white/5 bg-white/[0.02]">
+                      <div className="text-center">
+                        <div className="text-sm font-black text-[var(--text-bright)]">{xp}</div>
+                        <div className="text-[8px] font-black uppercase tracking-widest text-[var(--text-dim)]">Points XP</div>
+                      </div>
+                      <div className="text-center">
+                        <div className="text-sm font-black text-[var(--text-bright)]">{completedUniversal.length}</div>
+                        <div className="text-[8px] font-black uppercase tracking-widest text-[var(--text-dim)]">Leçons</div>
+                      </div>
+                    </div>
+
+                    <div className="p-2 space-y-1">
+                      <Link 
+                        to="/profile"
+                        onClick={() => setIsUserMenuOpen(false)}
+                        className="w-full flex items-center gap-3 px-4 py-3 rounded-2xl text-xs font-bold text-[var(--text-dim)] hover:text-[var(--text-bright)] hover:bg-white/5 transition-all"
+                      >
+                        <User className="w-4 h-4" />
+                        {t('nav_dashboard', uiLang)}
+                      </Link>
+                      <button 
+                        onClick={handleLogout}
+                        className="w-full flex items-center gap-3 px-4 py-3 rounded-2xl text-xs font-bold text-red-400 hover:bg-red-400/5 transition-all"
+                      >
+                        <LogOut className="w-4 h-4" />
+                        {t('nav_logout', uiLang)}
+                      </button>
+                    </div>
                   </motion.div>
                 )}
               </AnimatePresence>
+              </div>
             </div>
           ) : (
             <div className="flex items-center gap-2">

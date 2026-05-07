@@ -9,7 +9,7 @@ export const translations = {
   // ── Navbar ──────────────────────────────────────────────
   nav_algorithms: { fr: 'Algorithmes', en: 'Algorithms' },
   nav_exercises:  { fr: 'Exercices',   en: 'Exercises'  },
-  nav_roadmap:    { fr: 'Le Guide',     en: 'The Guide'  },
+  nav_roadmap:    { fr: 'Le Parcours',  en: 'Roadmap'    },
   nav_languages:  { fr: 'Langages',    en: 'Languages'  },
   nav_pricing:    { fr: 'Tarifs',      en: 'Pricing'    },
   nav_login:      { fr: 'Connexion',   en: 'Log in'     },

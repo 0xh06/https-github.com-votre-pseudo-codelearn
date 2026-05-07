@@ -1,13 +1,15 @@
+import React from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { useStore } from '../store/useStore';
 import Seo from '../components/Seo';
 import { ALGORITHMS, EXERCISES } from '../data/content';
-import { Trophy, Flame, BookOpen, Code2, ChevronRight, Star, Target } from 'lucide-react';
+import { Trophy, Flame, BookOpen, Code2, ChevronRight, Star, Target, Settings, Share2, Crown, Zap } from 'lucide-react';
 import { getLevelInfo } from '../utils/levels';
+import AvatarRenderer from '../components/AvatarRenderer';
 
 export default function Profile() {
-  const { xp, completed, favorites, streakData } = useStore();
+  const { xp, completed, favorites, streakData, avatar, user } = useStore();
   const levelData = getLevelInfo(xp);
   const completedAlgos = favorites.length;
   const completedExercises = completed.length;
@@ -15,107 +17,159 @@ export default function Profile() {
   const totalExercises = EXERCISES.length;
 
   return (
-    <div className="container mx-auto px-4 py-12 max-w-5xl">
-      <Seo title="Mon Profil" description="Votre tableau de bord personnel sur AlgoMaster." />
+    <div className="container mx-auto px-4 py-24 max-w-6xl relative overflow-hidden">
+      <Seo title="Mon Profil | AlgoMaster" description="Consulte ton tableau de bord personnel, tes stats et ton avatar sur AlgoMaster." />
+
+      {/* Decorative Elements */}
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[var(--green)]/5 blur-[120px] -z-10 rounded-full" />
+      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-[var(--blue)]/5 blur-[120px] -z-10 rounded-full" />
 
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
-        className="mb-12"
+        className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16"
       >
-        <h1 className="text-4xl font-bold mb-2">Mon Dashboard</h1>
-        <p className="text-[var(--text-dim)]">Votre progression en un coup d'œil.</p>
-      </motion.div>
-
-      {/* Level Card */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.1 }}
-        className="card p-8 mb-8 bg-gradient-to-r from-[var(--bg2)] to-[var(--bg3)] border-l-4 border-l-[var(--green)]"
-      >
-        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-          <div className="flex items-center gap-6">
-            <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-[var(--green)] to-[var(--blue)] flex items-center justify-center text-3xl font-black text-black">
-              {levelData.level}
-            </div>
-            <div>
-              <div className="text-[10px] uppercase tracking-widest text-[var(--yellow)] font-black mb-1">Niveau {levelData.level}</div>
-              <div className="text-2xl font-bold text-[var(--text-bright)]">{levelData.name || 'Apprenti Codeur'}</div>
-              <div className="text-sm text-[var(--text-dim)]">{xp} XP total</div>
-            </div>
+        <div>
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 mb-4">
+            <Crown className="text-[var(--yellow)] w-3 h-3" />
+            <span className="text-[9px] font-black uppercase tracking-[0.2em] text-[var(--text-dim)]">Tableau de Bord Personnel</span>
           </div>
-          <div className="w-full md:w-64">
-            <div className="flex justify-between text-xs text-[var(--text-dim)] mb-2">
-              <span>Progression</span>
-              <span>{xp} / {levelData.max} XP</span>
-            </div>
-            <div className="w-full h-3 bg-[var(--bg)] rounded-full overflow-hidden">
-              <motion.div
-                initial={{ width: 0 }}
-                animate={{ width: `${Math.min((xp / levelData.max) * 100, 100)}%` }}
-                transition={{ duration: 1, delay: 0.5 }}
-                className="h-full bg-gradient-to-r from-[var(--green)] to-[var(--blue)] rounded-full"
-              />
-            </div>
-          </div>
+          <h1 className="text-5xl md:text-7xl font-black text-white tracking-tighter">VOTRE <span className="premium-gradient">ASCENSION</span></h1>
+          <p className="text-[var(--text-dim)] text-xl font-medium mt-2">Prêt à franchir le prochain palier, {user?.email?.split('@')[0] || 'Codeur'} ?</p>
+        </div>
+        
+        <div className="flex gap-3">
+          <Link to="/settings" className="p-4 rounded-2xl glass border-white/5 text-[var(--text-dim)] hover:text-white transition-all">
+            <Settings size={20} />
+          </Link>
+          <button className="p-4 rounded-2xl glass border-white/5 text-[var(--text-dim)] hover:text-white transition-all">
+            <Share2 size={20} />
+          </button>
         </div>
       </motion.div>
 
-      {/* Stats Grid */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-        {[
-          { icon: <Flame className="w-5 h-5 text-orange-400" />, value: streakData.count, label: 'Jours de streak', color: 'orange' },
-          { icon: <BookOpen className="w-5 h-5 text-[var(--green)]" />, value: `${completedAlgos}/${totalAlgos}`, label: 'Algos étudiés', color: 'green' },
-          { icon: <Code2 className="w-5 h-5 text-[var(--blue)]" />, value: `${completedExercises}/${totalExercises}`, label: 'Exercices résolus', color: 'blue' },
-          { icon: <Star className="w-5 h-5 text-[var(--yellow)]" />, value: xp, label: 'XP gagnés', color: 'yellow' },
-        ].map((stat, i) => (
-          <motion.div
-            key={i}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 + i * 0.1 }}
-            className="card p-6 text-center"
-          >
-            <div className="flex justify-center mb-3">{stat.icon}</div>
-            <div className="text-2xl font-bold text-[var(--text-bright)] mb-1">{stat.value}</div>
-            <div className="text-[10px] uppercase tracking-widest text-[var(--text-dim)] font-bold">{stat.label}</div>
-          </motion.div>
-        ))}
-      </div>
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        {/* Main Identity Card */}
+        <motion.div
+          initial={{ opacity: 0, x: -30 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.1 }}
+          className="lg:col-span-5 space-y-8"
+        >
+          <div className="glass p-12 rounded-[48px] border-white/10 relative overflow-hidden group">
+            <div className="absolute inset-0 bg-gradient-to-br from-[var(--green)]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+            
+            <div className="relative z-10 flex flex-col items-center">
+              <div className="mb-8 p-1 rounded-[40px] border-2 border-white/10 shadow-2xl relative">
+                <div className="absolute -top-4 -right-4 w-12 h-12 rounded-2xl bg-[var(--green)] text-black flex items-center justify-center font-black text-xl shadow-lg border-2 border-[var(--bg)]">
+                  {levelData.level}
+                </div>
+                <AvatarRenderer config={avatar} size={240} />
+              </div>
+              
+              <div className="text-center space-y-2">
+                <div className="text-[10px] font-black uppercase tracking-[0.4em] text-[var(--green)]">Grade Actuel</div>
+                <h2 className="text-3xl font-black text-white tracking-tight">{levelData.name}</h2>
+                <div className="flex items-center justify-center gap-2 text-[var(--text-dim)] font-medium">
+                  <Star size={14} className="text-[var(--yellow)]" fill="currentColor" />
+                  {xp.toLocaleString()} TOTAL XP
+                </div>
+              </div>
 
-      {/* Quick Actions */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.6 }}
-        className="grid grid-cols-1 md:grid-cols-2 gap-4"
-      >
-        <Link to="/algorithms" className="card p-6 group hover:border-[var(--green)]/50 transition-all flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <div className="w-12 h-12 bg-[var(--green)]/10 rounded-xl flex items-center justify-center">
-              <Target className="w-6 h-6 text-[var(--green)]" />
-            </div>
-            <div>
-              <div className="font-bold text-[var(--text-bright)]">Continuer l'apprentissage</div>
-              <div className="text-sm text-[var(--text-dim)]">Reprendre là où vous vous êtes arrêté</div>
+              <div className="w-full mt-10 space-y-3">
+                <div className="flex justify-between text-[10px] font-black uppercase tracking-widest text-[var(--text-dim)]">
+                  <span>Progression Niveau</span>
+                  <span className="text-white">{xp} / {levelData.max} XP</span>
+                </div>
+                <div className="h-2 bg-white/5 rounded-full overflow-hidden p-0.5 border border-white/5">
+                  <motion.div
+                    initial={{ width: 0 }}
+                    animate={{ width: `${Math.min((xp / levelData.max) * 100, 100)}%` }}
+                    className="h-full bg-gradient-to-r from-[var(--green)] to-[#00ff88] rounded-full shadow-[0_0_10px_var(--green-glow)]"
+                  />
+                </div>
+              </div>
             </div>
           </div>
-          <ChevronRight className="w-5 h-5 text-[var(--text-dim)] group-hover:translate-x-1 transition-transform" />
-        </Link>
-        <Link to="/exercises" className="card p-6 group hover:border-[var(--blue)]/50 transition-all flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <div className="w-12 h-12 bg-[var(--blue)]/10 rounded-xl flex items-center justify-center">
-              <Code2 className="w-6 h-6 text-[var(--blue)]" />
+
+          <Link to="/avatar" className="block p-8 rounded-[40px] bg-gradient-to-r from-purple-600/20 to-blue-600/20 border border-white/10 hover:border-white/20 transition-all group">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <div className="w-14 h-14 rounded-2xl bg-white/10 flex items-center justify-center text-2xl group-hover:rotate-12 transition-transform">🎭</div>
+                <div>
+                  <div className="font-black text-white text-lg">Studio d'Avatar</div>
+                  <div className="text-sm text-[var(--text-dim)]">Personnalise ton identité</div>
+                </div>
+              </div>
+              <ChevronRight className="text-white/20 group-hover:text-white group-hover:translate-x-1 transition-all" />
             </div>
-            <div>
-              <div className="font-bold text-[var(--text-bright)]">Résoudre des exercices</div>
-              <div className="text-sm text-[var(--text-dim)]">{totalExercises - completedExercises} exercices restants</div>
+          </Link>
+        </motion.div>
+
+        {/* Stats & Activity */}
+        <motion.div
+          initial={{ opacity: 0, x: 30 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.2 }}
+          className="lg:col-span-7 space-y-8"
+        >
+          <div className="grid grid-cols-2 gap-6">
+            {[
+              { icon: <Flame className="w-6 h-6 text-orange-400" />, value: streakData.count, label: 'Série Actuelle', sub: 'Jours consécutifs' },
+              { icon: <Zap className="w-6 h-6 text-[var(--blue)]" />, value: completedExercises, label: 'Défis Relevés', sub: `${totalExercises - completedExercises} restants` },
+              { icon: <BookOpen className="w-6 h-6 text-[var(--green)]" />, value: completedAlgos, label: 'Algos Maîtrisés', sub: `${totalAlgos} au total` },
+              { icon: <Star className="w-6 h-6 text-[var(--yellow)]" />, value: favorites.length, label: 'Coups de Cœur', sub: 'Algorithmes favoris' },
+            ].map((stat, i) => (
+              <div key={i} className="glass p-8 rounded-[40px] border-white/5 space-y-4 hover:border-white/10 transition-all group">
+                <div className="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center group-hover:scale-110 transition-transform">
+                  {stat.icon}
+                </div>
+                <div>
+                  <div className="text-3xl font-black text-white">{stat.value}</div>
+                  <div className="text-xs font-black uppercase tracking-widest text-[var(--text-dim)]">{stat.label}</div>
+                  <div className="text-[10px] text-[var(--text-dim)]/60 font-medium">{stat.sub}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="glass p-10 rounded-[48px] border-white/5 space-y-8">
+            <h3 className="text-2xl font-black text-white tracking-tight">Prochaines Étapes</h3>
+            
+            <div className="space-y-4">
+              <Link to="/paths" className="flex items-center justify-between p-6 rounded-3xl bg-white/5 hover:bg-white/10 border border-white/5 transition-all group">
+                <div className="flex items-center gap-6">
+                  <div className="w-16 h-16 rounded-2xl bg-[var(--green)]/10 flex items-center justify-center text-[var(--green)]">
+                    <Target size={28} />
+                  </div>
+                  <div>
+                    <div className="font-black text-white text-lg">Parcours Universel</div>
+                    <div className="text-sm text-[var(--text-dim)]">Continue ton ascension vers le grade d'Expert</div>
+                  </div>
+                </div>
+                <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-[var(--green)] group-hover:text-black transition-all">
+                  <ChevronRight size={20} />
+                </div>
+              </Link>
+
+              <Link to="/flashcards" className="flex items-center justify-between p-6 rounded-3xl bg-white/5 hover:bg-white/10 border border-white/5 transition-all group">
+                <div className="flex items-center gap-6">
+                  <div className="w-16 h-16 rounded-2xl bg-[var(--blue)]/10 flex items-center justify-center text-[var(--blue)]">
+                    <Star size={28} />
+                  </div>
+                  <div>
+                    <div className="font-black text-white text-lg">Révisions Éclair</div>
+                    <div className="text-sm text-[var(--text-dim)]">Renforce ta mémoire avec les flashcards</div>
+                  </div>
+                </div>
+                <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-[var(--blue)] group-hover:text-black transition-all">
+                  <ChevronRight size={20} />
+                </div>
+              </Link>
             </div>
           </div>
-          <ChevronRight className="w-5 h-5 text-[var(--text-dim)] group-hover:translate-x-1 transition-transform" />
-        </Link>
-      </motion.div>
+        </motion.div>
+      </div>
     </div>
   );
 }

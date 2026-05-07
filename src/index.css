@@ -6,8 +6,8 @@
   :root {
     /* Premium Dark Palette (Deep Slate & Graphite) */
     --bg: hsl(220, 25%, 5%);
-    --bg2: hsl(220, 25%, 8%);
-    --bg3: hsl(220, 25%, 12%);
+    --bg2: hsl(220, 25%, 10%);
+    --bg3: hsl(220, 25%, 15%);
     --border: hsla(220, 20%, 20%, 0.5);
     
     --text: hsl(210, 20%, 80%);
@@ -97,6 +97,9 @@
   .text-glow-blue { text-shadow: 0 0 15px var(--blue-glow); }
   .premium-gradient {
     @apply bg-gradient-to-br from-white via-white to-gray-500 bg-clip-text text-transparent;
+  }
+  .profile-card-glow {
+    background: radial-gradient(circle at center, var(--green-glow) 0%, transparent 70%);
   }
 }
 

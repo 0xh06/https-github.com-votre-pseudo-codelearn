@@ -7,6 +7,8 @@ interface Particle {
   x: number;
   y: number;
   amount: number;
+  angle: number;
+  velocity: number;
 }
 
 export default function XPBubbles() {
@@ -16,19 +18,29 @@ export default function XPBubbles() {
 
   useEffect(() => {
     if (xp > prevXp) {
-      const amount = xp - prevXp;
-      const id = Date.now();
+      const amountGain = xp - prevXp;
+      const burstId = Date.now();
       
-      // Random position near the top or where the user might be looking
-      const x = Math.random() * 60 + 20; // 20% to 80% width
-      const y = Math.random() * 40 + 30; // 30% to 70% height
+      // Center of the burst
+      const centerX = Math.random() * 40 + 30; // 30% to 70%
+      const centerY = Math.random() * 40 + 30; // 30% to 70%
+
+      // Create multiple particles for the burst
+      const newParticles = Array.from({ length: 8 }).map((_, i) => ({
+        id: burstId + i,
+        x: centerX,
+        y: centerY,
+        amount: Math.round(amountGain / 8),
+        angle: (i * 45) + (Math.random() * 20),
+        velocity: 10 + Math.random() * 10
+      }));
       
-      setParticles((prev) => [...prev, { id, x, y, amount }]);
+      setParticles((prev) => [...prev, ...newParticles]);
       setPrevXp(xp);
 
       // Auto-remove after animation
       setTimeout(() => {
-        setParticles((prev) => prev.filter((p) => p.id !== id));
+        setParticles((prev) => prev.filter((p) => !newParticles.find(np => np.id === p.id)));
       }, 2000);
     }
   }, [xp, prevXp]);
@@ -39,25 +51,21 @@ export default function XPBubbles() {
         {particles.map((p) => (
           <motion.div
             key={p.id}
-            initial={{ opacity: 0, y: `${p.y}%`, x: `${p.x}%`, scale: 0.5 }}
+            initial={{ opacity: 0, x: `${p.x}%`, y: `${p.y}%`, scale: 0 }}
             animate={{ 
               opacity: [0, 1, 1, 0], 
-              y: [`${p.y}%`, `${p.y - 15}%`],
-              scale: [0.5, 1.2, 1, 1.5]
+              x: [`${p.x}%`, `${p.x + Math.cos(p.angle * Math.PI / 180) * p.velocity}%`],
+              y: [`${p.y}%`, `${p.y + Math.sin(p.angle * Math.PI / 180) * p.velocity}%`],
+              scale: [0, 1.5, 1, 0.5],
+              rotate: [0, p.angle * 2]
             }}
-            exit={{ opacity: 0 }}
-            className="absolute flex flex-col items-center"
+            transition={{ duration: 1.5, ease: "easeOut" }}
+            className="absolute flex items-center gap-1"
           >
-            <div className="bg-[var(--green)] text-black px-4 py-2 rounded-full font-black text-xl shadow-[0_0_30px_rgba(16,185,129,0.8)] border-2 border-white/20">
-              +{p.amount} XP
+            <div className="bg-gradient-to-br from-[var(--green)] to-[#00ff88] text-black px-3 py-1 rounded-full font-black text-sm shadow-[0_0_20px_var(--green-glow)] border border-white/20">
+              +{p.amount}
             </div>
-            <motion.div 
-              animate={{ rotate: 360 }}
-              transition={{ duration: 2, repeat: Infinity, ease: 'linear' }}
-              className="text-2xl mt-2"
-            >
-              ✨
-            </motion.div>
+            <span className="text-xl">✨</span>
           </motion.div>
         ))}
       </AnimatePresence>

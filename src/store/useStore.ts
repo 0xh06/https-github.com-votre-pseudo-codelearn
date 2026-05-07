@@ -82,7 +82,7 @@ export const useStore = create<StoreState>()(
         clothesColor: '#E74C3C',
         accessory: null
       },
-      unlockedAccessories: ['classic-glasses'],
+      unlockedAccessories: ['glasses', 'headphones'],
       srs: {},
       streakData: { count: 0, lastDate: null, history: [2, 5, 3, 7, 4, 8, 5] },
       lastAlgo: null,

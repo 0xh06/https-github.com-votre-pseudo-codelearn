@@ -1,69 +1,82 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useStore } from '../store/useStore';
-import { Target, CheckCircle2, ChevronRight, X } from 'lucide-react';
+import { Target, CheckCircle2, X, Trophy } from 'lucide-react';
 
 export default function QuestWidget() {
-  const { xp, completedUniversal } = useStore();
+  const { xp, completedUniversal, unlockedAccessories } = useStore();
   const [isOpen, setIsOpen] = useState(false);
 
   const quests = [
-    { id: 1, title: 'Premiers Pas', task: 'Compléter une leçon universelle', done: completedUniversal.length > 0 },
-    { id: 2, title: 'Accumulateur', task: 'Atteindre 500 XP', done: xp >= 500 },
-    { id: 3, title: 'Explorateur', task: 'Visiter la page des langages', done: true }, // Simple example
+    { id: 1, title: 'Premiers Pas', task: 'Compléter une leçon universelle', done: completedUniversal.length > 0, icon: '🌱' },
+    { id: 2, title: 'Accumulateur', task: 'Atteindre 500 XP', done: xp >= 500, icon: '💰' },
+    { id: 3, title: 'Collectionneur', task: 'Débloquer 3 accessoires', done: unlockedAccessories.length >= 3, icon: '🎩' },
+    { id: 4, title: 'Érudit', task: 'Finir le module débutant', done: completedUniversal.includes('b2'), icon: '📚' },
   ];
 
   const completedCount = quests.filter(q => q.done).length;
+  const progressPct = (completedCount / quests.length) * 100;
 
   return (
-    <div className="fixed bottom-8 right-8 z-[1000]">
+    <div className="fixed bottom-8 right-8 z-[1000] flex flex-col items-end gap-4">
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, scale: 0.9, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.9, y: 20 }}
-            className="absolute bottom-20 right-0 w-80 glass rounded-[32px] border-white/10 shadow-3xl overflow-hidden"
+            initial={{ opacity: 0, scale: 0.9, y: 20, x: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0, x: 0 }}
+            exit={{ opacity: 0, scale: 0.9, y: 20, x: 20 }}
+            className="w-80 glass rounded-[40px] border-white/10 shadow-[0_20px_60px_rgba(0,0,0,0.5)] overflow-hidden"
           >
-            <div className="p-6 bg-white/5 border-b border-white/5 flex items-center justify-between">
+            {/* Header */}
+            <div className="p-8 bg-gradient-to-br from-white/[0.05] to-transparent border-b border-white/5 flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-xl bg-[var(--green)]/20 flex items-center justify-center text-[var(--green)]">
-                  <Target size={18} />
+                <div className="w-10 h-10 rounded-2xl bg-yellow-400/20 flex items-center justify-center text-yellow-400 shadow-[0_0_15px_rgba(250,204,21,0.2)]">
+                  <Trophy size={20} />
                 </div>
-                <h3 className="text-sm font-black uppercase tracking-widest">Tes Quêtes</h3>
+                <div>
+                  <h3 className="text-sm font-black uppercase tracking-[0.2em] text-white">Quêtes</h3>
+                  <div className="text-[9px] font-black uppercase tracking-widest text-yellow-400/60">Journal de Bord</div>
+                </div>
               </div>
-              <button onClick={() => setIsOpen(false)} className="p-2 hover:bg-white/5 rounded-lg transition-colors">
-                <X size={16} className="text-[var(--text-dim)]" />
+              <button onClick={() => setIsOpen(false)} className="p-2 hover:bg-white/5 rounded-xl transition-colors text-[var(--text-dim)]">
+                <X size={18} />
               </button>
             </div>
 
-            <div className="p-6 space-y-4">
+            {/* List */}
+            <div className="p-6 space-y-3">
               {quests.map((q) => (
-                <div key={q.id} className={`flex items-start gap-4 p-3 rounded-2xl border transition-all ${q.done ? 'bg-[var(--green)]/5 border-[var(--green)]/20 opacity-60' : 'bg-white/5 border-white/5'}`}>
-                  <div className={`mt-0.5 ${q.done ? 'text-[var(--green)]' : 'text-[var(--text-dim)]'}`}>
-                    {q.done ? <CheckCircle2 size={16} /> : <div className="w-4 h-4 rounded-full border-2 border-current opacity-30" />}
+                <div 
+                  key={q.id} 
+                  className={`flex items-center gap-4 p-4 rounded-3xl border transition-all duration-500 ${
+                    q.done 
+                    ? 'bg-[var(--green)]/5 border-[var(--green)]/10 opacity-50 grayscale-[0.5]' 
+                    : 'bg-white/[0.02] border-white/5 hover:border-white/10'
+                  }`}
+                >
+                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center text-xl ${q.done ? 'bg-[var(--green)]/10' : 'bg-white/5'}`}>
+                    {q.done ? <CheckCircle2 size={20} className="text-[var(--green)]" /> : q.icon}
                   </div>
-                  <div>
-                    <div className="text-xs font-bold text-[var(--text-bright)]">{q.title}</div>
-                    <div className="text-[10px] text-[var(--text-dim)]">{q.task}</div>
+                  <div className="flex-1">
+                    <div className={`text-[11px] font-black uppercase tracking-wider ${q.done ? 'text-[var(--text-dim)] line-through' : 'text-white'}`}>{q.title}</div>
+                    <div className="text-[9px] font-bold text-[var(--text-dim)]">{q.task}</div>
                   </div>
                 </div>
               ))}
             </div>
 
-            <div className="p-4 bg-[var(--green)]/10 text-center">
-              <div className="text-[10px] font-black uppercase tracking-widest text-[var(--green)] mb-1">
-                Progression Globale
+            {/* Progress Footer */}
+            <div className="p-8 bg-white/[0.02] border-t border-white/5 space-y-4">
+              <div className="flex justify-between items-end">
+                <div className="text-[10px] font-black uppercase tracking-[0.2em] text-[var(--text-dim)]">Progression</div>
+                <div className="text-xl font-black text-white">{completedCount}<span className="text-[var(--text-dim)]">/{quests.length}</span></div>
               </div>
-              <div className="flex items-center gap-3">
-                <div className="flex-1 h-1.5 bg-white/5 rounded-full overflow-hidden">
-                  <motion.div 
-                    initial={{ width: 0 }}
-                    animate={{ width: `${(completedCount / quests.length) * 100}%` }}
-                    className="h-full bg-[var(--green)]" 
-                  />
-                </div>
-                <span className="text-[10px] font-bold text-[var(--green)]">{completedCount}/{quests.length}</span>
+              <div className="h-2 bg-white/5 rounded-full overflow-hidden p-0.5">
+                <motion.div 
+                  initial={{ width: 0 }}
+                  animate={{ width: `${progressPct}%` }}
+                  className="h-full bg-gradient-to-r from-[var(--green)] to-[#00ff88] rounded-full shadow-[0_0_10px_var(--green-glow)]" 
+                />
               </div>
             </div>
           </motion.div>
@@ -74,18 +87,18 @@ export default function QuestWidget() {
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         onClick={() => setIsOpen(!isOpen)}
-        className="relative w-14 h-14 rounded-2xl bg-[var(--bg2)] glass border-white/10 flex items-center justify-center text-[var(--green)] shadow-2xl group"
+        className={`relative w-16 h-16 rounded-[24px] glass border-white/10 flex items-center justify-center shadow-2xl group transition-all ${isOpen ? 'bg-[var(--green)] text-black border-[var(--green)]' : 'text-[var(--green)]'}`}
       >
-        <Target size={24} className="group-hover:rotate-12 transition-transform" />
-        {completedCount < quests.length && (
-          <div className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-red-500 border-2 border-[var(--bg)] flex items-center justify-center text-[10px] font-black text-white">
+        <Target size={28} className={`${!isOpen && 'group-hover:rotate-12'} transition-transform duration-500`} />
+        
+        {!isOpen && completedCount < quests.length && (
+          <div className="absolute -top-1 -right-1 w-6 h-6 rounded-full bg-red-500 border-[3px] border-[var(--bg)] flex items-center justify-center text-[10px] font-black text-white shadow-lg">
             {quests.length - completedCount}
           </div>
         )}
         
-        {/* Pulse ring when closed */}
         {!isOpen && (
-          <div className="absolute inset-0 rounded-2xl border-2 border-[var(--green)] animate-ping opacity-20" />
+          <div className="absolute inset-0 rounded-[24px] border-2 border-[var(--green)] animate-ping opacity-20 pointer-events-none" />
         )}
       </motion.button>
     </div>

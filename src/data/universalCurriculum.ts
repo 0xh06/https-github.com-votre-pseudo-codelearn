@@ -21,7 +21,7 @@ export type UniversalLevel = {
 export const UNIVERSAL_CURRICULUM: UniversalLevel[] = [
   {
     id: 'beginner',
-    title: 'Niveau 1 : Les Graines du Code',
+    title: 'Module 1 : Les Graines du Code',
     subtitle: 'Apprenez les fondamentaux absolus de la logique informatique.',
     reward: { id: 'beginner-badge', name: 'Badge Novice', icon: '🌱' },
     lessons: [
@@ -58,7 +58,7 @@ export const UNIVERSAL_CURRICULUM: UniversalLevel[] = [
   },
   {
     id: 'intermediate',
-    title: 'Niveau 2 : Le Tronc de la Logique',
+    title: 'Module 2 : Le Tronc de la Logique',
     subtitle: 'Structurez votre pensée et gérez la complexité.',
     reward: { id: 'scholar-hat', name: 'Chapeau d\'Étudiant', icon: '🎓' },
     lessons: [
@@ -80,7 +80,7 @@ export const UNIVERSAL_CURRICULUM: UniversalLevel[] = [
   },
   {
     id: 'expert',
-    title: 'Niveau 3 : La Couronne de l\'Architecture',
+    title: 'Module 3 : La Couronne de l\'Architecture',
     subtitle: 'Optimisez, sécurisez et concevez des systèmes robustes.',
     reward: { id: 'expert-crown', name: 'Couronne d\'Expert', icon: '👑' },
     lessons: [

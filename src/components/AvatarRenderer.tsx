@@ -1,5 +1,5 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useState, useEffect } from 'react';
+import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import type { AvatarConfig } from '../store/useStore';
 
 interface Props {
@@ -28,33 +28,24 @@ const PALETTE = {
   }
 };
 
-// 18x23 grid
 const LAYERS: Record<string, Record<string, string[]>> = {
   base: {
     body: [
-      "                  ", // 0
-      "                  ", // 1
-      "                  ", // 2
-      "                  ", // 3
-      "                  ", // 4
-      "     OOOOOOOO     ", // 5
-      "    OssssssssO    ", // 6
-      "   OSSSSSSSSSSO   ", // 7
-      "   OSSSSSSSSSSO   ", // 8
-      "   OSSSSSSSSSSO   ", // 9
-      "   OSSSSSSSSSSO   ", // 10
-      "   OOSSSSSSSSOO   ", // 11
-      "    OOSSSSSSOO    ", // 12
-      "     OOssssOO     ", // 13
-      "    OSSOOOOSSO    ", // 14
-      "   OSSOO  OOSSO   ", // 15
-      "   OSSO    OSSO   ", // 16
-      "    OO      OO    ", // 17
-      "                  ", // 18
-      "                  ", // 19
-      "                  ", // 20
-      "                  ", // 21
-      "                  ", // 22
+      "                  ", "                  ", "                  ", "                  ", "                  ",
+      "     OOOOOOOO     ",
+      "    OssssssssO    ",
+      "   OSSSSSSSSSSO   ",
+      "   OSSSSSSSSSSO   ",
+      "   OSSSSSSSSSSO   ",
+      "   OSSSSSSSSSSO   ",
+      "   OOSSSSSSSSOO   ",
+      "    OOSSSSSSOO    ",
+      "     OOssssOO     ",
+      "    OSSOOOOSSO    ",
+      "   OSSOO  OOSSO   ",
+      "   OSSO    OSSO   ",
+      "    OO      OO    ",
+      "                  ", "                  ", "                  ", "                  ", "                  ",
     ]
   },
   face: {
@@ -82,12 +73,23 @@ const LAYERS: Record<string, Record<string, string[]>> = {
       "    O EE  EE O    ",
       "    Obb E  E bbO  ",
       "                  ", "                  ", "                  ", "                  ", "                  ", "                  ", "                  ", "                  ", "                  ", "                  ", "                  ", "                  ",
+    ],
+    thinking: [
+      "                  ", "                  ", "                  ", "                  ", "                  ", "                  ", "                  ", "                  ", "                  ",
+      "    O E.  EE O    ",
+      "    Obb    bbO    ",
+      "       OOO        ", "                  ", "                  ", "                  ", "                  ", "                  ", "                  ", "                  ", "                  ", "                  ", "                  ", "                  ",
+    ],
+    wink: [
+      "                  ", "                  ", "                  ", "                  ", "                  ", "                  ", "                  ", "                  ", "                  ",
+      "    O E-  EE O    ",
+      "    Obb    bbO    ",
+      "                  ", "                  ", "                  ", "                  ", "                  ", "                  ", "                  ", "                  ", "                  ", "                  ", "                  ", "                  ",
     ]
   },
   hair: {
     short: [
-      "                  ",
-      "                  ",
+      "                  ", "                  ",
       "     OOOOOOOO     ",
       "   OOhhhhhhhhOO   ",
       "  OhhHHHHHHHHhhO  ",
@@ -194,16 +196,60 @@ const LAYERS: Record<string, Record<string, string[]>> = {
       "    OOFFOOFFOO    ",
       "    OOOOOOOOOO    ",
       "                  ",
+    ],
+    trench: [
+      "                  ", "                  ", "                  ", "                  ", "                  ", "                  ", "                  ", "                  ", "                  ", "                  ", "                  ", "                  ", "                  ",
+      "    OOCCCCCCCOO   ",
+      "   OCCCCCCCCCCCO  ",
+      "   OCCCCCCCCCCCO  ",
+      "   OCCCCCCCCCCCO  ",
+      "   OCCCCCCCCCCCO  ",
+      "   OCCCCCCCCCCCO  ",
+      "   OCCCCCCCCCCCO  ",
+      "   OCCCCCCCCCCCO  ",
+      "    OOOOOOOOOOO   ",
+      "                  ",
+    ],
+    't-shirt': [
+      "                  ", "                  ", "                  ", "                  ", "                  ", "                  ", "                  ", "                  ", "                  ", "                  ", "                  ", "                  ", "                  ",
+      "      OOOOOO      ",
+      "    OCCCSSCCCO    ",
+      "    OCCCCCCCOO    ",
+      "    OCCCCCCCOO    ",
+      "    OCCCCCCCOO    ",
+      "    OCCCCCCCOO    ",
+      "    OPPPOOPPPO    ",
+      "    OOFFOOFFOO    ",
+      "    OOOOOOOOOO    ",
+      "                  ",
     ]
   },
   accessory: {
     glasses: [
-      "                  ", "                  ", "                  ", "                  ", "                  ", "                  ", "                  ", "                  ",
-      "                  ",
+      "                  ", "                  ", "                  ", "                  ", "                  ", "                  ", "                  ", "                  ", "                  ",
       "   OA AA  AA AO   ",
       "   O A A  A A O   ",
       "   O AA    AA O   ",
       "                  ", "                  ", "                  ", "                  ", "                  ", "                  ", "                  ", "                  ", "                  ", "                  ", "                  ",
+    ],
+    headphones: [
+      "     OOOOOOOO     ",
+      "   OOAAhhhhAAOO   ",
+      "  OAAHHHHHHHHAAO  ",
+      " OAAHHHHHHHHHHAAO ",
+      " OAAHHHHHHHHHHAAO ",
+      " OAAHhhhhhhHHHAAO ",
+      " OAAHSSSSSSSSHHAAO",
+      "  OA          AO  ",
+      "                  ", "                  ", "                  ", "                  ", "                  ", "                  ", "                  ", "                  ", "                  ", "                  ", "                  ", "                  ", "                  ", "                  ", "                  ",
+    ],
+    'robot-ears': [
+      "                  ", "                  ", "                  ", "                  ", "                  ",
+      "   OA        AO   ",
+      "   OA        AO   ",
+      "   OA        AO   ",
+      "   OAAAAAAAAAAO   ",
+      "                  ", "                  ", "                  ", "                  ", "                  ", "                  ", "                  ", "                  ", "                  ", "                  ", "                  ", "                  ", "                  ", "                  ",
     ],
     'beginner-badge': [
       "                  ", "                  ", "                  ", "                  ", "                  ", "                  ", "                  ", "                  ", "                  ", "                  ", "                  ", "                  ", "                  ", "                  ",
@@ -233,6 +279,38 @@ const LAYERS: Record<string, Record<string, string[]>> = {
 };
 
 export default function AvatarRenderer({ config, size = 200, animate = true }: Props) {
+  const [isBlinking, setIsBlinking] = useState(false);
+  
+  // Mouse tracking for 3D tilt
+  const mouseX = useMotionValue(0.5);
+  const mouseY = useMotionValue(0.5);
+  const springX = useSpring(mouseX, { stiffness: 100, damping: 20 });
+  const springY = useSpring(mouseY, { stiffness: 100, damping: 20 });
+
+  const rotateY = useTransform(springX, [0, 1], [-15, 15]);
+  const rotateX = useTransform(springY, [0, 1], [15, -15]);
+
+  useEffect(() => {
+    if (!animate) return;
+    const blinkInterval = setInterval(() => {
+      setIsBlinking(true);
+      setTimeout(() => setIsBlinking(false), 150);
+    }, 4000 + Math.random() * 3000);
+    return () => clearInterval(blinkInterval);
+  }, [animate]);
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!animate) return;
+    const rect = e.currentTarget.getBoundingClientRect();
+    mouseX.set((e.clientX - rect.left) / rect.width);
+    mouseY.set((e.clientY - rect.top) / rect.height);
+  };
+
+  const handleMouseLeave = () => {
+    mouseX.set(0.5);
+    mouseY.set(0.5);
+  };
+
   // Safe fallbacks
   const skinTone = PALETTE.skin[config.skin as keyof typeof PALETTE.skin] || PALETTE.skin.light;
   const hairTone = PALETTE.hair[config.hairColor as keyof typeof PALETTE.hair] || PALETTE.hair.black;
@@ -243,16 +321,17 @@ export default function AvatarRenderer({ config, size = 200, animate = true }: P
     's': skinTone.s,
     'b': skinTone.b,
     'E': '#2D1B11', // Eyes
+    '-': '#2D1B11', // Wink/Closed eye
+    '.': '#2D1B11', // Thinking/Dot eye
     'H': hairTone.H,
     'h': hairTone.h,
-    'C': config.clothesColor || '#E74C3C', // Shirt (default Red like image)
-    'c': '#B03A2E', // Darker shirt
-    'P': '#2980B9', // Pants (default Blue like image overalls)
-    'p': '#1F618D', // Darker pants
-    'F': '#FFFFFF', // Shoes
-    'A': '#F1C40F', // Accessory gold
+    'C': config.clothesColor || '#E74C3C',
+    'c': '#B03A2E',
+    'P': '#2980B9',
+    'p': '#1F618D',
+    'F': '#FFFFFF',
+    'A': '#F1C40F',
     ' ': 'transparent',
-    '.': 'transparent'
   };
 
   const getLayer = (category: string, id: string | null) => {
@@ -260,88 +339,82 @@ export default function AvatarRenderer({ config, size = 200, animate = true }: P
     return LAYERS[category][id];
   };
 
-  const activeLayers = [
-    LAYERS.base.body,
-    getLayer('face', config.expression || 'neutral'),
-    getLayer('hair', config.hair || 'fluffy'),
-    getLayer('clothes', config.clothes || 'overalls'),
-    getLayer('accessory', config.accessory)
-  ].filter(Boolean) as string[][];
+  const layers = {
+    body: LAYERS.base.body,
+    face: getLayer('face', config.expression || 'neutral'),
+    hair: getLayer('hair', config.hair || 'fluffy'),
+    clothes: getLayer('clothes', config.clothes || 'overalls'),
+    accessory: getLayer('accessory', config.accessory)
+  };
 
-  // Merge layers
-  const mergedSprite: string[] = Array(23).fill("                  ");
-  const result = mergedSprite.map(row => row.split(''));
-
-  for (const layer of activeLayers) {
-    for (let y = 0; y < 23; y++) {
-      if (!layer[y]) continue;
-      for (let x = 0; x < 18; x++) {
-        const char = layer[y][x];
-        if (char && char !== ' ' && char !== '.') {
-          // Exception: Don't let hair overwrite outline for the very top of the head
-          // Actually, we want hair to cover skin outline, but not skin itself unless specified.
-          if (layer === activeLayers[2] && result[y][x] === 'S' && char === 'O') {
-             // Let skin show through hair outlines if needed, or just let hair dominate.
-             // Hair dominates.
-          }
-          result[y][x] = char;
-        }
-      }
-    }
-  }
-
-  // Handle right-side mirror for long hair, since it was only drawn on the left in the template sometimes
-  // (Wait, I drew them symmetrical, it's fine)
-
-  // Idle bounce animation
-  const bounceAnim = animate ? {
-    y: [0, -3, 0],
-    transition: { duration: 1.5, repeat: Infinity, ease: 'easeInOut' }
-  } : {};
-
-  return (
-    <div 
-      className="relative flex items-center justify-center pixelated" 
-      style={{ 
-        width: size, 
-        height: size, 
-        imageRendering: 'pixelated' // CSS for sharp pixels
-      }}
-    >
-      {/* Background Glow */}
-      <div 
-        className="absolute inset-0 rounded-full blur-2xl opacity-40 mix-blend-screen"
-        style={{ backgroundColor: COLOR_MAP['H'] }}
-      />
-      
+  const renderLayer = (layer: string[] | null, zIndex: number, extraProps: any = {}) => {
+    if (!layer) return null;
+    return (
       <motion.svg
         viewBox="0 0 18 23"
-        className="w-full h-full drop-shadow-[0_10px_25px_rgba(0,0,0,0.5)] z-10"
-        style={{ shapeRendering: 'crispEdges' }}
-        animate={bounceAnim}
+        className="absolute inset-0 w-full h-full"
+        style={{ shapeRendering: 'crispEdges', zIndex, ...extraProps.style }}
+        {...extraProps}
       >
-        {result.map((row, y) => 
-          row.map((char, x) => {
+        {layer.map((row, y) => 
+          row.split('').map((char, x) => {
             if (char === ' ' || char === '.') return null;
-            const color = COLOR_MAP[char] || '#FF00FF'; // Magenta for missing color mapping
-            return (
-              <rect 
-                key={`${x}-${y}`} 
-                x={x} 
-                y={y} 
-                width="1.05" // slight overlap to prevent svg gaps
-                height="1.05" 
-                fill={color} 
-              />
-            );
+            const color = COLOR_MAP[char] || '#FF00FF';
+            return <rect key={`${x}-${y}`} x={x} y={y} width="1.05" height="1.05" fill={color} />;
           })
         )}
       </motion.svg>
+    );
+  };
+
+  return (
+    <div 
+      className="relative flex items-center justify-center" 
+      style={{ 
+        width: size, 
+        height: size, 
+        perspective: '1000px'
+      }}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+    >
+      {/* Background Glow */}
+      <motion.div 
+        className="absolute inset-0 rounded-full blur-[60px] opacity-20 mix-blend-screen"
+        style={{ backgroundColor: hairTone.H, scale: animate ? [1, 1.1, 1] : 1 }}
+        animate={animate ? { opacity: [0.1, 0.3, 0.1] } : {}}
+        transition={{ duration: 4, repeat: Infinity }}
+      />
+      
+      <motion.div
+        className="relative w-full h-full"
+        style={{ 
+          rotateX, rotateY, transformStyle: 'preserve-3d',
+          imageRendering: 'pixelated'
+        }}
+        animate={animate ? { y: [0, -5, 0] } : {}}
+        transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+      >
+        {/* Layer Stack */}
+        {renderLayer(layers.body, 1)}
+        {renderLayer(layers.face, 3, {
+          style: { scaleY: isBlinking ? 0 : 1, originY: '0.45' },
+          transition: { duration: 0.1 }
+        })}
+        {renderLayer(layers.hair, 4)}
+        {renderLayer(layers.clothes, 2)}
+        {renderLayer(layers.accessory, 5)}
+      </motion.div>
 
       {/* Shadow */}
-      <svg viewBox="0 0 18 4" className="absolute -bottom-4 w-[60%] h-auto opacity-30 z-0">
+      <motion.svg 
+        viewBox="0 0 18 4" 
+        className="absolute -bottom-6 w-[70%] h-auto opacity-20 z-0"
+        style={{ scale: animate ? [1, 0.9, 1] : 1 }}
+        transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+      >
         <ellipse cx="9" cy="2" rx="7" ry="1.5" fill="#000000" />
-      </svg>
+      </motion.svg>
     </div>
   );
 }
