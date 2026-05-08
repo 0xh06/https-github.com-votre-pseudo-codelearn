@@ -1,3 +1,3 @@
 User-agent: *
 Allow: /
-Sitemap: https://algomaster.app/sitemap.xml
+Sitemap: https://codelearn-two.vercel.app/sitemap.xml

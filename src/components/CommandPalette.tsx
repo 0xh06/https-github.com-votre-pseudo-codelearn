@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { Search, Code2, Terminal, User, Settings, Zap, BookOpen, Map as MapIcon } from 'lucide-react';
+import { Search, Code2, Terminal, User, Settings, Zap, BookOpen, Map as MapIcon, Hammer } from 'lucide-react';
 import { ALGORITHMS, EXERCISES } from '../data/content';
 import { LANGUAGE_COURSES } from '../data/languageContent';
 
