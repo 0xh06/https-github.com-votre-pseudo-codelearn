@@ -240,7 +240,7 @@ export default function ProjectDetail() {
               <div className="flex gap-1">
                 <div className="w-2 h-2 rounded-full bg-red-500/20" />
                 <div className="w-2 h-2 rounded-full bg-yellow-500/20" />
-                <div className="w-2 h-2 rounded-full bg-green-500/20" />
+                <div className="w-2 h-2 rounded-full bg-indigo-500/20" />
               </div>
             </div>
             

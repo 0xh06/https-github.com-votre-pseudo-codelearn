@@ -47,10 +47,10 @@ export default function ResetPassword() {
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
-          className="card w-full max-w-md p-12 text-center border-[var(--green)]/30 bg-[var(--green)]/5"
+          className="card w-full max-w-md p-12 text-center border-[var(--primary)]/30 bg-[var(--primary)]/5"
         >
-          <div className="w-20 h-20 bg-[var(--green)]/10 rounded-full flex items-center justify-center mx-auto mb-6">
-            <CheckCircle className="w-10 h-10 text-[var(--green)]" />
+          <div className="w-20 h-20 bg-[var(--primary)]/10 rounded-full flex items-center justify-center mx-auto mb-6">
+            <CheckCircle className="w-10 h-10 text-[var(--primary)]" />
           </div>
           <h1 className="text-2xl font-bold mb-3">Mot de passe mis à jour !</h1>
           <p className="text-[var(--text-dim)]">Redirection vers la connexion...</p>
@@ -68,8 +68,8 @@ export default function ResetPassword() {
         className="card w-full max-w-md p-10 border border-[var(--border)] shadow-2xl"
       >
         <div className="text-center mb-10">
-          <div className="w-14 h-14 bg-[var(--green)]/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
-            <KeyRound className="w-7 h-7 text-[var(--green)]" />
+          <div className="w-14 h-14 bg-[var(--primary)]/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
+            <KeyRound className="w-7 h-7 text-[var(--primary)]" />
           </div>
           <h1 className="text-3xl font-bold mb-2">Nouveau mot de passe</h1>
           <p className="text-[var(--text-dim)] text-sm">Choisissez un mot de passe sécurisé.</p>
@@ -89,7 +89,7 @@ export default function ResetPassword() {
               required
               minLength={6}
               placeholder="Min. 6 caractères"
-              className="w-full bg-[var(--bg3)] border border-[var(--border)] rounded-xl py-3 px-4 focus:border-[var(--green)] outline-none transition-all text-sm"
+              className="w-full bg-[var(--bg3)] border border-[var(--border)] rounded-xl py-3 px-4 focus:border-[var(--primary)] outline-none transition-all text-sm"
               value={password}
               onChange={e => setPassword(e.target.value)}
             />
@@ -100,7 +100,7 @@ export default function ResetPassword() {
               type="password"
               required
               placeholder="••••••••"
-              className="w-full bg-[var(--bg3)] border border-[var(--border)] rounded-xl py-3 px-4 focus:border-[var(--green)] outline-none transition-all text-sm"
+              className="w-full bg-[var(--bg3)] border border-[var(--border)] rounded-xl py-3 px-4 focus:border-[var(--primary)] outline-none transition-all text-sm"
               value={confirm}
               onChange={e => setConfirm(e.target.value)}
             />

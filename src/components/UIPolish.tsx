@@ -22,24 +22,24 @@ export default function UIPolish() {
     <>
       {/* Scroll Progress Bar at the Top */}
       <motion.div
-        className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-[var(--green)] via-[var(--blue)] to-[var(--purple)] z-[2000] origin-left"
+        className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-[var(--primary)] via-[var(--blue)] to-[var(--purple)] z-[2000] origin-left"
         style={{ scaleX }}
       />
 
       {/* Custom Magic Cursor (Desktop only) */}
       <motion.div
-        className="fixed top-0 left-0 w-8 h-8 rounded-full border border-[var(--green)]/50 pointer-events-none z-[9999] hidden md:block"
+        className="fixed top-0 left-0 w-8 h-8 rounded-full border border-[var(--primary)]/50 pointer-events-none z-[9999] hidden md:block"
         animate={{
           x: mousePos.x - 16,
           y: mousePos.y - 16,
           transition: { type: 'spring', damping: 25, stiffness: 250, mass: 0.5 }
         }}
       >
-        <div className="absolute inset-0 rounded-full bg-[var(--green)]/10 blur-[4px]" />
+        <div className="absolute inset-0 rounded-full bg-[var(--primary)]/10 blur-[4px]" />
       </motion.div>
       
       <motion.div
-        className="fixed top-0 left-0 w-2 h-2 rounded-full bg-[var(--green)] pointer-events-none z-[9999] hidden md:block"
+        className="fixed top-0 left-0 w-2 h-2 rounded-full bg-[var(--primary)] pointer-events-none z-[9999] hidden md:block"
         animate={{
           x: mousePos.x - 4,
           y: mousePos.y - 4,
@@ -65,7 +65,7 @@ export default function UIPolish() {
             y: [0, 50, 0],
           }}
           transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
-          className="absolute top-[10%] left-[10%] w-[500px] h-[500px] bg-[var(--green)]/5 blur-[120px] rounded-full"
+          className="absolute top-[10%] left-[10%] w-[500px] h-[500px] bg-[var(--primary)]/5 blur-[120px] rounded-full"
         />
         <motion.div
           animate={{

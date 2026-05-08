@@ -72,7 +72,7 @@ export default function PremiumModal({
             className="relative w-full max-w-lg glass rounded-[32px] overflow-hidden border-white/10 shadow-2xl"
           >
             {/* Top Glow */}
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-px bg-gradient-to-r from-transparent via-[var(--green)] to-transparent opacity-50" />
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-px bg-gradient-to-r from-transparent via-[var(--primary)] to-transparent opacity-50" />
             
             <button 
               onClick={onClose}

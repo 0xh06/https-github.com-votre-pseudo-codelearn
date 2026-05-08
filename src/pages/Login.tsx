@@ -104,7 +104,7 @@ export default function Login() {
                 type="email"
                 required
                 placeholder="nom@exemple.com"
-                className="w-full bg-[var(--bg3)] border border-[var(--border)] rounded-xl py-3 pl-10 pr-4 focus:border-[var(--green)] outline-none transition-all text-sm"
+                className="w-full bg-[var(--bg3)] border border-[var(--border)] rounded-xl py-3 pl-10 pr-4 focus:border-[var(--primary)] outline-none transition-all text-sm"
                 value={email}
                 onChange={e => setEmail(e.target.value)}
               />
@@ -116,7 +116,7 @@ export default function Login() {
               <button
                 type="button"
                 onClick={handleResetPassword}
-                className="text-[10px] text-[var(--green)] hover:underline"
+                className="text-[10px] text-[var(--primary)] hover:underline"
               >
                 Mot de passe oublié ?
               </button>
@@ -125,7 +125,7 @@ export default function Login() {
               type="password"
               required
               placeholder="••••••••"
-              className="w-full bg-[var(--bg3)] border border-[var(--border)] rounded-xl py-3 px-4 focus:border-[var(--green)] outline-none transition-all text-sm"
+              className="w-full bg-[var(--bg3)] border border-[var(--border)] rounded-xl py-3 px-4 focus:border-[var(--primary)] outline-none transition-all text-sm"
               value={password}
               onChange={e => setPassword(e.target.value)}
             />
@@ -142,7 +142,7 @@ export default function Login() {
         </form>
 
         <div className="mt-8 text-center text-sm text-[var(--text-dim)]">
-          Nouveau ici ? <Link to="/signup" className="text-[var(--green)] font-bold hover:underline">Créer un compte</Link>
+          Nouveau ici ? <Link to="/signup" className="text-[var(--primary)] font-bold hover:underline">Créer un compte</Link>
         </div>
       </div>
     </div>

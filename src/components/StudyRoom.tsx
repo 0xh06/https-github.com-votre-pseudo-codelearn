@@ -72,7 +72,7 @@ export default function StudyRoom() {
 
       {/* Posters */}
       <div className="absolute top-8 right-16 w-24 h-32 bg-white/5 border border-white/10 rounded-lg transform rotate-3 flex flex-col items-center justify-center p-2 shadow-xl backdrop-blur-sm">
-        <div className="w-full h-16 bg-[var(--green)]/20 rounded mb-2 flex items-center justify-center text-2xl">
+        <div className="w-full h-16 bg-[var(--primary)]/20 rounded mb-2 flex items-center justify-center text-2xl">
           {roomTheme === 'novice' ? '🎯' : roomTheme === 'intermediate' ? '🚀' : '🧠'}
         </div>
         <div className="w-3/4 h-2 bg-white/20 rounded-full mb-1" />
@@ -113,7 +113,7 @@ export default function StudyRoom() {
       
       {/* Rank Indicator */}
       <div className="absolute top-4 right-4 glass px-3 py-1.5 rounded-xl text-xs font-black uppercase tracking-widest text-[var(--text-dim)] border-white/10 z-50 flex items-center gap-2">
-        <div className="w-2 h-2 rounded-full bg-[var(--green)] animate-pulse" />
+        <div className="w-2 h-2 rounded-full bg-[var(--primary)] animate-pulse" />
         {roomTheme === 'novice' ? 'Bureau Novice' : roomTheme === 'intermediate' ? 'Setup Intermédiaire' : 'Station Expert'}
       </div>
     </div>

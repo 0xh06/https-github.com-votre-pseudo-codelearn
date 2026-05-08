@@ -75,7 +75,7 @@ export default function FlashcardSession() {
       {!isPro && dueItemsFull.length > FREE_SESSION_CAP && (
         <div className="mb-6 p-4 rounded-xl bg-[var(--yellow)]/10 border border-[var(--yellow)]/25 text-sm text-[var(--text-bright)]">
           Plan Gratuit : jusqu&apos;à <strong>{FREE_SESSION_CAP}</strong> cartes par session.{' '}
-          <Link to="/pricing" className="text-[var(--green)] font-bold underline">
+          <Link to="/pricing" className="text-[var(--primary)] font-bold underline">
             Passez Pro
           </Link>{' '}
           pour réviser toutes les cartes dues ({dueItemsFull.length} aujourd&apos;hui).
@@ -102,7 +102,7 @@ export default function FlashcardSession() {
               className="card min-h-[400px] flex flex-col items-center justify-center text-center p-8 md:p-10 cursor-pointer"
               onClick={() => setShowAnswer(true)}
             >
-              <div className="text-[var(--green)] font-bold mb-4 uppercase tracking-widest text-xs">Concept</div>
+              <div className="text-[var(--primary)] font-bold mb-4 uppercase tracking-widest text-xs">Concept</div>
               <h2 className="text-3xl md:text-4xl font-bold px-2">{currentAlgo?.name}</h2>
               <p className="mt-10 text-[var(--text-dim)] animate-pulse text-sm">Cliquez pour voir la réponse</p>
             </motion.div>
@@ -115,7 +115,7 @@ export default function FlashcardSession() {
               className="card min-h-[400px] flex flex-col p-8 md:p-10"
             >
               <div className="flex-1 overflow-auto">
-                <h3 className="text-xl font-bold mb-4 text-[var(--green)]">Description</h3>
+                <h3 className="text-xl font-bold mb-4 text-[var(--primary)]">Description</h3>
                 <p className="text-[var(--text)] mb-6 text-sm leading-relaxed">{currentAlgo?.description}</p>
                 <h3 className="text-xl font-bold mb-4 text-[var(--blue)]">Complexité</h3>
                 <p className="font-mono text-sm">
@@ -129,7 +129,7 @@ export default function FlashcardSession() {
                     key={score}
                     type="button"
                     onClick={() => handleScore(score)}
-                    className="py-2 rounded bg-[var(--bg3)] hover:bg-[var(--green)] hover:text-black transition-all font-bold text-sm"
+                    className="py-2 rounded bg-[var(--bg3)] hover:bg-[var(--primary)] hover:text-white transition-all font-bold text-sm"
                   >
                     {score}
                   </button>

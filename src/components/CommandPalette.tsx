@@ -150,17 +150,17 @@ export default function CommandPalette() {
                       onMouseEnter={() => setActiveIndex(i)}
                       className={`w-full flex items-center justify-between p-4 rounded-xl transition-all text-left ${
                         activeIndex === i 
-                          ? 'bg-[var(--green)]/10 text-[var(--green)] border border-[var(--green)]/20 shadow-[0_0_20px_rgba(16,185,129,0.1)]' 
+                          ? 'bg-[var(--primary)]/10 text-[var(--primary)] border border-[var(--primary)]/20 shadow-[0_0_20px_rgba(99,102,241,0.1)]' 
                           : 'text-[var(--text-dim)] border border-transparent hover:bg-white/5'
                       }`}
                     >
                       <div className="flex items-center gap-4">
-                        <div className={`p-2 rounded-lg ${activeIndex === i ? 'bg-[var(--green)]/20' : 'bg-white/5'}`}>
+                        <div className={`p-2 rounded-lg ${activeIndex === i ? 'bg-[var(--primary)]/20' : 'bg-white/5'}`}>
                           {React.cloneElement(item.icon as React.ReactElement<any>, { className: 'w-4 h-4' })}
                         </div>
                         <span className={`font-black ${activeIndex === i ? 'text-white' : ''}`}>{item.title}</span>
                       </div>
-                      <span className={`text-[10px] font-black uppercase tracking-widest ${activeIndex === i ? 'text-[var(--green)]' : 'opacity-40'}`}>
+                      <span className={`text-[10px] font-black uppercase tracking-widest ${activeIndex === i ? 'text-[var(--primary)]' : 'opacity-40'}`}>
                         {item.type}
                       </span>
                     </button>

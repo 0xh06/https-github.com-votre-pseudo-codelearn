@@ -14,7 +14,7 @@ export default function Flashcards() {
       {!isPro && (
         <p className="text-center text-sm text-[var(--text-dim)] mb-6 p-4 rounded-xl border border-[var(--border)] bg-[var(--bg2)]">
           Gratuit : jusqu&apos;à <strong className="text-[var(--text-bright)]">8 cartes</strong> par session.{' '}
-          <Link to="/pricing" className="text-[var(--green)] font-bold hover:underline">
+          <Link to="/pricing" className="text-[var(--primary)] font-bold hover:underline">
             Pro
           </Link>{' '}
           = sessions illimitées.
@@ -38,7 +38,7 @@ export default function Flashcards() {
               <div className="text-xs uppercase tracking-widest text-[var(--text-dim)]">A reviser</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl font-bold text-[var(--green)]">{Object.keys(srs).length}</div>
+              <div className="text-3xl font-bold text-[var(--primary)]">{Object.keys(srs).length}</div>
               <div className="text-xs uppercase tracking-widest text-[var(--text-dim)]">Maîtrisés</div>
             </div>
           </div>

@@ -131,7 +131,7 @@ export default function ExerciseDetail() {
       <div className="bg-[#1e1e1e] border-t border-[var(--border)] h-[250px] overflow-auto flex flex-col">
         <div className="flex items-center gap-2 p-3 border-b border-[var(--border)] sticky top-0 bg-[#1e1e1e] z-10">
           <div className="text-[var(--text-dim)] uppercase text-[10px] tracking-widest font-bold">Résultats d'exécution</div>
-          {testResults && testResults.every(r => r.passed) && <span className="bg-green-500/20 text-green-400 text-[10px] px-2 py-0.5 rounded font-bold">ALL TESTS PASSED</span>}
+          {testResults && testResults.every(r => r.passed) && <span className="bg-indigo-500/20 text-indigo-400 text-[10px] px-2 py-0.5 rounded font-bold">ALL TESTS PASSED</span>}
         </div>
         
         <div className="p-4 flex-1">
@@ -144,15 +144,15 @@ export default function ExerciseDetail() {
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: i * 0.1, type: 'spring', stiffness: 100 }}
                     key={i} 
-                    className={`p-3 rounded border ${t.passed ? 'bg-green-500/5 border-green-500/20' : 'bg-red-500/5 border-red-500/20'}`}
+                    className={`p-3 rounded border ${t.passed ? 'bg-indigo-500/5 border-green-500/20' : 'bg-red-500/5 border-red-500/20'}`}
                   >
                     <div className="flex items-center gap-2 font-bold text-xs mb-2">
                       {t.passed ? <CheckCircle2 className="w-4 h-4 text-green-500" /> : <div className="w-4 h-4 rounded-full bg-red-500 flex items-center justify-center text-[10px] text-white">×</div>}
-                      <span className={t.passed ? 'text-green-400' : 'text-red-400'}>Test Case {t.id}</span>
+                      <span className={t.passed ? 'text-indigo-400' : 'text-red-400'}>Test Case {t.id}</span>
                     </div>
                     <div className="text-xs text-[var(--text-dim)] grid grid-cols-1 gap-1 pl-6">
                       <div><span className="opacity-50">Entrée :</span> <code className="text-[var(--text-bright)]">{t.input}</code></div>
-                      <div><span className="opacity-50">Attendu :</span> <code className="text-green-400">{t.expected}</code></div>
+                      <div><span className="opacity-50">Attendu :</span> <code className="text-indigo-400">{t.expected}</code></div>
                       {!t.passed && <div><span className="opacity-50">Reçu :</span> <code className="text-red-400">{t.error ? `Erreur: ${t.error}` : String(t.actual)}</code></div>}
                     </div>
                   </motion.div>
@@ -175,7 +175,7 @@ export default function ExerciseDetail() {
       <span
         className={`badge mb-6 inline-block ${
           ex.level === 'Debutant'
-            ? 'bg-green-500/10 text-[var(--green)] border border-[var(--green)]'
+            ? 'bg-indigo-500/10 text-[var(--primary)] border border-[var(--primary)]'
             : ex.level === 'Intermediaire'
               ? 'bg-yellow-500/10 text-[var(--yellow)] border border-[var(--yellow)]'
               : 'bg-red-500/10 text-[var(--red)] border border-[var(--red)]'
@@ -190,7 +190,7 @@ export default function ExerciseDetail() {
 
       <div className="p-4 bg-[var(--bg3)] rounded-xl border border-[var(--border)] text-sm text-[var(--text-dim)] mb-6">
         <strong className="text-[var(--text-bright)] flex items-center gap-2 mb-2">
-          <CheckCircle2 className="w-4 h-4 text-[var(--green)]" />
+          <CheckCircle2 className="w-4 h-4 text-[var(--primary)]" />
           Objectif
         </strong>
         Implémentez une solution efficace. Votre code est exécuté avec des tests injectés pour valider les cas visibles (et la logique
@@ -212,7 +212,7 @@ export default function ExerciseDetail() {
       {!isFocusMode && (
         <Link
           to="/exercises"
-          className="text-[var(--text-dim)] hover:text-[var(--green)] mb-4 inline-flex items-center gap-2 transition-colors text-sm shrink-0"
+          className="text-[var(--text-dim)] hover:text-[var(--primary)] mb-4 inline-flex items-center gap-2 transition-colors text-sm shrink-0"
         >
           ← Retour aux exercices
         </Link>
@@ -233,7 +233,7 @@ export default function ExerciseDetail() {
           </Panel>
 
           <PanelResizeHandle className="w-2 flex items-center justify-center cursor-col-resize group">
-            <div className="w-1 h-8 rounded-full bg-[var(--border)] group-hover:bg-[var(--green)] transition-colors" />
+            <div className="w-1 h-8 rounded-full bg-[var(--border)] group-hover:bg-[var(--primary)] transition-colors" />
           </PanelResizeHandle>
 
           <Panel defaultSize={70} minSize={50} className="pl-4 min-h-0">

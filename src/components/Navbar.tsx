@@ -65,11 +65,11 @@ export default function Navbar() {
     <nav className="fixed top-0 left-0 right-0 h-16 glass z-[999] px-4">
       <div className="container mx-auto h-full flex items-center justify-between">
         <Link to="/" className="flex items-center gap-2 group">
-          <div className="w-10 h-10 bg-[var(--green)]/15 rounded-xl flex items-center justify-center group-hover:rotate-12 transition-all duration-500 shadow-[0_0_15px_var(--green-glow)]">
-            <Code2 className="text-[var(--green)] w-6 h-6" />
+          <div className="w-10 h-10 bg-[var(--primary)]/15 rounded-xl flex items-center justify-center group-hover:rotate-12 transition-all duration-500 shadow-[0_0_15px_var(--primary-glow)]">
+            <Code2 className="text-[var(--primary)] w-6 h-6" />
           </div>
           <span className="text-xl font-black tracking-tighter text-[var(--text-bright)] font-[var(--font-display)]">
-            ALGO<span className="text-[var(--green)]">MASTER</span>
+            ALGO<span className="text-[var(--primary)]">MASTER</span>
           </span>
         </Link>
 
@@ -81,7 +81,7 @@ export default function Navbar() {
               to={link.path} 
               className={`relative flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-black tracking-wide transition-all group ${
                 location.pathname === link.path 
-                  ? 'text-[var(--green)]' 
+                  ? 'text-[var(--primary)]' 
                   : 'text-[var(--text-dim)] hover:text-[var(--text-bright)]'
               }`}
             >
@@ -90,7 +90,7 @@ export default function Navbar() {
               {location.pathname === link.path && (
                 <motion.div 
                   layoutId="nav-active" 
-                  className="absolute inset-0 bg-[var(--green)]/5 rounded-xl -z-10 border border-[var(--green)]/20 shadow-[0_0_10px_var(--green-glow)]"
+                  className="absolute inset-0 bg-[var(--primary)]/5 rounded-xl -z-10 border border-[var(--primary)]/20 shadow-[0_0_10px_var(--primary-glow)]"
                 />
               )}
             </Link>
@@ -179,12 +179,12 @@ export default function Navbar() {
                       <div className="absolute inset-0 profile-card-glow opacity-50 -z-10" />
                       <div className="flex flex-col items-center text-center space-y-3">
                         <div className="relative group/avatar">
-                          <div className="absolute inset-0 bg-[var(--green)]/20 blur-xl rounded-full opacity-0 group-hover/avatar:opacity-100 transition-opacity" />
+                          <div className="absolute inset-0 bg-[var(--primary)]/20 blur-xl rounded-full opacity-0 group-hover/avatar:opacity-100 transition-opacity" />
                           <AvatarRenderer config={avatar} size={80} />
                           <Link 
                             to="/avatar" 
                             onClick={() => setIsUserMenuOpen(false)}
-                            className="absolute -right-2 -bottom-2 w-8 h-8 rounded-full bg-[var(--bg3)] border border-white/10 flex items-center justify-center text-[var(--green)] hover:scale-110 transition-transform shadow-lg"
+                            className="absolute -right-2 -bottom-2 w-8 h-8 rounded-full bg-[var(--bg3)] border border-white/10 flex items-center justify-center text-[var(--primary)] hover:scale-110 transition-transform shadow-lg"
                             title="Personnaliser"
                           >
                             <Paintbrush size={14} />
@@ -194,7 +194,7 @@ export default function Navbar() {
                           <div className="text-lg font-black text-[var(--text-bright)] tracking-tight">
                             {user.email?.split('@')[0]}
                           </div>
-                          <div className="text-[10px] font-black uppercase tracking-[0.2em] text-[var(--green)]">
+                          <div className="text-[10px] font-black uppercase tracking-[0.2em] text-[var(--primary)]">
                             {levelData.name} • NIV.{levelData.level}
                           </div>
                         </div>
@@ -237,7 +237,7 @@ export default function Navbar() {
             </div>
           ) : (
             <div className="flex items-center gap-2">
-              <Link to="/signup" className="btn btn-primary px-5 py-2.5 rounded-2xl text-xs flex items-center gap-2 shadow-[0_4px_15px_var(--green-glow)]">
+              <Link to="/signup" className="btn btn-primary px-5 py-2.5 rounded-2xl text-xs flex items-center gap-2 shadow-[0_4px_15px_var(--primary-glow)]">
                 <Sparkles className="w-4 h-4" />
                 {uiLang === 'fr' ? "Commencer" : "Get Started"}
               </Link>
@@ -269,7 +269,7 @@ export default function Navbar() {
                 to={link.path} 
                 onClick={() => setIsMobileMenuOpen(false)}
                 className={`flex items-center gap-4 p-5 rounded-2xl border border-[var(--border)] text-base font-black tracking-tight ${
-                  location.pathname === link.path ? 'bg-[var(--green)]/10 border-[var(--green)]/40 text-[var(--green)] shadow-[0_0_15px_var(--green-glow)]' : 'bg-[var(--bg2)]'
+                  location.pathname === link.path ? 'bg-[var(--primary)]/10 border-[var(--primary)]/40 text-[var(--primary)] shadow-[0_0_15px_var(--primary-glow)]' : 'bg-[var(--bg2)]'
                 }`}
               >
                 {link.icon}

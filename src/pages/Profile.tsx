@@ -21,7 +21,7 @@ export default function Profile() {
       <Seo title="Mon Profil | AlgoMaster" description="Consulte ton tableau de bord personnel, tes stats et ton avatar sur AlgoMaster." />
 
       {/* Decorative Elements */}
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[var(--green)]/5 blur-[120px] -z-10 rounded-full" />
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[var(--primary)]/5 blur-[120px] -z-10 rounded-full" />
       <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-[var(--blue)]/5 blur-[120px] -z-10 rounded-full" />
 
       <motion.div
@@ -57,18 +57,18 @@ export default function Profile() {
           className="lg:col-span-5 space-y-8"
         >
           <div className="glass p-12 rounded-[48px] border-white/10 relative overflow-hidden group">
-            <div className="absolute inset-0 bg-gradient-to-br from-[var(--green)]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+            <div className="absolute inset-0 bg-gradient-to-br from-[var(--primary)]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
             
             <div className="relative z-10 flex flex-col items-center">
               <div className="mb-8 p-1 rounded-[40px] border-2 border-white/10 shadow-2xl relative">
-                <div className="absolute -top-4 -right-4 w-12 h-12 rounded-2xl bg-[var(--green)] text-black flex items-center justify-center font-black text-xl shadow-lg border-2 border-[var(--bg)]">
+                <div className="absolute -top-4 -right-4 w-12 h-12 rounded-2xl bg-[var(--primary)] text-white flex items-center justify-center font-black text-xl shadow-lg border-2 border-[var(--bg)]">
                   {levelData.level}
                 </div>
                 <AvatarRenderer config={avatar} size={240} />
               </div>
               
               <div className="text-center space-y-2">
-                <div className="text-[10px] font-black uppercase tracking-[0.4em] text-[var(--green)]">Grade Actuel</div>
+                <div className="text-[10px] font-black uppercase tracking-[0.4em] text-[var(--primary)]">Grade Actuel</div>
                 <h2 className="text-3xl font-black text-white tracking-tight">{levelData.name}</h2>
                 <div className="flex items-center justify-center gap-2 text-[var(--text-dim)] font-medium">
                   <Star size={14} className="text-[var(--yellow)]" fill="currentColor" />
@@ -85,7 +85,7 @@ export default function Profile() {
                   <motion.div
                     initial={{ width: 0 }}
                     animate={{ width: `${Math.min((xp / levelData.max) * 100, 100)}%` }}
-                    className="h-full bg-gradient-to-r from-[var(--green)] to-[#00ff88] rounded-full shadow-[0_0_10px_var(--green-glow)]"
+                    className="h-full bg-gradient-to-r from-[var(--primary)] to-[#818cf8] rounded-full shadow-[0_0_10px_var(--primary-glow)]"
                   />
                 </div>
               </div>
@@ -117,7 +117,7 @@ export default function Profile() {
             {[
               { icon: <Flame className="w-6 h-6 text-orange-400" />, value: streakData.count, label: 'Série Actuelle', sub: 'Jours consécutifs' },
               { icon: <Zap className="w-6 h-6 text-[var(--blue)]" />, value: completedExercises, label: 'Défis Relevés', sub: `${totalExercises - completedExercises} restants` },
-              { icon: <BookOpen className="w-6 h-6 text-[var(--green)]" />, value: completedAlgos, label: 'Algos Maîtrisés', sub: `${totalAlgos} au total` },
+              { icon: <BookOpen className="w-6 h-6 text-[var(--primary)]" />, value: completedAlgos, label: 'Algos Maîtrisés', sub: `${totalAlgos} au total` },
               { icon: <Star className="w-6 h-6 text-[var(--yellow)]" />, value: favorites.length, label: 'Coups de Cœur', sub: 'Algorithmes favoris' },
             ].map((stat, i) => (
               <div key={i} className="glass p-8 rounded-[40px] border-white/5 space-y-4 hover:border-white/10 transition-all group">
@@ -139,7 +139,7 @@ export default function Profile() {
             <div className="space-y-4">
               <Link to="/paths" className="flex items-center justify-between p-6 rounded-3xl bg-white/5 hover:bg-white/10 border border-white/5 transition-all group">
                 <div className="flex items-center gap-6">
-                  <div className="w-16 h-16 rounded-2xl bg-[var(--green)]/10 flex items-center justify-center text-[var(--green)]">
+                  <div className="w-16 h-16 rounded-2xl bg-[var(--primary)]/10 flex items-center justify-center text-[var(--primary)]">
                     <Target size={28} />
                   </div>
                   <div>
@@ -147,7 +147,7 @@ export default function Profile() {
                     <div className="text-sm text-[var(--text-dim)]">Continue ton ascension vers le grade d'Expert</div>
                   </div>
                 </div>
-                <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-[var(--green)] group-hover:text-black transition-all">
+                <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-[var(--primary)] group-hover:text-white transition-all">
                   <ChevronRight size={20} />
                 </div>
               </Link>
@@ -162,7 +162,7 @@ export default function Profile() {
                     <div className="text-sm text-[var(--text-dim)]">Renforce ta mémoire avec les flashcards</div>
                   </div>
                 </div>
-                <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-[var(--blue)] group-hover:text-black transition-all">
+                <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-[var(--blue)] group-hover:text-white transition-all">
                   <ChevronRight size={20} />
                 </div>
               </Link>

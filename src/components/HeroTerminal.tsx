@@ -61,20 +61,20 @@ export default function HeroTerminal() {
             <motion.span
               animate={{ opacity: [0, 1, 0] }}
               transition={{ duration: 0.8, repeat: Infinity }}
-              className="inline-block w-2 h-4 bg-[var(--green)] ml-1 align-middle"
+              className="inline-block w-2 h-4 bg-[var(--primary)] ml-1 align-middle"
             />
           )}
         </pre>
         
         {/* Floating background code blurbs */}
         <div className="absolute inset-0 -z-10 flex items-center justify-center">
-          <div className="w-40 h-40 bg-[var(--green)]/10 blur-[60px] rounded-full" />
+          <div className="w-40 h-40 bg-[var(--primary)]/10 blur-[60px] rounded-full" />
         </div>
       </div>
       <div className="bg-white/5 px-4 py-2 border-t border-white/5 flex items-center justify-between text-[10px] text-[var(--text-dim)]">
         <span>Ready to compile...</span>
         <span className="flex items-center gap-1">
-          <div className="w-1.5 h-1.5 rounded-full bg-[var(--green)] animate-pulse" />
+          <div className="w-1.5 h-1.5 rounded-full bg-[var(--primary)] animate-pulse" />
           System Online
         </span>
       </div>

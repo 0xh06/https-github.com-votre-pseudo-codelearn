@@ -33,12 +33,12 @@ export default function LessonModal({ lesson, onClose, onComplete, isCompleted }
           {/* Header */}
           <div className="p-8 border-b border-white/5 flex items-center justify-between shrink-0 bg-white/[0.02]">
             <div className="flex items-center gap-4">
-              <div className="w-12 h-12 rounded-2xl bg-[var(--green)]/15 flex items-center justify-center text-xl shadow-lg border border-[var(--green)]/20">
+              <div className="w-12 h-12 rounded-2xl bg-[var(--primary)]/15 flex items-center justify-center text-xl shadow-lg border border-[var(--primary)]/20">
                 🌱
               </div>
               <div>
                 <h2 className="text-2xl font-black text-[var(--text-bright)]">{lesson.title}</h2>
-                <p className="text-xs font-black uppercase tracking-widest text-[var(--green)]">Leçon Universelle</p>
+                <p className="text-xs font-black uppercase tracking-widest text-[var(--primary)]">Leçon Universelle</p>
               </div>
             </div>
             <button onClick={onClose} className="p-3 rounded-2xl hover:bg-white/5 transition-all text-[var(--text-dim)] hover:text-white">
@@ -50,7 +50,7 @@ export default function LessonModal({ lesson, onClose, onComplete, isCompleted }
           <div className="flex-1 overflow-y-auto p-8 md:p-12 space-y-12">
             {/* Concept */}
             <section className="space-y-4">
-              <div className="flex items-center gap-3 text-[var(--green)]">
+              <div className="flex items-center gap-3 text-[var(--primary)]">
                 <Lightbulb size={20} />
                 <h3 className="text-lg font-black uppercase tracking-widest">Le Concept</h3>
               </div>
@@ -101,7 +101,7 @@ export default function LessonModal({ lesson, onClose, onComplete, isCompleted }
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {/* Real World */}
               <section className="space-y-3">
-                <h3 className="text-sm font-black uppercase tracking-widest text-[var(--green)]">Cas d'usage réel</h3>
+                <h3 className="text-sm font-black uppercase tracking-widest text-[var(--primary)]">Cas d'usage réel</h3>
                 <p className="text-sm text-[var(--text-dim)] leading-relaxed">{lesson.realWorld}</p>
               </section>
 
@@ -123,7 +123,7 @@ export default function LessonModal({ lesson, onClose, onComplete, isCompleted }
               className={`px-8 py-4 rounded-2xl font-black text-sm uppercase tracking-widest flex items-center gap-3 transition-all ${
                 isCompleted 
                 ? 'bg-white/5 text-white/50 border border-white/10'
-                : 'bg-[var(--green)] text-black shadow-[0_10px_30px_rgba(16,185,129,0.3)] hover:scale-105 active:scale-95'
+                : 'bg-[var(--primary)] text-white shadow-[0_10px_30px_rgba(99,102,241,0.3)] hover:scale-105 active:scale-95'
               }`}
             >
               {isCompleted ? 'Déjà complété' : 'Marquer comme terminé'}

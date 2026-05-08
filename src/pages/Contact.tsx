@@ -27,10 +27,10 @@ export default function Contact() {
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
-          className="card w-full max-w-md p-12 text-center border-[var(--green)]/30 bg-[var(--green)]/5"
+          className="card w-full max-w-md p-12 text-center border-[var(--primary)]/30 bg-[var(--primary)]/5"
         >
-          <div className="w-20 h-20 bg-[var(--green)]/10 rounded-full flex items-center justify-center mx-auto mb-6">
-            <CheckCircle className="w-10 h-10 text-[var(--green)]" />
+          <div className="w-20 h-20 bg-[var(--primary)]/10 rounded-full flex items-center justify-center mx-auto mb-6">
+            <CheckCircle className="w-10 h-10 text-[var(--primary)]" />
           </div>
           <h1 className="text-2xl font-bold mb-3">Message envoyé !</h1>
           <p className="text-[var(--text-dim)]">Nous vous répondrons dans les plus brefs délais.</p>
@@ -43,8 +43,8 @@ export default function Contact() {
     <div className="container mx-auto px-4 py-20 max-w-2xl">
       <Seo title="Contact" description="Contactez l'équipe AlgoMaster." />
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-12">
-        <div className="w-16 h-16 bg-[var(--green)]/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
-          <MessageSquare className="w-8 h-8 text-[var(--green)]" />
+        <div className="w-16 h-16 bg-[var(--primary)]/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
+          <MessageSquare className="w-8 h-8 text-[var(--primary)]" />
         </div>
         <h1 className="text-4xl font-bold mb-4">Contactez-nous</h1>
         <p className="text-[var(--text-dim)]">Une question, un bug, une suggestion ? On est là.</p>
@@ -61,7 +61,7 @@ export default function Contact() {
                 placeholder="Votre nom"
                 value={name}
                 onChange={e => setName(e.target.value)}
-                className="w-full bg-[var(--bg3)] border border-[var(--border)] rounded-xl py-3 px-4 focus:border-[var(--green)] outline-none transition-all text-sm"
+                className="w-full bg-[var(--bg3)] border border-[var(--border)] rounded-xl py-3 px-4 focus:border-[var(--primary)] outline-none transition-all text-sm"
               />
             </div>
             <div>
@@ -74,7 +74,7 @@ export default function Contact() {
                   placeholder="vous@exemple.com"
                   value={email}
                   onChange={e => setEmail(e.target.value)}
-                  className="w-full bg-[var(--bg3)] border border-[var(--border)] rounded-xl py-3 pl-10 pr-4 focus:border-[var(--green)] outline-none transition-all text-sm"
+                  className="w-full bg-[var(--bg3)] border border-[var(--border)] rounded-xl py-3 pl-10 pr-4 focus:border-[var(--primary)] outline-none transition-all text-sm"
                 />
               </div>
             </div>
@@ -87,7 +87,7 @@ export default function Contact() {
               placeholder="Décrivez votre demande..."
               value={message}
               onChange={e => setMessage(e.target.value)}
-              className="w-full bg-[var(--bg3)] border border-[var(--border)] rounded-xl py-3 px-4 focus:border-[var(--green)] outline-none transition-all text-sm resize-none"
+              className="w-full bg-[var(--bg3)] border border-[var(--border)] rounded-xl py-3 px-4 focus:border-[var(--primary)] outline-none transition-all text-sm resize-none"
             />
           </div>
           <button type="submit" disabled={loading} className="btn btn-primary w-full py-4 rounded-xl font-bold flex items-center justify-center gap-2">

@@ -166,13 +166,13 @@ export default function AlgorithmVisualizer({ algoId }: { algoId: string }) {
   const legendItems = isBinary ? [
     { label: 'Espace Actif', color: 'rgba(255,255,255,0.3)' },
     { label: 'Milieu (Mid)', color: 'var(--blue)' },
-    { label: 'Cible Trouvée', color: 'var(--green)' },
+    { label: 'Cible Trouvée', color: 'var(--primary)' },
     { label: 'Éliminé', color: 'rgba(255,255,255,0.1)' }
   ] : [
     { label: 'Normal', color: 'rgba(255,255,255,0.1)' },
     { label: 'Comparé', color: 'var(--blue)' },
     { label: 'Échangé (Swap)', color: '#ef4444' },
-    { label: 'Verrouillé', color: 'var(--green)' },
+    { label: 'Verrouillé', color: 'var(--primary)' },
     ...(algoId === 'quick-sort' ? [{ label: 'Pivot', color: '#a855f7' }] : [])
   ];
 
@@ -183,7 +183,7 @@ export default function AlgorithmVisualizer({ algoId }: { algoId: string }) {
       {/* Header */}
       <div className="flex items-center justify-between px-6 py-4 border-b border-white/5 bg-white/[0.02]">
         <div className="flex items-center gap-3">
-          <Activity size={18} className="text-[var(--green)]" />
+          <Activity size={18} className="text-[var(--primary)]" />
           <span className="text-[10px] font-black uppercase tracking-[0.2em] text-[var(--text-dim)]">
             Environnement de Simulation
           </span>
@@ -196,7 +196,7 @@ export default function AlgorithmVisualizer({ algoId }: { algoId: string }) {
             >
               <Settings2 size={14} /> Données Custom
             </button>
-            <div className="px-3 py-1 rounded-full glass border-white/10 text-[10px] font-black text-[var(--green)] uppercase">
+            <div className="px-3 py-1 rounded-full glass border-white/10 text-[10px] font-black text-[var(--primary)] uppercase">
               Étape {step + 1} / {steps.length}
             </div>
           </div>
@@ -219,7 +219,7 @@ export default function AlgorithmVisualizer({ algoId }: { algoId: string }) {
                 type="text"
                 value={customArrayInput}
                 onChange={e => setCustomArrayInput(e.target.value)}
-                className="w-full bg-[#050505] border border-white/10 rounded-xl px-4 py-3 text-sm font-mono text-white focus:border-[var(--green)] outline-none transition-colors"
+                className="w-full bg-[#050505] border border-white/10 rounded-xl px-4 py-3 text-sm font-mono text-white focus:border-[var(--primary)] outline-none transition-colors"
                 placeholder="Ex: 10, 25, 4, 12, 8"
               />
               {isBinary && <p className="text-[10px] text-[var(--yellow)] mt-2 mt-2 font-medium">Note : Le tableau sera automatiquement trié pour la recherche binaire.</p>}
@@ -264,7 +264,7 @@ export default function AlgorithmVisualizer({ algoId }: { algoId: string }) {
             <motion.div
               animate={{ width: `${steps.length > 1 ? (step / (steps.length - 1)) * 100 : 0}%` }}
               transition={{ type: 'tween' }}
-              className="absolute left-0 top-0 bottom-0 bg-gradient-to-r from-[var(--green)] to-[var(--blue)] shadow-[0_0_10px_var(--green)]"
+              className="absolute left-0 top-0 bottom-0 bg-gradient-to-r from-[var(--primary)] to-[var(--blue)] shadow-[0_0_10px_var(--primary)]"
             />
           </div>
 
@@ -279,7 +279,7 @@ export default function AlgorithmVisualizer({ algoId }: { algoId: string }) {
                   if (isEliminated) {
                     opacity = 0.15; scale = 0.8; 
                   } else if (cur.found === i) { 
-                    bg = 'rgba(16,185,129,0.15)'; border = 'var(--green)'; text = 'var(--green)'; scale = 1.15; shadow = '0 0 40px rgba(16,185,129,0.3)'; 
+                    bg = 'rgba(99,102,241,0.15)'; border = 'var(--primary)'; text = 'var(--primary)'; scale = 1.15; shadow = '0 0 40px rgba(99,102,241,0.3)'; 
                   } else if (cur.mid === i) { 
                     bg = 'rgba(59,130,246,0.2)'; border = 'var(--blue)'; text = 'var(--blue)'; scale = 1.05; shadow = '0 0 20px rgba(59,130,246,0.2)';
                   } else if (i >= cur.left && i <= cur.right) { 
@@ -315,7 +315,7 @@ export default function AlgorithmVisualizer({ algoId }: { algoId: string }) {
                   
                   if (cur.comparing?.includes(i)) { color = 'var(--blue)'; glow = '0 0 20px rgba(59,130,246,0.4)'; }
                   if (cur.swapped?.includes(i))   { color = '#ef4444'; glow = '0 0 20px rgba(239,68,68,0.4)'; }
-                  if (cur.done?.includes(i))      { color = 'var(--green)'; glow = '0 0 20px rgba(16,185,129,0.3)'; }
+                  if (cur.done?.includes(i))      { color = 'var(--primary)'; glow = '0 0 20px rgba(99,102,241,0.3)'; }
                   if (cur.pivot === i)            { color = '#a855f7'; glow = '0 0 20px rgba(168,85,247,0.4)'; }
                   
                   return (
@@ -352,10 +352,10 @@ export default function AlgorithmVisualizer({ algoId }: { algoId: string }) {
 
           {/* Pedagogical Step Description - Pushed to the forefront */}
           <div className="mx-8 mb-6 relative group">
-            <div className="absolute -inset-1 bg-gradient-to-r from-[var(--green)]/20 to-[var(--blue)]/20 rounded-2xl blur opacity-30 group-hover:opacity-50 transition-opacity" />
+            <div className="absolute -inset-1 bg-gradient-to-r from-[var(--primary)]/20 to-[var(--blue)]/20 rounded-2xl blur opacity-30 group-hover:opacity-50 transition-opacity" />
             <div className="relative p-6 rounded-2xl glass border border-white/10 min-h-[80px] bg-[#050505]/80 flex items-start gap-4 shadow-xl">
               <div className="p-2 rounded-xl bg-white/5 shrink-0 mt-0.5">
-                <Terminal size={20} className="text-[var(--green)]" />
+                <Terminal size={20} className="text-[var(--primary)]" />
               </div>
               <AnimatePresence mode="wait">
                 <motion.div
@@ -383,9 +383,9 @@ export default function AlgorithmVisualizer({ algoId }: { algoId: string }) {
             <input
               type="range" min={1} max={5} value={speed}
               onChange={e => setSpeed(Number(e.target.value))}
-              className="flex-1 h-1 accent-[var(--green)] cursor-pointer"
+              className="flex-1 h-1 accent-[var(--primary)] cursor-pointer"
             />
-            <div className="px-3 py-1 rounded-lg glass border-white/5 text-[10px] font-black text-[var(--green)] shrink-0 w-12 text-center">
+            <div className="px-3 py-1 rounded-lg glass border-white/5 text-[10px] font-black text-[var(--primary)] shrink-0 w-12 text-center">
               {speed}.0x
             </div>
           </div>
@@ -426,7 +426,7 @@ export default function AlgorithmVisualizer({ algoId }: { algoId: string }) {
               className={`px-12 py-4 rounded-[20px] font-black text-sm uppercase tracking-widest flex items-center gap-3 transition-all ${
                 playing
                   ? 'bg-red-500/10 text-red-400 border border-red-500/20 shadow-[0_0_30px_rgba(239,68,68,0.15)] hover:bg-red-500/20'
-                  : 'bg-[var(--green)] text-black shadow-[0_10px_30px_rgba(16,185,129,0.3)] hover:scale-105 active:scale-95'
+                  : 'bg-[var(--primary)] text-white shadow-[0_10px_30px_rgba(99,102,241,0.3)] hover:scale-105 active:scale-95'
               }`}
             >
               {playing ? <Pause size={18} /> : <Play size={18} className="fill-current" />}

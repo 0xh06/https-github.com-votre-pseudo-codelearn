@@ -176,7 +176,7 @@ function DifficultyDots({ level }: { level: number }) {
           key={i} 
           initial={false}
           animate={{ scale: i <= level ? 1.1 : 1, opacity: i <= level ? 1 : 0.2 }}
-          className={`w-2.5 h-2.5 rounded-full ${i <= level ? 'bg-[var(--green)] shadow-[0_0_8px_var(--green-glow)]' : 'bg-[var(--text-dim)]'}`} 
+          className={`w-2.5 h-2.5 rounded-full ${i <= level ? 'bg-[var(--primary)] shadow-[0_0_8px_var(--primary-glow)]' : 'bg-[var(--text-dim)]'}`} 
         />
       ))}
     </div>
@@ -202,16 +202,16 @@ export default function Languages() {
         animate={{ opacity: 1, y: 0 }} 
         className="text-center mb-16 relative"
       >
-        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-2xl glass mb-6 shadow-xl border-[var(--green)]/20">
-          <Sparkles className="w-4 h-4 text-[var(--green)] animate-pulse" />
-          <span className="text-xs font-black tracking-widest text-[var(--green)] uppercase">
+        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-2xl glass mb-6 shadow-xl border-[var(--primary)]/20">
+          <Sparkles className="w-4 h-4 text-[var(--primary)] animate-pulse" />
+          <span className="text-xs font-black tracking-widest text-[var(--primary)] uppercase">
             {uiLang === 'fr' ? 'Standard 100k€ — Curriculum Expert' : '100k€ Standard — Expert Curriculum'}
           </span>
         </div>
         
         <h1 className="text-5xl md:text-7xl font-black mb-6 premium-gradient font-[var(--font-display)] leading-tight">
           {uiLang === 'fr' ? 'Choisissez votre' : 'Choose your'} <br />
-          <span className="text-[var(--green)] text-glow-green">ADN de Codeur</span>
+          <span className="text-[var(--primary)] text-glow-primary">ADN de Codeur</span>
         </h1>
         
         <p className="text-[var(--text-dim)] text-lg md:text-xl max-w-3xl mx-auto font-medium leading-relaxed">
@@ -234,7 +234,7 @@ export default function Languages() {
               onClick={() => setDomain(d)}
               className={`px-6 py-2 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${
                 domain === d 
-                  ? 'bg-[var(--green)] text-black shadow-lg shadow-green-500/20' 
+                  ? 'bg-[var(--primary)] text-white shadow-lg shadow-indigo-500/20' 
                   : 'text-[var(--text-dim)] hover:text-white hover:bg-white/5'
               }`}
             >
@@ -283,7 +283,7 @@ export default function Languages() {
                         </div>
                       </div>
                       <span className={`badge ${
-                        lang.level === 'Débutant' ? 'text-green-400' :
+                        lang.level === 'Débutant' ? 'text-indigo-400' :
                         lang.level === 'Intermédiaire' ? 'text-yellow-400' :
                         'text-red-400'}`}>
                         {lang.level}
@@ -384,8 +384,8 @@ export default function Languages() {
         className="relative rounded-[40px] overflow-hidden p-12 md:p-20 text-center border border-white/10"
       >
         {/* Background blobs */}
-        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-[var(--green)]/10 to-[var(--blue)]/10 -z-10" />
-        <div className="absolute -top-1/2 -left-1/2 w-full h-full bg-[var(--green)]/5 blur-[120px] rounded-full animate-pulse" />
+        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-[var(--primary)]/10 to-[var(--blue)]/10 -z-10" />
+        <div className="absolute -top-1/2 -left-1/2 w-full h-full bg-[var(--primary)]/5 blur-[120px] rounded-full animate-pulse" />
         <div className="absolute -bottom-1/2 -right-1/2 w-full h-full bg-[var(--blue)]/5 blur-[120px] rounded-full animate-pulse delay-1000" />
         
         <div className="relative z-10 max-w-2xl mx-auto">

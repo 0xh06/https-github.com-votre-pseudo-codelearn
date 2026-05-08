@@ -122,11 +122,11 @@ export default function Leaderboard() {
           <motion.div 
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            className="inline-block px-8 py-3 bg-[var(--green)]/10 border border-[var(--green)]/20 rounded-2xl"
+            className="inline-block px-8 py-3 bg-[var(--primary)]/10 border border-[var(--primary)]/20 rounded-2xl"
           >
             <div className="flex items-center gap-3">
-              <Star className="text-[var(--green)]" size={20} fill="currentColor" />
-              <span className="font-black text-white uppercase tracking-widest text-sm">Ta Position : <span className="text-[var(--green)]">#{userRank}</span></span>
+              <Star className="text-[var(--primary)]" size={20} fill="currentColor" />
+              <span className="font-black text-white uppercase tracking-widest text-sm">Ta Position : <span className="text-[var(--primary)]">#{userRank}</span></span>
             </div>
           </motion.div>
         )}
@@ -215,7 +215,7 @@ export default function Leaderboard() {
               transition={{ delay: i * 0.05 }}
               className={`group flex items-center p-6 rounded-[32px] glass border transition-all ${
                 isMe
-                  ? 'border-[var(--green)]/50 bg-[var(--green)]/10 shadow-[0_10px_40px_rgba(16,185,129,0.1)]'
+                  ? 'border-[var(--primary)]/50 bg-[var(--primary)]/10 shadow-[0_10px_40px_rgba(99,102,241,0.1)]'
                   : 'border-white/5 bg-white/[0.02] hover:bg-white/[0.05] hover:border-white/10'
               }`}
             >
@@ -235,7 +235,7 @@ export default function Leaderboard() {
                   />
                 </div>
                 <div>
-                  <div className={`text-lg font-black ${isMe ? 'text-[var(--green)]' : 'text-white'}`}>
+                  <div className={`text-lg font-black ${isMe ? 'text-[var(--primary)]' : 'text-white'}`}>
                     {isMe ? 'Toi ✨' : getPseudo(leader.email)}
                   </div>
                   <div className="text-[10px] text-[var(--text-dim)] font-black uppercase tracking-widest">
@@ -272,7 +272,7 @@ export default function Leaderboard() {
       {/* Footer Motivation */}
       <div className="mt-32 text-center">
         <p className="text-[var(--text-dim)] font-medium">Continue à coder pour monter dans le classement.</p>
-        <Zap className="text-[var(--green)] mx-auto mt-4 animate-pulse" />
+        <Zap className="text-[var(--primary)] mx-auto mt-4 animate-pulse" />
       </div>
     </div>
   );

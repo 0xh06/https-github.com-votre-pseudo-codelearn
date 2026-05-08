@@ -139,7 +139,7 @@ export default function Chatbot() {
           key={i}
           animate={{ y: [0, -4, 0] }}
           transition={{ duration: 0.6, repeat: Infinity, delay: i * 0.15 }}
-          className="w-2 h-2 bg-[var(--green)] rounded-full"
+          className="w-2 h-2 bg-[var(--primary)] rounded-full"
         />
       ))}
     </div>
@@ -152,7 +152,7 @@ export default function Chatbot() {
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed bottom-6 right-6 w-14 h-14 bg-[var(--green)] text-black rounded-full shadow-[0_0_30px_rgba(57,211,83,0.4)] flex items-center justify-center z-[9999]"
+        className="fixed bottom-6 right-6 w-14 h-14 bg-[var(--primary)] text-white rounded-full shadow-[0_0_30px_rgba(57,211,83,0.4)] flex items-center justify-center z-[9999]"
         aria-label="Ouvrir l'assistant"
       >
         <AnimatePresence mode="wait">
@@ -181,13 +181,13 @@ export default function Chatbot() {
             {/* Header */}
             <div className="p-4 bg-[var(--bg3)] border-b border-[var(--border)] flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <div className="w-9 h-9 bg-[var(--green)]/10 rounded-xl flex items-center justify-center">
-                  <Bot className="w-5 h-5 text-[var(--green)]" />
+                <div className="w-9 h-9 bg-[var(--primary)]/10 rounded-xl flex items-center justify-center">
+                  <Bot className="w-5 h-5 text-[var(--primary)]" />
                 </div>
                 <div>
                   <div className="text-sm font-bold">Assistant AlgoMaster</div>
                   <div className="flex items-center gap-1.5">
-                    <div className="w-1.5 h-1.5 bg-[var(--green)] rounded-full animate-pulse" />
+                    <div className="w-1.5 h-1.5 bg-[var(--primary)] rounded-full animate-pulse" />
                     <span className="text-[10px] text-[var(--text-dim)]">
                       {import.meta.env.VITE_GEMINI_API_KEY ? 'IA Gemini connectée' : 'Mode hors-ligne'}
                     </span>
@@ -212,7 +212,7 @@ export default function Chatbot() {
                 >
                   <div className={`max-w-[82%] px-4 py-2.5 rounded-2xl text-sm leading-relaxed ${
                     m.role === 'user'
-                      ? 'bg-[var(--green)] text-black rounded-tr-sm font-medium'
+                      ? 'bg-[var(--primary)] text-white rounded-tr-sm font-medium'
                       : 'bg-[var(--bg3)] text-[var(--text-bright)] rounded-tl-sm border border-[var(--border)]'
                   }`}>
                     {m.isTyping ? <TypingIndicator /> : m.text}
@@ -228,7 +228,7 @@ export default function Chatbot() {
                 ref={inputRef}
                 type="text"
                 placeholder="Posez votre question..."
-                className="flex-1 bg-[var(--bg3)] border border-[var(--border)] rounded-xl px-4 py-2.5 text-sm focus:border-[var(--green)] outline-none transition-all"
+                className="flex-1 bg-[var(--bg3)] border border-[var(--border)] rounded-xl px-4 py-2.5 text-sm focus:border-[var(--primary)] outline-none transition-all"
                 value={input}
                 onChange={e => setInput(e.target.value)}
                 onKeyDown={e => e.key === 'Enter' && handleSend()}
@@ -237,7 +237,7 @@ export default function Chatbot() {
               <button
                 onClick={handleSend}
                 disabled={isLoading || !input.trim()}
-                className="bg-[var(--green)] text-black p-2.5 rounded-xl hover:bg-[var(--green)]/80 transition-all disabled:opacity-40 disabled:cursor-not-allowed"
+                className="bg-[var(--primary)] text-white p-2.5 rounded-xl hover:bg-[var(--primary)]/80 transition-all disabled:opacity-40 disabled:cursor-not-allowed"
               >
                 <Send className="w-4 h-4" />
               </button>

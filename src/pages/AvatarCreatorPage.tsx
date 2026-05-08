@@ -18,7 +18,7 @@ export default function AvatarCreatorPage() {
           <div className="space-y-4">
             <Link 
               to="/paths" 
-              className="inline-flex items-center gap-2 text-sm font-bold text-[var(--text-dim)] hover:text-[var(--green)] transition-colors group"
+              className="inline-flex items-center gap-2 text-sm font-bold text-[var(--text-dim)] hover:text-[var(--primary)] transition-colors group"
             >
               <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
               Retour au Parcours
@@ -27,7 +27,7 @@ export default function AvatarCreatorPage() {
               <motion.div
                 initial={{ scale: 0.8, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
-                className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[var(--green)]/10 border border-[var(--green)]/20 text-[var(--green)] text-[10px] font-black uppercase tracking-widest"
+                className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[var(--primary)]/10 border border-[var(--primary)]/20 text-[var(--primary)] text-[10px] font-black uppercase tracking-widest"
               >
                 <Sparkles size={12} /> Studio d'Identité
               </motion.div>
@@ -43,7 +43,7 @@ export default function AvatarCreatorPage() {
 
         {/* The Creator */}
         <div className="relative">
-          <div className="absolute -inset-4 bg-gradient-to-br from-[var(--green)]/10 via-transparent to-[var(--blue)]/10 blur-3xl -z-10 opacity-50" />
+          <div className="absolute -inset-4 bg-gradient-to-br from-[var(--primary)]/10 via-transparent to-[var(--blue)]/10 blur-3xl -z-10 opacity-50" />
           <AvatarCreator />
         </div>
 

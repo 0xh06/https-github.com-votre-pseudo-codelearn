@@ -13,13 +13,13 @@ const CATEGORY_ICONS: Record<string, string> = {
   'Tri': '🔄', 'Recherche': '🔍', 'Graphes': '🕸️', 'Dynamique': '🧠', 'Arrays': '📊'
 };
 const CATEGORY_COLORS: Record<string, string> = {
-  'Tri': '#10b981', 'Recherche': '#3b82f6', 'Graphes': '#8b5cf6', 'Dynamique': '#f59e0b', 'Arrays': '#ef4444'
+  'Tri': '#6366f1', 'Recherche': '#3b82f6', 'Graphes': '#8b5cf6', 'Dynamique': '#f59e0b', 'Arrays': '#64748b'
 };
 
 const diffStyle = (d: string) => {
-  if (d === 'Débutant') return { color: '#10b981', bg: 'rgba(16,185,129,0.08)', border: 'rgba(16,185,129,0.25)' };
+  if (d === 'Débutant') return { color: '#6366f1', bg: 'rgba(99,102,241,0.08)', border: 'rgba(99,102,241,0.25)' };
   if (d === 'Intermédiaire') return { color: '#f59e0b', bg: 'rgba(245,158,11,0.08)', border: 'rgba(245,158,11,0.25)' };
-  return { color: '#ef4444', bg: 'rgba(239,68,68,0.08)', border: 'rgba(239,68,68,0.25)' };
+  return { color: '#f43f5e', bg: 'rgba(244,63,94,0.08)', border: 'rgba(244,63,94,0.25)' };
 };
 
 const HAS_VISUALIZER = new Set(['bubble-sort', 'quick-sort', 'binary-search']);
@@ -70,10 +70,10 @@ export default function Algorithms() {
                   initial={{ width: 0 }}
                   animate={{ width: `${progressPct}%` }}
                   transition={{ duration: 1, delay: 0.5, ease: 'easeOut' }}
-                  className="h-full bg-gradient-to-r from-[var(--green)] to-teal-400 rounded-full"
+                  className="h-full bg-gradient-to-r from-[var(--primary)] to-teal-400 rounded-full"
                 />
               </div>
-              <span className="text-sm font-black text-[var(--green)]">{progressPct}%</span>
+              <span className="text-sm font-black text-[var(--primary)]">{progressPct}%</span>
             </div>
             <div className="text-[10px] text-[var(--text-dim)] mt-1.5">
               {completedCount} / {totalAlgos} {uiLang === 'fr' ? 'complétés' : 'completed'}
@@ -89,7 +89,7 @@ export default function Algorithms() {
             key={c}
             onClick={() => setCategory(cat => cat === c ? 'Tous' : c)}
             className={`flex items-center gap-2 px-3 py-1.5 rounded-xl border text-xs font-bold transition-all ${
-              category === c ? 'text-black border-transparent' : 'bg-[var(--bg2)] text-[var(--text-dim)] border-[var(--border)] hover:border-[var(--text-dim)]'
+              category === c ? 'text-white border-transparent' : 'bg-[var(--bg2)] text-[var(--text-dim)] border-[var(--border)] hover:border-[var(--text-dim)]'
             }`}
             style={category === c ? { backgroundColor: CATEGORY_COLORS[c], borderColor: CATEGORY_COLORS[c] } : {}}
           >
@@ -105,7 +105,7 @@ export default function Algorithms() {
           <input
             type="text"
             placeholder={uiLang === 'fr' ? 'Rechercher un algorithme...' : 'Search an algorithm...'}
-            className="w-full bg-[var(--bg2)] border border-[var(--border)] rounded-2xl py-3 pl-11 pr-4 focus:border-[var(--green)] outline-none transition-all text-sm"
+            className="w-full bg-[var(--bg2)] border border-[var(--border)] rounded-2xl py-3 pl-11 pr-4 focus:border-[var(--primary)] outline-none transition-all text-sm"
             value={search}
             onChange={e => setSearch(e.target.value)}
           />
@@ -123,7 +123,7 @@ export default function Algorithms() {
               onClick={() => setDifficulty(d)}
               className={`px-3 py-1 rounded-full text-[10px] font-bold border transition-all ${
                 difficulty === d
-                  ? 'bg-[var(--green)] text-black border-[var(--green)]'
+                  ? 'bg-[var(--primary)] text-white border-[var(--primary)]'
                   : 'bg-[var(--bg3)] text-[var(--text-dim)] border-[var(--border)] hover:border-[var(--text-dim)]'
               }`}
             >
@@ -192,7 +192,7 @@ export default function Algorithms() {
                             </span>
                           )}
                           {isCompleted && (
-                            <span className="flex items-center gap-1 text-[9px] font-bold px-2 py-0.5 rounded-full bg-green-500/10 text-green-400 border border-green-500/20">
+                            <span className="flex items-center gap-1 text-[9px] font-bold px-2 py-0.5 rounded-full bg-indigo-500/10 text-indigo-400 border border-green-500/20">
                               <CheckCircle2 className="w-2.5 h-2.5" /> OK
                             </span>
                           )}
@@ -206,7 +206,7 @@ export default function Algorithms() {
                       </div>
 
                       {/* Name + desc */}
-                      <h3 className="text-lg font-black mb-2 group-hover:text-[var(--green)] transition-colors relative">{algo.name}</h3>
+                      <h3 className="text-lg font-black mb-2 group-hover:text-[var(--primary)] transition-colors relative">{algo.name}</h3>
                       <p className="text-xs text-[var(--text-dim)] flex-1 mb-4 leading-relaxed line-clamp-2 relative">{algo.description}</p>
 
                       {/* Complexity chips */}

@@ -67,7 +67,7 @@ export default function AvatarCreator() {
         <div className="glass rounded-[40px] p-10 border-white/5 flex flex-col items-center justify-center relative overflow-hidden group">
           {/* Animated background glow */}
           <motion.div 
-            className="absolute inset-0 bg-gradient-to-br from-[var(--green)]/10 via-transparent to-[var(--blue)]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700"
+            className="absolute inset-0 bg-gradient-to-br from-[var(--primary)]/10 via-transparent to-[var(--blue)]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700"
             animate={{ 
               rotate: [0, 360],
               scale: [1, 1.2, 1]
@@ -84,7 +84,7 @@ export default function AvatarCreator() {
               onClick={handleRandomize}
               className="flex-1 btn btn-secondary py-3 text-xs"
             >
-              <Dice5 size={14} className="text-[var(--green)]" /> Aléatoire
+              <Dice5 size={14} className="text-[var(--primary)]" /> Aléatoire
             </button>
           </div>
         </div>
@@ -99,9 +99,9 @@ export default function AvatarCreator() {
               <button
                 key={name}
                 onClick={() => updateAvatar(config)}
-                className="p-3 rounded-2xl bg-white/[0.03] border border-white/5 text-[10px] font-bold hover:bg-[var(--green)]/10 hover:border-[var(--green)]/30 transition-all text-left group"
+                className="p-3 rounded-2xl bg-white/[0.03] border border-white/5 text-[10px] font-bold hover:bg-[var(--primary)]/10 hover:border-[var(--primary)]/30 transition-all text-left group"
               >
-                <div className="text-[var(--text-dim)] group-hover:text-[var(--green)] transition-colors">{name}</div>
+                <div className="text-[var(--text-dim)] group-hover:text-[var(--primary)] transition-colors">{name}</div>
               </button>
             ))}
           </div>
@@ -114,11 +114,11 @@ export default function AvatarCreator() {
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-white/5 pb-8">
             <div>
               <h2 className="text-3xl font-black tracking-tighter flex items-center gap-3">
-                <Sparkles className="text-[var(--green)]" /> Personnalisation
+                <Sparkles className="text-[var(--primary)]" /> Personnalisation
               </h2>
               <p className="text-[var(--text-dim)] text-sm font-medium">Configure ton identité numérique sur la plateforme.</p>
             </div>
-            <div className="flex items-center gap-2 px-4 py-2 rounded-2xl bg-[var(--green)]/10 border border-[var(--green)]/20 text-[var(--green)]">
+            <div className="flex items-center gap-2 px-4 py-2 rounded-2xl bg-[var(--primary)]/10 border border-[var(--primary)]/20 text-[var(--primary)]">
               <ShieldCheck size={18} />
               <span className="text-xs font-black uppercase tracking-wider">Sauvegarde Auto</span>
             </div>
@@ -134,7 +134,7 @@ export default function AvatarCreator() {
                   <button
                     key={s.id}
                     onClick={() => updateAvatar({ skin: s.id })}
-                    className={`w-12 h-12 rounded-2xl border-2 transition-all relative overflow-hidden ${avatar.skin === s.id ? 'border-[var(--green)] scale-110 shadow-[0_0_20px_var(--green-glow)]' : 'border-white/10 hover:border-white/30'}`}
+                    className={`w-12 h-12 rounded-2xl border-2 transition-all relative overflow-hidden ${avatar.skin === s.id ? 'border-[var(--primary)] scale-110 shadow-[0_0_20px_var(--primary-glow)]' : 'border-white/10 hover:border-white/30'}`}
                     style={{ backgroundColor: s.color }}
                   >
                     {avatar.skin === s.id && (
@@ -155,7 +155,7 @@ export default function AvatarCreator() {
                   <button
                     key={hc.id}
                     onClick={() => updateAvatar({ hairColor: hc.id })}
-                    className={`w-10 h-10 rounded-xl border-2 transition-all ${avatar.hairColor === hc.id ? 'border-[var(--green)] scale-110 shadow-[0_0_15px_var(--green-glow)]' : 'border-white/10 hover:scale-105'}`}
+                    className={`w-10 h-10 rounded-xl border-2 transition-all ${avatar.hairColor === hc.id ? 'border-[var(--primary)] scale-110 shadow-[0_0_15px_var(--primary-glow)]' : 'border-white/10 hover:scale-105'}`}
                     style={{ backgroundColor: hc.color }}
                   />
                 ))}
@@ -170,7 +170,7 @@ export default function AvatarCreator() {
                   <button
                     key={h}
                     onClick={() => updateAvatar({ hair: h })}
-                    className={`px-4 py-2.5 rounded-xl border transition-all text-[11px] font-black uppercase tracking-wider ${avatar.hair === h ? 'border-[var(--green)] bg-[var(--green)]/10 text-[var(--green)]' : 'border-white/5 bg-white/[0.02] text-[var(--text-dim)] hover:border-white/20 hover:text-white'}`}
+                    className={`px-4 py-2.5 rounded-xl border transition-all text-[11px] font-black uppercase tracking-wider ${avatar.hair === h ? 'border-[var(--primary)] bg-[var(--primary)]/10 text-[var(--primary)]' : 'border-white/5 bg-white/[0.02] text-[var(--text-dim)] hover:border-white/20 hover:text-white'}`}
                   >
                     {h}
                   </button>
@@ -186,7 +186,7 @@ export default function AvatarCreator() {
                   <button
                     key={e}
                     onClick={() => updateAvatar({ expression: e })}
-                    className={`px-4 py-2.5 rounded-xl border transition-all text-[11px] font-black uppercase tracking-wider ${avatar.expression === e ? 'border-[var(--green)] bg-[var(--green)]/10 text-[var(--green)]' : 'border-white/5 bg-white/[0.02] text-[var(--text-dim)] hover:border-white/20 hover:text-white'}`}
+                    className={`px-4 py-2.5 rounded-xl border transition-all text-[11px] font-black uppercase tracking-wider ${avatar.expression === e ? 'border-[var(--primary)] bg-[var(--primary)]/10 text-[var(--primary)]' : 'border-white/5 bg-white/[0.02] text-[var(--text-dim)] hover:border-white/20 hover:text-white'}`}
                   >
                     {e}
                   </button>
@@ -202,7 +202,7 @@ export default function AvatarCreator() {
                   <button
                     key={c}
                     onClick={() => updateAvatar({ clothes: c })}
-                    className={`px-4 py-2.5 rounded-xl border transition-all text-[11px] font-black uppercase tracking-wider ${avatar.clothes === c ? 'border-[var(--green)] bg-[var(--green)]/10 text-[var(--green)]' : 'border-white/5 bg-white/[0.02] text-[var(--text-dim)] hover:border-white/20 hover:text-white'}`}
+                    className={`px-4 py-2.5 rounded-xl border transition-all text-[11px] font-black uppercase tracking-wider ${avatar.clothes === c ? 'border-[var(--primary)] bg-[var(--primary)]/10 text-[var(--primary)]' : 'border-white/5 bg-white/[0.02] text-[var(--text-dim)] hover:border-white/20 hover:text-white'}`}
                   >
                     {c}
                   </button>
@@ -218,7 +218,7 @@ export default function AvatarCreator() {
                   <button
                     key={color}
                     onClick={() => updateAvatar({ clothesColor: color })}
-                    className={`w-10 h-10 rounded-xl border-2 transition-all ${avatar.clothesColor === color ? 'border-[var(--green)] scale-110 shadow-[0_0_15px_var(--green-glow)]' : 'border-white/10 hover:scale-105'}`}
+                    className={`w-10 h-10 rounded-xl border-2 transition-all ${avatar.clothesColor === color ? 'border-[var(--primary)] scale-110 shadow-[0_0_15px_var(--primary-glow)]' : 'border-white/10 hover:scale-105'}`}
                     style={{ backgroundColor: color }}
                   />
                 ))}
@@ -235,7 +235,7 @@ export default function AvatarCreator() {
                 <div className="absolute inset-0 bg-gradient-to-r from-yellow-400/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                 <button
                   onClick={() => updateAvatar({ accessory: null })}
-                  className={`w-14 h-14 rounded-2xl border-2 flex items-center justify-center transition-all ${avatar.accessory === null ? 'border-[var(--green)] bg-[var(--green)]/10 text-[var(--green)]' : 'border-white/5 bg-white/[0.03] text-white/20 hover:border-white/20'}`}
+                  className={`w-14 h-14 rounded-2xl border-2 flex items-center justify-center transition-all ${avatar.accessory === null ? 'border-[var(--primary)] bg-[var(--primary)]/10 text-[var(--primary)]' : 'border-white/5 bg-white/[0.03] text-white/20 hover:border-white/20'}`}
                 >
                   <span className="text-lg">🚫</span>
                 </button>
@@ -243,11 +243,11 @@ export default function AvatarCreator() {
                   <button
                     key={a}
                     onClick={() => updateAvatar({ accessory: a })}
-                    className={`w-14 h-14 rounded-2xl border-2 flex items-center justify-center text-3xl transition-all relative ${avatar.accessory === a ? 'border-[var(--green)] bg-[var(--green)]/10 text-[var(--green)] shadow-[0_0_25px_rgba(16,185,129,0.3)]' : 'border-white/5 bg-white/[0.03] hover:scale-105 hover:border-white/20'}`}
+                    className={`w-14 h-14 rounded-2xl border-2 flex items-center justify-center text-3xl transition-all relative ${avatar.accessory === a ? 'border-[var(--primary)] bg-[var(--primary)]/10 text-[var(--primary)] shadow-[0_0_25px_rgba(99,102,241,0.3)]' : 'border-white/5 bg-white/[0.03] hover:scale-105 hover:border-white/20'}`}
                   >
                     {a === 'beginner-badge' ? '🌱' : a === 'scholar-hat' ? '🎓' : a === 'expert-crown' ? '👑' : a === 'glasses' ? '👓' : a === 'headphones' ? '🎧' : a === 'robot-ears' ? '🤖' : '✨'}
                     {avatar.accessory === a && (
-                      <motion.div layoutId="accessory-check" className="absolute -top-2 -right-2 w-5 h-5 bg-[var(--green)] rounded-full flex items-center justify-center border-2 border-[var(--bg)]">
+                      <motion.div layoutId="accessory-check" className="absolute -top-2 -right-2 w-5 h-5 bg-[var(--primary)] rounded-full flex items-center justify-center border-2 border-[var(--bg)]">
                         <div className="w-1.5 h-1.5 bg-black rounded-full" />
                       </motion.div>
                     )}

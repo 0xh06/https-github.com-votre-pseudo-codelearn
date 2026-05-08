@@ -48,8 +48,8 @@ export default function Settings() {
         {/* Email */}
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="card p-8">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 bg-[var(--green)]/10 rounded-xl flex items-center justify-center">
-              <User className="w-5 h-5 text-[var(--green)]" />
+            <div className="w-10 h-10 bg-[var(--primary)]/10 rounded-xl flex items-center justify-center">
+              <User className="w-5 h-5 text-[var(--primary)]" />
             </div>
             <h2 className="text-xl font-bold">Informations du compte</h2>
           </div>
@@ -60,7 +60,7 @@ export default function Settings() {
                 type="email"
                 value={newEmail}
                 onChange={e => setNewEmail(e.target.value)}
-                className="w-full bg-[var(--bg3)] border border-[var(--border)] rounded-xl py-3 px-4 focus:border-[var(--green)] outline-none transition-all text-sm"
+                className="w-full bg-[var(--bg3)] border border-[var(--border)] rounded-xl py-3 px-4 focus:border-[var(--primary)] outline-none transition-all text-sm"
               />
             </div>
             <button type="submit" disabled={loading} className="btn btn-primary px-6 py-2.5 rounded-xl text-sm flex items-center gap-2">
@@ -86,7 +86,7 @@ export default function Settings() {
                 value={newPassword}
                 onChange={e => setNewPassword(e.target.value)}
                 placeholder="Min. 6 caractères"
-                className="w-full bg-[var(--bg3)] border border-[var(--border)] rounded-xl py-3 px-4 focus:border-[var(--green)] outline-none transition-all text-sm"
+                className="w-full bg-[var(--bg3)] border border-[var(--border)] rounded-xl py-3 px-4 focus:border-[var(--primary)] outline-none transition-all text-sm"
               />
             </div>
             <button type="submit" disabled={loading || !newPassword} className="btn btn-primary px-6 py-2.5 rounded-xl text-sm flex items-center gap-2">

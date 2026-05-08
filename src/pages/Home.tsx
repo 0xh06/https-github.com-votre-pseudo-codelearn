@@ -36,7 +36,7 @@ export default function Home() {
 
       {/* Hero Background Elements */}
       <div className="absolute top-0 inset-x-0 h-[1000px] pointer-events-none -z-10">
-        <div className="absolute top-[-10%] left-[-10%] w-[800px] h-[800px] bg-[var(--green)]/10 blur-[150px] rounded-full animate-pulse" />
+        <div className="absolute top-[-10%] left-[-10%] w-[800px] h-[800px] bg-[var(--primary)]/10 blur-[150px] rounded-full animate-pulse" />
         <div className="absolute top-[20%] right-[-10%] w-[600px] h-[600px] bg-[var(--blue)]/10 blur-[150px] rounded-full" />
         <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-[0.03]" />
       </div>
@@ -51,7 +51,7 @@ export default function Home() {
             className="text-center space-y-8"
           >
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-md">
-              <Sparkles className="text-[var(--green)] w-4 h-4" />
+              <Sparkles className="text-[var(--primary)] w-4 h-4" />
               <span className="text-[10px] font-black uppercase tracking-[0.2em] text-[var(--text-dim)]">Plateforme de Programmation Nouvelle Génération</span>
             </div>
             
@@ -68,7 +68,7 @@ export default function Home() {
             <div className="flex gap-6 justify-center flex-wrap pt-4">
               <Link
                 to="/signup"
-                className="group relative px-10 py-5 bg-[var(--green)] text-black rounded-[24px] font-black text-lg flex items-center gap-3 transition-all hover:scale-105 active:scale-95 shadow-[0_20px_40px_rgba(16,185,129,0.3)]"
+                className="group relative px-10 py-5 bg-[var(--primary)] text-white rounded-[24px] font-black text-lg flex items-center gap-3 transition-all hover:scale-105 active:scale-95 shadow-[0_20px_40px_rgba(99,102,241,0.3)]"
               >
                 Commencer l'Aventure
                 <ChevronRight className="group-hover:translate-x-1 transition-transform" />
@@ -91,7 +91,7 @@ export default function Home() {
               className="lg:col-span-7"
             >
               <div className="relative group">
-                <div className="absolute -inset-1 bg-gradient-to-r from-[var(--green)] to-[var(--blue)] rounded-[32px] blur opacity-25 group-hover:opacity-40 transition duration-1000 group-hover:duration-200"></div>
+                <div className="absolute -inset-1 bg-gradient-to-r from-[var(--primary)] to-[var(--blue)] rounded-[32px] blur opacity-25 group-hover:opacity-40 transition duration-1000 group-hover:duration-200"></div>
                 <HeroTerminal />
               </div>
             </motion.div>
@@ -103,10 +103,10 @@ export default function Home() {
               className="lg:col-span-5 flex flex-col items-center justify-center space-y-8"
             >
               <div className="glass p-12 rounded-[48px] border-white/10 relative group shadow-2xl">
-                <div className="absolute inset-0 bg-gradient-to-br from-[var(--green)]/10 to-transparent rounded-[48px] opacity-0 group-hover:opacity-100 transition-opacity" />
+                <div className="absolute inset-0 bg-gradient-to-br from-[var(--primary)]/10 to-transparent rounded-[48px] opacity-0 group-hover:opacity-100 transition-opacity" />
                 <AvatarRenderer config={avatar} size={280} />
                 <div className="mt-8 text-center space-y-2">
-                  <div className="text-[10px] font-black uppercase tracking-[0.3em] text-[var(--green)]">Ton Avatar Évolutif</div>
+                  <div className="text-[10px] font-black uppercase tracking-[0.3em] text-[var(--primary)]">Ton Avatar Évolutif</div>
                   <div className="text-2xl font-black text-white">Prêt pour la Quête ?</div>
                 </div>
               </div>
@@ -124,10 +124,10 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               {
-                icon: <Brain className="w-8 h-8 text-[var(--green)]" />,
+                icon: <Brain className="w-8 h-8 text-[var(--primary)]" />,
                 title: 'Intelligence Cognitive',
                 text: 'Nos algorithmes de répétition espacée optimisent ta mémorisation sur le long terme.',
-                color: 'var(--green)'
+                color: 'var(--primary)'
               },
               {
                 icon: <Terminal className="w-8 h-8 text-[var(--blue)]" />,
@@ -164,7 +164,7 @@ export default function Home() {
         <section className="py-20">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {[
-              { n: '100+', l: 'Algorithmes', c: 'var(--green)' },
+              { n: '100+', l: 'Algorithmes', c: 'var(--primary)' },
               { n: '50+', l: 'Exercices', c: 'var(--blue)' },
               { n: '24/7', l: 'Apprentissage', c: 'var(--purple)' },
               { n: '98%', l: 'Satisfaction', c: 'var(--yellow)' },
@@ -193,7 +193,7 @@ export default function Home() {
                   title: 'Infiltration',
                   desc: 'Crée ton profil, personnalise ton avatar et accède à la base de connaissances universelle.',
                   icon: <UserPlus />,
-                  glow: 'var(--green)'
+                  glow: 'var(--primary)'
                 },
                 {
                   step: '02',
@@ -242,8 +242,8 @@ export default function Home() {
           viewport={{ once: true }}
           className="mb-40 p-16 md:p-24 rounded-[64px] relative overflow-hidden group border border-white/5 text-center"
         >
-          <div className="absolute inset-0 bg-gradient-to-br from-[var(--green)]/10 via-transparent to-[var(--blue)]/10 group-hover:opacity-100 transition-opacity duration-1000" />
-          <div className="absolute -top-24 -left-24 w-96 h-96 bg-[var(--green)]/10 blur-[120px] rounded-full" />
+          <div className="absolute inset-0 bg-gradient-to-br from-[var(--primary)]/10 via-transparent to-[var(--blue)]/10 group-hover:opacity-100 transition-opacity duration-1000" />
+          <div className="absolute -top-24 -left-24 w-96 h-96 bg-[var(--primary)]/10 blur-[120px] rounded-full" />
           <div className="absolute -bottom-24 -right-24 w-96 h-96 bg-[var(--blue)]/10 blur-[120px] rounded-full" />
           
           <div className="relative z-10 space-y-10">

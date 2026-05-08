@@ -154,7 +154,7 @@ export default function AlgorithmDetail() {
     <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="space-y-10">
       <div>
         <div className="flex items-center gap-2 mb-4">
-          <span className="badge text-[var(--green)] bg-[var(--green)]/10 border-[var(--green)]/20">{algo.difficulty}</span>
+          <span className="badge text-[var(--primary)] bg-[var(--primary)]/10 border-[var(--primary)]/20">{algo.difficulty}</span>
           <span className="text-[10px] font-black uppercase tracking-widest text-[var(--text-dim)]">Expert System</span>
         </div>
         <h1 className="text-4xl md:text-5xl font-[var(--font-display)] font-black premium-gradient mb-6 leading-tight">
@@ -204,14 +204,14 @@ export default function AlgorithmDetail() {
       </div>
 
       {useCases.length > 0 && (
-        <div className="p-8 rounded-[32px] bg-[var(--green)]/[0.03] border border-[var(--green)]/10">
-          <h3 className="text-xs font-black uppercase tracking-[0.2em] text-[var(--green)] mb-6 flex items-center gap-2">
+        <div className="p-8 rounded-[32px] bg-[var(--primary)]/[0.03] border border-[var(--primary)]/10">
+          <h3 className="text-xs font-black uppercase tracking-[0.2em] text-[var(--primary)] mb-6 flex items-center gap-2">
             <Target size={14} /> Applications Industrielles
           </h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {useCases.map((uc, i) => (
               <div key={i} className="flex items-start gap-3 p-3 rounded-2xl bg-white/5 border border-white/5">
-                <div className="w-1.5 h-1.5 rounded-full bg-[var(--green)] mt-1.5 shrink-0" />
+                <div className="w-1.5 h-1.5 rounded-full bg-[var(--primary)] mt-1.5 shrink-0" />
                 <span className="text-sm font-medium opacity-90">{uc}</span>
               </div>
             ))}
@@ -288,7 +288,7 @@ export default function AlgorithmDetail() {
           <div className="flex items-center gap-2">
             <div className="w-2.5 h-2.5 rounded-full bg-red-500/50" />
             <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/50" />
-            <div className="w-2.5 h-2.5 rounded-full bg-[var(--green)]/50" />
+            <div className="w-2.5 h-2.5 rounded-full bg-[var(--primary)]/50" />
           </div>
           <div className="h-4 w-px bg-white/10 mx-2" />
           <select
@@ -305,7 +305,7 @@ export default function AlgorithmDetail() {
               Solution
             </button>
           ) : (
-            <span className="text-[10px] font-black uppercase tracking-widest text-[var(--green)] flex items-center gap-1.5">
+            <span className="text-[10px] font-black uppercase tracking-widest text-[var(--primary)] flex items-center gap-1.5">
               <CheckCircle2 size={12} /> Master Solved
             </span>
           )}
@@ -351,7 +351,7 @@ export default function AlgorithmDetail() {
       <div className="bg-[#050505] border-t border-white/5 h-[220px] font-mono overflow-hidden flex flex-col">
         <div className="px-6 py-3 border-b border-white/5 flex items-center justify-between bg-white/[0.01]">
           <div className="flex items-center gap-2">
-            <Terminal size={14} className="text-[var(--green)]" />
+            <Terminal size={14} className="text-[var(--primary)]" />
             <span className="text-[10px] font-black uppercase tracking-widest text-[var(--text-dim)]">Debug Console</span>
           </div>
           {output.includes('❌') && (
@@ -391,7 +391,7 @@ export default function AlgorithmDetail() {
       <Seo title={`${algo.name} — Expert Coding`} description={algo.description} />
 
       {/* Background Decorative Blob */}
-      <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-[var(--green)]/5 blur-[120px] -z-10 rounded-full" />
+      <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-[var(--primary)]/5 blur-[120px] -z-10 rounded-full" />
 
       {!isFocusMode && (
         <div className="flex flex-col md:flex-row md:items-center justify-between mb-10 gap-6">
@@ -444,7 +444,7 @@ export default function AlgorithmDetail() {
                     </div>
                   </Panel>
                   <PanelResizeHandle className="w-1.5 flex items-center justify-center cursor-col-resize group bg-white/5">
-                    <div className="w-px h-12 bg-white/10 group-hover:bg-[var(--green)]/50 transition-colors" />
+                    <div className="w-px h-12 bg-white/10 group-hover:bg-[var(--primary)]/50 transition-colors" />
                   </PanelResizeHandle>
                   <Panel defaultSize={65} minSize={40}>
                     <div className="h-full p-4">
@@ -484,7 +484,7 @@ export default function AlgorithmDetail() {
                             🏆
                           </div>
                           <span className={`text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest ${
-                            c.difficulty === 'Débutant' ? 'text-[var(--green)] bg-[var(--green)]/10' :
+                            c.difficulty === 'Débutant' ? 'text-[var(--primary)] bg-[var(--primary)]/10' :
                             c.difficulty === 'Intermédiaire' ? 'text-yellow-400 bg-yellow-400/10' : 'text-red-400 bg-red-400/10'
                           }`}>
                             {c.difficulty}
@@ -494,7 +494,7 @@ export default function AlgorithmDetail() {
                         <p className="text-sm text-[var(--text-dim)] font-medium leading-relaxed mb-8">{c.desc}</p>
                         <button 
                           onClick={() => setActiveTab('implementer')}
-                          className="flex items-center gap-2 text-xs font-black uppercase tracking-widest text-[var(--green)] group-hover:gap-4 transition-all"
+                          className="flex items-center gap-2 text-xs font-black uppercase tracking-widest text-[var(--primary)] group-hover:gap-4 transition-all"
                         >
                           Relever le défi <ChevronRight size={16} />
                         </button>

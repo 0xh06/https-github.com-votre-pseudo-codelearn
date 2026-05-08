@@ -122,7 +122,7 @@ export default function Pricing() {
 
       {/* Decorative Background */}
       <div className="absolute top-0 inset-x-0 h-[800px] pointer-events-none -z-10">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[600px] bg-[var(--green)]/5 blur-[120px] rounded-full" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[600px] bg-[var(--primary)]/5 blur-[120px] rounded-full" />
       </div>
 
       <div className="text-center mb-20 space-y-6">
@@ -144,12 +144,12 @@ export default function Pricing() {
         <motion.div 
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="max-w-2xl mx-auto mb-16 p-6 rounded-[32px] bg-[var(--green)]/10 border border-[var(--green)]/20 text-center relative overflow-hidden group"
+          className="max-w-2xl mx-auto mb-16 p-6 rounded-[32px] bg-[var(--primary)]/10 border border-[var(--primary)]/20 text-center relative overflow-hidden group"
         >
-          <div className="absolute inset-0 bg-[var(--green)]/5 animate-pulse" />
+          <div className="absolute inset-0 bg-[var(--primary)]/5 animate-pulse" />
           <div className="relative z-10 flex items-center justify-center gap-4">
-            <Sparkles className="text-[var(--green)]" />
-            <span className="font-bold text-white text-lg">Tu es actuellement membre <span className="text-[var(--green)]">Pro</span></span>
+            <Sparkles className="text-[var(--primary)]" />
+            <span className="font-bold text-white text-lg">Tu es actuellement membre <span className="text-[var(--primary)]">Pro</span></span>
             <button
               type="button"
               onClick={() => {
@@ -177,18 +177,18 @@ export default function Pricing() {
               transition={{ delay: i * 0.1 }}
               className={`relative flex flex-col p-10 rounded-[48px] glass transition-all duration-500 group ${
                 plan.highlight
-                  ? 'border-[var(--green)]/50 shadow-[0_40px_100px_rgba(16,185,129,0.15)] scale-[1.05] z-10'
+                  ? 'border-[var(--primary)]/50 shadow-[0_40px_100px_rgba(99,102,241,0.15)] scale-[1.05] z-10'
                   : 'border-white/5 hover:border-white/10'
               }`}
             >
               {plan.highlight && (
-                <div className="absolute -top-5 left-1/2 -translate-x-1/2 px-6 py-2 bg-[var(--green)] text-black text-[10px] font-black uppercase tracking-[0.2em] rounded-full shadow-lg">
+                <div className="absolute -top-5 left-1/2 -translate-x-1/2 px-6 py-2 bg-[var(--primary)] text-white text-[10px] font-black uppercase tracking-[0.2em] rounded-full shadow-lg">
                   Recommandé
                 </div>
               )}
 
               <div className="flex items-center gap-4 mb-8">
-                <div className={`w-14 h-14 rounded-2xl flex items-center justify-center ${plan.highlight ? 'bg-[var(--green)]/20 text-[var(--green)]' : 'bg-white/5 text-[var(--text-dim)]'}`}>
+                <div className={`w-14 h-14 rounded-2xl flex items-center justify-center ${plan.highlight ? 'bg-[var(--primary)]/20 text-[var(--primary)]' : 'bg-white/5 text-[var(--text-dim)]'}`}>
                   {plan.icon}
                 </div>
                 <h3 className="text-3xl font-black text-white tracking-tight">{plan.name}</h3>
@@ -205,7 +205,7 @@ export default function Pricing() {
               <div className="flex-1 space-y-4 mb-12">
                 {plan.features.map((feat, j) => (
                   <div key={j} className="flex items-start gap-4 text-sm font-medium">
-                    <div className={`mt-1 w-5 h-5 rounded-full flex items-center justify-center ${plan.highlight ? 'bg-[var(--green)]/20 text-[var(--green)]' : 'bg-white/5 text-[var(--text-dim)]'}`}>
+                    <div className={`mt-1 w-5 h-5 rounded-full flex items-center justify-center ${plan.highlight ? 'bg-[var(--primary)]/20 text-[var(--primary)]' : 'bg-white/5 text-[var(--text-dim)]'}`}>
                       <Check className="w-3 h-3" />
                     </div>
                     <span className="text-[var(--text-dim)] group-hover:text-white transition-colors">{feat}</span>
@@ -219,7 +219,7 @@ export default function Pricing() {
                 disabled={loading !== null || (plan.planKey === 'pro' && isCurrent)}
                 className={`relative w-full py-5 rounded-[24px] font-black text-sm uppercase tracking-[0.2em] transition-all overflow-hidden ${
                   plan.highlight 
-                    ? 'bg-[var(--green)] text-black hover:scale-[1.02] active:scale-[0.98] shadow-xl' 
+                    ? 'bg-[var(--primary)] text-white hover:scale-[1.02] active:scale-[0.98] shadow-xl' 
                     : 'bg-white/5 text-white hover:bg-white/10'
                 } disabled:opacity-50`}
               >
@@ -240,7 +240,7 @@ export default function Pricing() {
               <tr className="bg-white/5">
                 <th className="py-8 px-10 text-[10px] font-black uppercase tracking-[0.2em] text-[var(--text-dim)]">Fonctionnalité</th>
                 <th className="py-8 px-10 text-center text-[10px] font-black uppercase tracking-[0.2em] text-white">Gratuit</th>
-                <th className="py-8 px-10 text-center text-[10px] font-black uppercase tracking-[0.2em] text-[var(--green)]">Pro</th>
+                <th className="py-8 px-10 text-center text-[10px] font-black uppercase tracking-[0.2em] text-[var(--primary)]">Pro</th>
                 <th className="py-8 px-10 text-center text-[10px] font-black uppercase tracking-[0.2em] text-white">Équipe</th>
               </tr>
             </thead>
@@ -250,17 +250,17 @@ export default function Pricing() {
                   <td className="py-6 px-10 text-sm font-bold text-[var(--text-bright)]">{row.label}</td>
                   <td className="py-6 px-10 text-center">
                     {typeof row.free === 'boolean' ? (
-                      row.free ? <Check className="w-5 h-5 text-[var(--green)] mx-auto" /> : <X className="w-5 h-5 text-white/10 mx-auto" />
+                      row.free ? <Check className="w-5 h-5 text-[var(--primary)] mx-auto" /> : <X className="w-5 h-5 text-white/10 mx-auto" />
                     ) : <span className="text-xs font-black text-[var(--text-dim)]">{row.free}</span>}
                   </td>
-                  <td className="py-6 px-10 text-center bg-[var(--green)]/5">
+                  <td className="py-6 px-10 text-center bg-[var(--primary)]/5">
                     {typeof row.pro === 'boolean' ? (
-                      row.pro ? <Check className="w-5 h-5 text-[var(--green)] mx-auto" /> : <X className="w-5 h-5 text-white/10 mx-auto" />
-                    ) : <span className="text-xs font-black text-[var(--green)]">{row.pro}</span>}
+                      row.pro ? <Check className="w-5 h-5 text-[var(--primary)] mx-auto" /> : <X className="w-5 h-5 text-white/10 mx-auto" />
+                    ) : <span className="text-xs font-black text-[var(--primary)]">{row.pro}</span>}
                   </td>
                   <td className="py-6 px-10 text-center">
                     {typeof row.team === 'boolean' ? (
-                      row.team ? <Check className="w-5 h-5 text-[var(--green)] mx-auto" /> : <X className="w-5 h-5 text-white/10 mx-auto" />
+                      row.team ? <Check className="w-5 h-5 text-[var(--primary)] mx-auto" /> : <X className="w-5 h-5 text-white/10 mx-auto" />
                     ) : <span className="text-xs font-black text-[var(--text-dim)]">{row.team}</span>}
                   </td>
                 </tr>

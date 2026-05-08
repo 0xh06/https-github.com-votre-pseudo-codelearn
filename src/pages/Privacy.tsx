@@ -50,7 +50,7 @@ export default function Privacy() {
         <p className="text-[var(--text-dim)]">Dernière mise à jour : mai 2026</p>
         <p className="text-sm text-[var(--text-dim)] mt-4">
           Résumé : nous limitons la collecte au nécessaire, nous ne revendons pas vos données, et vous gardez le contrôle.{' '}
-          <Link to="/contact" className="text-[var(--green)] font-bold hover:underline">
+          <Link to="/contact" className="text-[var(--primary)] font-bold hover:underline">
             Contact
           </Link>
         </p>

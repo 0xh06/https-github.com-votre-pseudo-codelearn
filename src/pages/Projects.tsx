@@ -16,7 +16,7 @@ export default function Projects() {
     <div className="container mx-auto px-4 py-24 max-w-6xl relative min-h-screen">
       <Seo title="La Forge | AlgoMaster" description="Construisez de vrais projets pour appliquer vos compétences." />
 
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[var(--green)]/5 blur-[120px] -z-10 rounded-full" />
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[var(--primary)]/5 blur-[120px] -z-10 rounded-full" />
       <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-orange-500/5 blur-[120px] -z-10 rounded-full" />
 
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-16">
@@ -54,7 +54,7 @@ export default function Projects() {
                   {project.lang}
                 </span>
                 <span className={`px-3 py-1 rounded-lg text-[10px] font-black uppercase tracking-widest border ${
-                  project.difficulty === 'Débutant' ? 'bg-[var(--green)]/10 text-[var(--green)] border-[var(--green)]/20' :
+                  project.difficulty === 'Débutant' ? 'bg-[var(--primary)]/10 text-[var(--primary)] border-[var(--primary)]/20' :
                   project.difficulty === 'Intermédiaire' ? 'bg-yellow-500/10 text-yellow-500 border-yellow-500/20' :
                   'bg-red-500/10 text-red-500 border-red-500/20'
                 }`}>
@@ -67,14 +67,14 @@ export default function Projects() {
               </div>
             </div>
 
-            <h3 className="text-2xl font-black text-white mb-3 tracking-tight group-hover:text-[var(--green)] transition-colors">{project.title}</h3>
+            <h3 className="text-2xl font-black text-white mb-3 tracking-tight group-hover:text-[var(--primary)] transition-colors">{project.title}</h3>
             <p className="text-[var(--text-dim)] text-sm leading-relaxed mb-8 font-medium">
               {project.desc}
             </p>
 
             <Link 
               to={project.locked ? '#' : `/projects/${project.id}`}
-              className={`w-full btn btn-primary py-3 rounded-xl text-sm flex items-center justify-center gap-2 group-hover:shadow-[0_0_20px_var(--green-glow)] transition-all ${project.locked ? 'cursor-not-allowed opacity-50' : ''}`}
+              className={`w-full btn btn-primary py-3 rounded-xl text-sm flex items-center justify-center gap-2 group-hover:shadow-[0_0_20px_var(--primary-glow)] transition-all ${project.locked ? 'cursor-not-allowed opacity-50' : ''}`}
             >
               {project.locked ? 'Verrouillé' : 'Démarrer le Projet'} <ChevronRight size={16} />
             </Link>

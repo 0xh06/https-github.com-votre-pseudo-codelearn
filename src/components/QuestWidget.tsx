@@ -52,12 +52,12 @@ export default function QuestWidget() {
                   key={q.id} 
                   className={`flex items-center gap-4 p-4 rounded-3xl border transition-all duration-500 ${
                     q.done 
-                    ? 'bg-[var(--green)]/5 border-[var(--green)]/10 opacity-50 grayscale-[0.5]' 
+                    ? 'bg-[var(--primary)]/5 border-[var(--primary)]/10 opacity-50 grayscale-[0.5]' 
                     : 'bg-white/[0.02] border-white/5 hover:border-white/10'
                   }`}
                 >
-                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center text-xl ${q.done ? 'bg-[var(--green)]/10' : 'bg-white/5'}`}>
-                    {q.done ? <CheckCircle2 size={20} className="text-[var(--green)]" /> : q.icon}
+                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center text-xl ${q.done ? 'bg-[var(--primary)]/10' : 'bg-white/5'}`}>
+                    {q.done ? <CheckCircle2 size={20} className="text-[var(--primary)]" /> : q.icon}
                   </div>
                   <div className="flex-1">
                     <div className={`text-[11px] font-black uppercase tracking-wider ${q.done ? 'text-[var(--text-dim)] line-through' : 'text-white'}`}>{q.title}</div>
@@ -77,7 +77,7 @@ export default function QuestWidget() {
                 <motion.div 
                   initial={{ width: 0 }}
                   animate={{ width: `${progressPct}%` }}
-                  className="h-full bg-gradient-to-r from-[var(--green)] to-[#00ff88] rounded-full shadow-[0_0_10px_var(--green-glow)]" 
+                  className="h-full bg-gradient-to-r from-[var(--primary)] to-[#818cf8] rounded-full shadow-[0_0_10px_var(--primary-glow)]" 
                 />
               </div>
             </div>
@@ -89,7 +89,7 @@ export default function QuestWidget() {
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         onClick={() => setIsOpen(!isOpen)}
-        className={`relative w-16 h-16 rounded-[24px] glass border-white/10 flex items-center justify-center shadow-2xl group transition-all ${isOpen ? 'bg-[var(--green)] text-black border-[var(--green)]' : 'text-[var(--green)]'}`}
+        className={`relative w-16 h-16 rounded-[24px] glass border-white/10 flex items-center justify-center shadow-2xl group transition-all ${isOpen ? 'bg-[var(--primary)] text-white border-[var(--primary)]' : 'text-[var(--primary)]'}`}
       >
         <Target size={28} className={`${!isOpen && 'group-hover:rotate-12'} transition-transform duration-500`} />
         
@@ -100,7 +100,7 @@ export default function QuestWidget() {
         )}
         
         {!isOpen && (
-          <div className="absolute inset-0 rounded-[24px] border-2 border-[var(--green)] animate-ping opacity-20 pointer-events-none" />
+          <div className="absolute inset-0 rounded-[24px] border-2 border-[var(--primary)] animate-ping opacity-20 pointer-events-none" />
         )}
       </motion.button>
     </div>

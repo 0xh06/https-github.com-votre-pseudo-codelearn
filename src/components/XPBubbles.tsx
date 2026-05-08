@@ -62,7 +62,7 @@ export default function XPBubbles() {
             transition={{ duration: 1.5, ease: "easeOut" }}
             className="absolute flex items-center gap-1"
           >
-            <div className="bg-gradient-to-br from-[var(--green)] to-[#00ff88] text-black px-3 py-1 rounded-full font-black text-sm shadow-[0_0_20px_var(--green-glow)] border border-white/20">
+            <div className="bg-gradient-to-br from-[var(--primary)] to-[#818cf8] text-black px-3 py-1 rounded-full font-black text-sm shadow-[0_0_20px_var(--primary-glow)] border border-white/20">
               +{p.amount}
             </div>
             <span className="text-xl">✨</span>

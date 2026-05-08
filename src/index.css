@@ -5,18 +5,20 @@
 @layer base {
   :root {
     /* Premium Dark Palette (Deep Slate & Graphite) */
-    --bg: hsl(220, 25%, 5%);
-    --bg2: hsl(220, 25%, 10%);
-    --bg3: hsl(220, 25%, 15%);
-    --border: hsla(220, 20%, 20%, 0.5);
+    --bg: hsl(230, 25%, 5%);
+    --bg2: hsl(230, 25%, 8%);
+    --bg3: hsl(230, 25%, 12%);
+    --border: hsla(230, 20%, 20%, 0.4);
     
     --text: hsl(210, 20%, 80%);
     --text-bright: hsl(0, 0%, 100%);
     --text-dim: hsl(210, 15%, 60%);
     
     /* Signature Colors */
-    --green: #2ecc71;
-    --green-glow: hsla(145, 63%, 49%, 0.3);
+    --primary: #6366f1;
+    --primary-glow: hsla(239, 84%, 67%, 0.3);
+    --secondary: #3b82f6;
+    --secondary-glow: hsla(217, 91%, 60%, 0.3);
     --blue: #3498db;
     --blue-glow: hsla(204, 70%, 53%, 0.3);
     --purple: #9b59b6;
@@ -27,8 +29,8 @@
     --font-display: 'Outfit', sans-serif;
     --font-sans: 'Inter', sans-serif;
 
-    --glass-bg: hsla(220, 25%, 8%, 0.8);
-    --glass-border: hsla(220, 20%, 30%, 0.2);
+    --glass-bg: hsla(230, 25%, 7%, 0.75);
+    --glass-border: hsla(230, 20%, 30%, 0.15);
   }
 
   .light-theme {
@@ -44,7 +46,7 @@
   }
 
   body {
-    @apply bg-[var(--bg)] text-[var(--text)] antialiased selection:bg-[var(--green)] selection:text-black;
+    @apply bg-[var(--bg)] text-[var(--text)] antialiased selection:bg-[var(--primary)] selection:text-white;
     font-family: var(--font-sans);
   }
 
@@ -76,7 +78,7 @@
     @apply flex items-center justify-center gap-2 rounded-xl px-5 py-2.5 font-bold transition-all duration-300 border border-[var(--border)] bg-[var(--bg3)] text-[var(--text-bright)] hover:scale-[1.02] active:scale-95 disabled:opacity-50 disabled:pointer-events-none;
   }
   .btn-primary {
-    @apply bg-[var(--green)] text-black border-[var(--green)] hover:shadow-[0_0_20px_var(--green-glow)];
+    @apply bg-[var(--primary)] text-white border-[var(--primary)] hover:shadow-[0_0_20px_var(--primary-glow)];
   }
   .btn-secondary {
     @apply bg-[var(--glass-bg)] backdrop-blur-md border-[var(--glass-border)] text-[var(--text-bright)] hover:bg-[var(--bg3)];
@@ -93,13 +95,13 @@
 }
 
 @layer utilities {
-  .text-glow-green { text-shadow: 0 0 15px var(--green-glow); }
+  .text-glow-primary { text-shadow: 0 0 15px var(--primary-glow); }
   .text-glow-blue { text-shadow: 0 0 15px var(--blue-glow); }
   .premium-gradient {
-    @apply bg-gradient-to-br from-white via-white to-gray-500 bg-clip-text text-transparent;
+    @apply bg-gradient-to-br from-white via-white to-indigo-300 bg-clip-text text-transparent;
   }
   .profile-card-glow {
-    background: radial-gradient(circle at center, var(--green-glow) 0%, transparent 70%);
+    background: radial-gradient(circle at center, var(--primary-glow) 0%, transparent 70%);
   }
 }
 

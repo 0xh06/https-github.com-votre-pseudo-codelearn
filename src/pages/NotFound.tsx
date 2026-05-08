@@ -51,11 +51,11 @@ export default function NotFound() {
           transition={{ type: 'spring', stiffness: 200, damping: 15 }}
           className="relative mb-8"
         >
-          <div className="text-[10rem] font-black leading-none text-transparent bg-clip-text bg-gradient-to-br from-[var(--green)] to-[var(--blue)] select-none">
+          <div className="text-[10rem] font-black leading-none text-transparent bg-clip-text bg-gradient-to-br from-[var(--primary)] to-[var(--blue)] select-none">
             404
           </div>
           <div
-            className="absolute inset-0 text-[10rem] font-black leading-none text-[var(--green)] opacity-20 blur-lg select-none"
+            className="absolute inset-0 text-[10rem] font-black leading-none text-[var(--primary)] opacity-20 blur-lg select-none"
             aria-hidden
           >
             404
@@ -72,13 +72,13 @@ export default function NotFound() {
           <div className="flex items-center gap-2 mb-4">
             <div className="w-3 h-3 rounded-full bg-red-500" />
             <div className="w-3 h-3 rounded-full bg-yellow-500" />
-            <div className="w-3 h-3 rounded-full bg-green-500" />
+            <div className="w-3 h-3 rounded-full bg-indigo-500" />
             <span className="ml-2 text-xs text-[var(--text-dim)]">terminal</span>
           </div>
           <div className="space-y-2 text-sm">
-            <div className="text-[var(--text-dim)]"><span className="text-[var(--green)]">$</span> navigate_to current_page</div>
+            <div className="text-[var(--text-dim)]"><span className="text-[var(--primary)]">$</span> navigate_to current_page</div>
             <div className="text-red-400">Error: Route not found in filesystem</div>
-            <div className="text-[var(--text-dim)]"><span className="text-[var(--green)]">$</span> {decoded ? 'Suggestion: return to /' : <GlitchText text="Suggestion: return to /" />}</div>
+            <div className="text-[var(--text-dim)]"><span className="text-[var(--primary)]">$</span> {decoded ? 'Suggestion: return to /' : <GlitchText text="Suggestion: return to /" />}</div>
           </div>
         </motion.div>
 

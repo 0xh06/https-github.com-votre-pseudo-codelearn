@@ -197,7 +197,7 @@ export default function LanguageDetail() {
               <div className="lg:col-span-4 space-y-4">
                 <div className="flex items-center justify-between px-4 mb-4">
                   <h3 className="text-xs font-black uppercase tracking-widest text-[var(--text-dim)] flex items-center gap-2">
-                    <MapIcon size={14} className="text-[var(--green)]" /> {uiLang === 'fr' ? 'Carte du Monde' : 'World Map'}
+                    <MapIcon size={14} className="text-[var(--primary)]" /> {uiLang === 'fr' ? 'Carte du Monde' : 'World Map'}
                   </h3>
                 </div>
                 
@@ -218,7 +218,7 @@ export default function LanguageDetail() {
                           <h4 className={`text-sm font-black ${activeSection === si ? 'text-white' : 'text-[var(--text-dim)] group-hover:text-white'}`}>{section.title}</h4>
                           <p className="text-[9px] font-black uppercase tracking-tighter opacity-60 mt-0.5" style={{ color: lang.color }}>{section.lessons.length} Étapes</p>
                         </div>
-                        {isCompleted(si, section.lessons.length - 1) && <CheckCircle2 className="text-[var(--green)] w-4 h-4" />}
+                        {isCompleted(si, section.lessons.length - 1) && <CheckCircle2 className="text-[var(--primary)] w-4 h-4" />}
                       </button>
 
                       <AnimatePresence>
@@ -242,10 +242,10 @@ export default function LanguageDetail() {
                                     }`}
                                   >
                                     <div className={`w-6 h-6 rounded-lg flex items-center justify-center border-2 transition-all ${
-                                      completed ? 'bg-[var(--green)]/20 border-[var(--green)]' : 
+                                      completed ? 'bg-[var(--primary)]/20 border-[var(--primary)]' : 
                                       active ? 'border-white' : 'border-white/10'
                                     }`}>
-                                      {completed ? <CheckCircle2 size={12} className="text-[var(--green)]" /> : 
+                                      {completed ? <CheckCircle2 size={12} className="text-[var(--primary)]" /> : 
                                        active ? <MousePointer2 size={10} className="text-white fill-current" /> : 
                                        <span className="text-[8px] font-black opacity-40">{li + 1}</span>}
                                     </div>
@@ -286,7 +286,7 @@ export default function LanguageDetail() {
                           <h2 className="text-3xl md:text-4xl font-black text-white tracking-tight">{currentLesson.title}</h2>
                         </div>
                         {isCompleted(activeSection, activeLesson) && (
-                          <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-[var(--green)]/10 border border-[var(--green)]/20 text-[var(--green)] text-[10px] font-black uppercase tracking-widest">
+                          <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-[var(--primary)]/10 border border-[var(--primary)]/20 text-[var(--primary)] text-[10px] font-black uppercase tracking-widest">
                             <CheckCircle2 size={14} /> {uiLang === 'fr' ? 'Maîtrisé' : 'Mastered'}
                           </div>
                         )}
@@ -343,7 +343,7 @@ export default function LanguageDetail() {
                               onClick={handleRunCode}
                               disabled={isRunning}
                               className={`btn px-6 py-2 text-xs flex items-center gap-2 font-black rounded-xl transition-all ${
-                                isRunning ? 'bg-[var(--green)]/20 text-[var(--green)] border border-[var(--green)]/30 shadow-[0_0_20px_rgba(16,185,129,0.2)]' : 'bg-white text-black hover:scale-105 active:scale-95'
+                                isRunning ? 'bg-[var(--primary)]/20 text-[var(--primary)] border border-[var(--primary)]/30 shadow-[0_0_20px_rgba(99,102,241,0.2)]' : 'bg-white text-black hover:scale-105 active:scale-95'
                               }`}
                             >
                               {isRunning ? <SquareSquare size={14} className="animate-pulse" /> : <Play size={14} className="fill-current" />}
@@ -364,7 +364,7 @@ export default function LanguageDetail() {
                         {/* Terminal Output */}
                         <div className="bg-[#050505]">
                           <div className="px-6 py-3 border-b border-white/5 bg-white/[0.01] flex items-center justify-between">
-                            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-[var(--green)] flex items-center gap-2">
+                            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-[var(--primary)] flex items-center gap-2">
                               <Terminal size={14} /> Terminal
                             </span>
                             <button 
@@ -421,7 +421,7 @@ export default function LanguageDetail() {
 
                         <button
                           onClick={markComplete}
-                          className={`btn px-10 py-4 text-sm font-black rounded-2xl flex items-center gap-3 ${currentLesson.isBoss && !isCompleted(activeSection, activeLesson) ? 'bg-red-500 hover:bg-red-600 text-white shadow-[0_10px_30px_rgba(239,68,68,0.3)]' : 'btn-primary shadow-[0_10px_30px_var(--green-glow)]'}`}
+                          className={`btn px-10 py-4 text-sm font-black rounded-2xl flex items-center gap-3 ${currentLesson.isBoss && !isCompleted(activeSection, activeLesson) ? 'bg-red-500 hover:bg-red-600 text-white shadow-[0_10px_30px_rgba(239,68,68,0.3)]' : 'btn-primary shadow-[0_10px_30px_var(--primary-glow)]'}`}
                         >
                           {isCompleted(activeSection, activeLesson) ? (
                             <>Prochaine Quête <ArrowRight size={18} /></>
@@ -441,13 +441,13 @@ export default function LanguageDetail() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {lang.algoExamples.map(algo => (
                 <Link key={algo.id} to={`/algorithms/${algo.id}`}>
-                  <div className="card h-full group hover:border-[var(--green)]/30">
+                  <div className="card h-full group hover:border-[var(--primary)]/30">
                     <div className="w-12 h-12 rounded-xl glass mb-6 flex items-center justify-center text-2xl group-hover:rotate-12 transition-transform">
                       {lang.icon}
                     </div>
                     <h3 className="text-xl font-black mb-3">{algo.name}</h3>
                     <p className="text-sm text-[var(--text-dim)] mb-8 flex-1">Implémentation optimisée et visualisation interactive du {algo.name} en {lang.name}.</p>
-                    <div className="flex items-center gap-2 text-xs font-black uppercase tracking-widest text-[var(--green)] group-hover:gap-4 transition-all">
+                    <div className="flex items-center gap-2 text-xs font-black uppercase tracking-widest text-[var(--primary)] group-hover:gap-4 transition-all">
                       Coder maintenant <ChevronRight size={16} />
                     </div>
                   </div>
@@ -467,7 +467,7 @@ export default function LanguageDetail() {
                     {r.type === 'doc' ? <FileText size={24} /> : r.type === 'video' ? <Video size={24} /> : <ExternalLink size={24} />}
                   </div>
                   <div className="flex-1">
-                    <h4 className="text-lg font-black text-white group-hover:text-[var(--green)] transition-colors">{r.title}</h4>
+                    <h4 className="text-lg font-black text-white group-hover:text-[var(--primary)] transition-colors">{r.title}</h4>
                     <span className="text-[10px] font-black uppercase tracking-widest opacity-40">{r.type}</span>
                   </div>
                   <ArrowRight className="text-[var(--text-dim)] opacity-0 group-hover:opacity-100 group-hover:translate-x-2 transition-all" />

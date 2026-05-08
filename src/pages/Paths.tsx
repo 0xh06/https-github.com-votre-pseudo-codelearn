@@ -68,7 +68,7 @@ export default function Paths() {
 
       {/* Floating Background Elements */}
       <div className="fixed inset-0 pointer-events-none -z-10 overflow-hidden">
-        <div className="absolute top-[20%] left-[10%] w-[400px] h-[400px] bg-[var(--green)]/5 blur-[120px] rounded-full" />
+        <div className="absolute top-[20%] left-[10%] w-[400px] h-[400px] bg-[var(--primary)]/5 blur-[120px] rounded-full" />
         <div className="absolute top-[60%] right-[10%] w-[500px] h-[500px] bg-[var(--blue)]/5 blur-[150px] rounded-full" />
       </div>
 
@@ -78,7 +78,7 @@ export default function Paths() {
           <motion.div
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[var(--green)]/10 border border-[var(--green)]/20 text-[var(--green)] text-[10px] font-black uppercase tracking-[0.2em]"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[var(--primary)]/10 border border-[var(--primary)]/20 text-[var(--primary)] text-[10px] font-black uppercase tracking-[0.2em]"
           >
             <Sparkles size={14} /> Le Parcours des Maîtres
           </motion.div>
@@ -99,14 +99,14 @@ export default function Paths() {
           <div className="absolute inset-0 bg-gradient-to-br from-white/[0.02] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
           <div className="flex flex-col md:flex-row items-center gap-12 relative z-10">
             <div className="shrink-0 relative">
-              <div className="absolute -inset-4 bg-[var(--green)]/20 blur-2xl rounded-full" />
+              <div className="absolute -inset-4 bg-[var(--primary)]/20 blur-2xl rounded-full" />
               <AvatarRenderer config={avatar} size={180} />
             </div>
             <div className="flex-1 space-y-8 text-center md:text-left">
               <div>
                 <h2 className="text-4xl font-black mb-2">Progression Globale</h2>
                 <div className="flex flex-wrap justify-center md:justify-start gap-4">
-                  <span className="badge border-[var(--green)]/30 text-[var(--green)]">
+                  <span className="badge border-[var(--primary)]/30 text-[var(--primary)]">
                     Rang : {completedUniversal.length === UNIVERSAL_CURRICULUM.reduce((acc, lv) => acc + lv.lessons.length, 0) ? 'Maître' : xp > 1000 ? 'Architecte' : xp > 500 ? 'Initié' : 'Apprenti'}
                   </span>
                   <span className="badge border-yellow-400/30 text-yellow-400">
@@ -116,7 +116,7 @@ export default function Paths() {
               </div>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
                 <div className="space-y-1">
-                  <div className="text-3xl font-black text-[var(--green)]">{xp}</div>
+                  <div className="text-3xl font-black text-[var(--primary)]">{xp}</div>
                   <div className="text-[9px] font-black uppercase tracking-widest text-[var(--text-dim)] flex items-center gap-1.5 justify-center md:justify-start">
                     <Zap size={10} /> Points XP
                   </div>
@@ -152,7 +152,7 @@ export default function Paths() {
               />
               <defs>
                 <linearGradient id="path-gradient" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="var(--green)" />
+                  <stop offset="0%" stopColor="var(--primary)" />
                   <stop offset="50%" stopColor="var(--blue)" />
                   <stop offset="100%" stopColor="var(--purple)" />
                 </linearGradient>
@@ -175,7 +175,7 @@ export default function Paths() {
                   className={`mb-20 flex flex-col items-center text-center space-y-6 relative z-10 ${!unlocked ? 'opacity-40 grayscale' : ''}`}
                 >
                   <div className={`w-28 h-28 rounded-[40px] flex items-center justify-center text-5xl shadow-2xl border-4 relative group ${
-                    level.id === 'beginner' ? 'bg-[var(--green)]/20 border-[var(--green)]/30' :
+                    level.id === 'beginner' ? 'bg-[var(--primary)]/20 border-[var(--primary)]/30' :
                     level.id === 'intermediate' ? 'bg-[var(--blue)]/20 border-[var(--blue)]/30' :
                     'bg-[var(--purple)]/20 border-[var(--purple)]/30'
                   }`}>
@@ -193,7 +193,7 @@ export default function Paths() {
                       initial={{ width: 0 }}
                       animate={{ width: `${progressPct}%` }}
                       className={`h-full rounded-full ${
-                        level.id === 'beginner' ? 'bg-gradient-to-r from-[var(--green)] to-[#00ff88]' :
+                        level.id === 'beginner' ? 'bg-gradient-to-r from-[var(--primary)] to-[#818cf8]' :
                         level.id === 'intermediate' ? 'bg-gradient-to-r from-[var(--blue)] to-[#00d2ff]' :
                         'bg-gradient-to-r from-[var(--purple)] to-[#ff00ff]'
                       }`}
@@ -224,15 +224,15 @@ export default function Paths() {
                         viewport={{ once: true }}
                         onClick={() => unlocked && setSelectedLesson(lesson)}
                         className={`group relative p-10 rounded-[40px] glass border-white/5 transition-all duration-500 ${
-                          unlocked ? 'cursor-pointer hover:border-[var(--green)]/40 hover:bg-white/[0.03] hover:-translate-y-2' : 'opacity-20 select-none'
+                          unlocked ? 'cursor-pointer hover:border-[var(--primary)]/40 hover:bg-white/[0.03] hover:-translate-y-2' : 'opacity-20 select-none'
                         }`}
                       >
                         {isDone ? (
-                          <div className="absolute top-6 right-6 px-4 py-1.5 rounded-full bg-[var(--green)]/20 border border-[var(--green)]/30 flex items-center gap-2 text-[10px] font-black text-[var(--green)] uppercase tracking-widest shadow-lg shadow-[var(--green)]/10">
+                          <div className="absolute top-6 right-6 px-4 py-1.5 rounded-full bg-[var(--primary)]/20 border border-[var(--primary)]/30 flex items-center gap-2 text-[10px] font-black text-[var(--primary)] uppercase tracking-widest shadow-lg shadow-[var(--primary)]/10">
                             <CheckCircle2 size={14} /> Validé
                           </div>
                         ) : unlocked ? (
-                          <div className="absolute top-6 right-6 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 flex items-center gap-2 text-[10px] font-black text-[var(--text-dim)] uppercase tracking-widest group-hover:text-[var(--green)] group-hover:border-[var(--green)]/30 transition-colors">
+                          <div className="absolute top-6 right-6 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 flex items-center gap-2 text-[10px] font-black text-[var(--text-dim)] uppercase tracking-widest group-hover:text-[var(--primary)] group-hover:border-[var(--primary)]/30 transition-colors">
                             En cours
                           </div>
                         ) : null}
@@ -244,7 +244,7 @@ export default function Paths() {
                           <div className="space-y-3">
                             <h3 className="text-2xl font-black group-hover:text-[var(--text-bright)] transition-colors tracking-tight">{lesson.title}</h3>
                             <p className="text-[var(--text-dim)] font-medium leading-relaxed">{lesson.concept}</p>
-                            <div className="pt-6 flex items-center gap-2 text-[11px] font-black uppercase tracking-[0.15em] text-[var(--green)] opacity-0 group-hover:opacity-100 transition-opacity translate-x-[-10px] group-hover:translate-x-0">
+                            <div className="pt-6 flex items-center gap-2 text-[11px] font-black uppercase tracking-[0.15em] text-[var(--primary)] opacity-0 group-hover:opacity-100 transition-opacity translate-x-[-10px] group-hover:translate-x-0">
                               Lancer la leçon <ChevronRight size={16} />
                             </div>
                           </div>
@@ -272,7 +272,7 @@ export default function Paths() {
                   </div>
                   <div className={`px-10 py-4 rounded-2xl font-black text-sm uppercase tracking-widest transition-all ${
                     unlocked && levelProgress === level.lessons.length 
-                    ? 'bg-[var(--green)] text-black shadow-xl shadow-[var(--green)]/20' 
+                    ? 'bg-[var(--primary)] text-white shadow-xl shadow-[var(--primary)]/20' 
                     : 'glass border-white/10 text-[var(--text-dim)]'
                   }`}>
                     {unlocked && levelProgress === level.lessons.length ? 'Récompense Obtenue ✅' : `${levelProgress}/${level.lessons.length} Leçons`}
@@ -297,7 +297,7 @@ export default function Paths() {
         title={showRewardModal?.title || ''}
         subtitle={`Tu as débloqué l'accessoire : ${showRewardModal?.reward}. Il t'attend dans le Studio d'Avatar !`}
         xpEarned={500}
-        badge={{ icon: '🎖️', name: 'Nouveau Grade', color: '#10b981' }}
+        badge={{ icon: '🎖️', name: 'Nouveau Grade', color: '#6366f1' }}
         actionLabel="Studio d'Avatar"
         onAction={() => { setShowRewardModal(null); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
       />
