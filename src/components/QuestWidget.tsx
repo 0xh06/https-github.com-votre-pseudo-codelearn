@@ -9,9 +9,11 @@ export default function QuestWidget() {
 
   const quests = [
     { id: 1, title: 'Premiers Pas', task: 'Compléter une leçon universelle', done: completedUniversal.length > 0, icon: '🌱' },
-    { id: 2, title: 'Accumulateur', task: 'Atteindre 500 XP', done: xp >= 500, icon: '💰' },
-    { id: 3, title: 'Collectionneur', task: 'Débloquer 3 accessoires', done: unlockedAccessories.length >= 3, icon: '🎩' },
-    { id: 4, title: 'Érudit', task: 'Finir le module débutant', done: completedUniversal.includes('b2'), icon: '📚' },
+    { id: 2, title: 'Accumulateur', task: 'Atteindre 1000 XP', done: xp >= 1000, icon: '💰' },
+    { id: 3, title: 'Collectionneur', task: 'Débloquer 4 accessoires', done: unlockedAccessories.length >= 4, icon: '🎩' },
+    { id: 4, title: 'Érudit', task: 'Finir le module débutant', done: completedUniversal.includes('b4_loops'), icon: '📚' },
+    { id: 5, title: 'Architecte', task: 'Débloquer le module Expert', done: completedUniversal.includes('i3_objects'), icon: '🏛️' },
+    { id: 6, title: 'Codeur Aguerri', task: 'Compléter 5 défis de l\'Arène', done: (completed?.length || 0) >= 5, icon: '⚔️' },
   ];
 
   const completedCount = quests.filter(q => q.done).length;

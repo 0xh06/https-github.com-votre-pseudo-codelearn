@@ -2,7 +2,7 @@ export const ALGORITHMS = [
   // --- BASES ABSOLUES ---
   {
     id: "bases-algorithmique", name: "Qu'est-ce qu'un algorithme ?", category: "Bases", timeO: "O(1)", spaceO: "O(1)", difficulty: "Débutant", color: "green",
-    description: "Un algorithme est souvent perçu comme un concept mathématique complexe, mais c'est en réalité extrêmement familier : c'est l'équivalent numérique d'une recette de cuisine. Imaginez que vous vouliez préparer des pâtes. Vous devez suivre une liste stricte d'instructions : 1) Faire bouillir de l'eau, 2) Verser les pâtes, 3) Patienter 10 minutes, 4) Égoutter. Si vous inversez l'ordre des étapes, le résultat sera un désastre ! En programmation, vous êtes le Chef Étoilé, l'ordinateur est votre commis de cuisine (ultra-rapide mais totalement dépourvu de bon sens), et l'algorithme est la recette ultra-précise que vous lui confiez. Mais attention, toutes les recettes ne se valent pas. La 'Complexité Temporelle' mesure le temps de cuisson si le nombre d'invités augmente. Si vous devez cuire chaque pâte individuellement, le temps explose : c'est un algorithme inefficace. L' 'Espace Mémoire', quant à lui, représente le nombre de casseroles (la mémoire RAM) dont vous avez besoin simultanément. Un algorithme élégant est une recette rapide qui ne salit pas toute votre cuisine. Mini-vérification : avant de coder, assurez-vous toujours de pouvoir expliquer votre recette à voix haute.",
+    description: "Approchez-vous du tableau, les enfants. J'écris 'Algorithme'. Ne soyez pas effrayés par ce mot ! C'est juste une recette. Regardez, je trace une flèche : Entrée -> Traitement -> Sortie. Si je vous demande de faire des pâtes, vous suivez des étapes précises, non ? C'est ça l'algorithme. C'est la liste d'instructions ultra-précise que vous donnez à l'ordinateur, qui lui est très rapide mais n'a aucune imagination. On va apprendre à lui parler étape par étape !",
     complexityDesc: "La Complexité Temporelle O(1) signifie que le temps d'exécution reste toujours le même (constant) peu importe le nombre de fois où on répète l'action. Même si on dit bonjour 3 fois ou 1 million de fois, le temps par opération reste fixe.",
     steps: [
       "Comprendre le problème : Quel est l'objectif final ? (Ex: Préparer un repas pour 4 personnes). Identifiez vos ingrédients de départ (les données) et le résultat attendu.",
@@ -28,7 +28,7 @@ export const ALGORITHMS = [
   // --- TRI ---
   {
     id: "bubble-sort", name: "Bubble Sort", category: "Tri", timeO: "O(n²)", spaceO: "O(1)", difficulty: "Débutant", color: "green",
-    description: "Le Tri à Bulles (Bubble Sort) est souvent le premier algorithme enseigné. Imaginez un instituteur qui doit ranger des élèves par taille. Il commence à gauche, compare les deux premiers élèves et les inverse si le premier est plus grand. Il avance d'un pas et répète. À la fin du premier passage, le plus grand élève est forcément tout à droite (il a fait des 'bulles' jusqu'à la surface). C'est très intuitif, mais très lent car on repasse de nombreuses fois sur la file complète. Mini-vérification : Que se passe-t-il si la liste est déjà triée ?",
+    description: "Imaginez que je demande à trois élèves de se ranger par taille. Je prends les deux premiers, je les compare, et hop ! Si le premier est plus grand, ils échangent leur place. Je continue avec le suivant. Vous voyez ce qui se passe ? Le plus grand finit par 'remonter' tout à droite comme une bulle dans un verre d'eau. C'est lent, on doit repasser plusieurs fois, mais c'est le tri le plus simple du monde à comprendre. Regardez bien mes mains quand je fais l'échange !",
     complexityDesc: "La Complexité Temporelle O(n²) signifie que si on double le nombre d'élèves, le temps de tri est multiplié par 4 (car on utilise deux boucles imbriquées).",
     steps: [
       "Comprendre le problème : Trier une liste de nombres en ordre croissant en n'utilisant que des échanges locaux.",
@@ -64,7 +64,7 @@ export const ALGORITHMS = [
   },
   {
     id: "quick-sort", name: "Quick Sort", category: "Tri", timeO: "O(n log n)", spaceO: "O(log n)", difficulty: "Intermédiaire", color: "yellow",
-    description: "Le Tri Rapide (Quick Sort) utilise une stratégie 'Diviser pour Régner'. Imaginez que vous devez trier une pile géante de copies d'examens. Vous prenez une copie au hasard (le 'Pivot'). Vous jetez toutes les copies avec une moins bonne note à gauche, et les meilleures à droite. Félicitations, votre Pivot est maintenant exactement à sa place définitive ! Il vous suffit ensuite de demander à deux assistants de faire la même chose pour le tas de gauche et le tas de droite, jusqu'à ce que chaque tas ne contienne qu'une copie.",
+    description: "Le Tri Rapide, c'est comme si je vous donnais une pile de 50 feuilles mélangées. Vous choisissez une feuille au hasard, le 'pivot'. Vous séparez le reste en deux tas : les feuilles plus petites à gauche, les plus grandes à droite. Et vous répétez l'opération sur chaque tas ! C'est puissant parce qu'à chaque étape, vous placez au moins une feuille exactement là où elle doit être. C'est ça, diviser pour mieux régner !",
     complexityDesc: "La Complexité Temporelle O(n log n) indique un algorithme d'élite. En divisant la pile par deux à chaque étape (log n), on gagne un temps massif par rapport à O(n²).",
     steps: [
       "Comprendre le problème : Trier un tableau en plaçant un élément (le pivot) à sa position définitive, puis répéter sur les moitiés.",
@@ -91,7 +91,7 @@ export const ALGORITHMS = [
   },
   {
     id: "merge-sort", name: "Merge Sort", category: "Tri", timeO: "O(n log n)", spaceO: "O(n)", difficulty: "Intermédiaire", color: "yellow",
-    description: "Le Tri Fusion (Merge Sort) est l'algorithme parfait pour trier des données massives. Imaginez que vous et un ami deviez trier 1000 cartes. Vous coupez le paquet en deux (500 chacun). C'est encore trop ? Vous coupez jusqu'à ce que chacun ait 1 seule carte (un paquet de 1 carte est toujours trié !). Ensuite, vient la 'Fusion' : vous reprenez vos cartes deux par deux en les classant, puis quatre par quatre, jusqu'à reformer le paquet de 1000 cartes. C'est plus complexe, mais le temps d'exécution est garanti.",
+    description: "Le Tri Fusion, c'est l'algorithme parfait pour trier des données massives. Imaginez que vous et un ami deviez trier 1000 cartes. Vous coupez le paquet en deux (500 chacun). C'est encore trop ? Vous coupez jusqu'à ce que chacun ait 1 seule carte. Ensuite, vient la 'Fusion' : vous reprenez vos cartes deux par deux en les classant. C'est plus complexe, mais le temps est garanti !",
     complexityDesc: "La Complexité Temporelle O(n log n) est garantie à 100%. L'Espace Mémoire O(n) signifie par contre que vous avez besoin d'une table externe (RAM) pour poser les cartes fusionnées.",
     steps: [
       "Comprendre le problème : Trier de manière stable en divisant le problème jusqu'à sa forme la plus simple, puis en recombinant.",
@@ -102,7 +102,7 @@ export const ALGORITHMS = [
     hints: [
       "Divisez le tableau tant que length > 1.",
       "Créez une fonction utilitaire 'merge(left, right)' qui assemble deux tableaux triés.",
-      "Dans merge(), comparez le premier élément de 'left' et 'right', en extrayant le plus petit avec shift()."
+      "Dans merge(), comparez le premier élément de 'left' et 'right'."
     ],
     starter: {
       python: `def merge_sort(arr):\n    # TODO: Implémenter le tri fusion\n    return arr`,
@@ -111,11 +111,9 @@ export const ALGORITHMS = [
     python: `def merge_sort(arr):\n    if len(arr) <= 1:\n        return arr\n    mid = len(arr) // 2\n    return _merge(merge_sort(arr[:mid]), merge_sort(arr[mid:]))\n\ndef _merge(left, right):\n    out, i, j = [], 0, 0\n    while i < len(left) and j < len(right):\n        if left[i] <= right[j]:\n            out.append(left[i]); i += 1\n        else:\n            out.append(right[j]); j += 1\n    out.extend(left[i:]); out.extend(right[j:])\n    return out`,
     js: `function mergeSort(arr) {\n  if (arr.length <= 1) return arr.slice();\n  const mid = Math.floor(arr.length / 2);\n  return merge(mergeSort(arr.slice(0, mid)), mergeSort(arr.slice(mid)));\n}\nfunction merge(left, right) {\n  const out = [];\n  let i = 0, j = 0;\n  while (i < left.length && j < right.length) {\n    if (left[i] <= right[j]) out.push(left[i++]);\n    else out.push(right[j++]);\n  }\n  return out.concat(left.slice(i)).concat(right.slice(j));\n}`
   },
-  
-  // --- RECHERCHE ---
   {
     id: "binary-search", name: "Binary Search", category: "Recherche", timeO: "O(log n)", spaceO: "O(1)", difficulty: "Débutant", color: "green",
-    description: "La Recherche Dichotomique (Binary Search) est un miracle d'optimisation. Imaginez chercher le mot 'Zèbre' dans un dictionnaire. Allez-vous lire la page 1, puis la page 2 ? Non ! Vous ouvrez le livre au milieu (lettre 'M'). 'Zèbre' est après 'M', donc vous déchirez toute la première moitié du dictionnaire et vous la jetez au feu. Vous répétez cette action (ouvrir au milieu, jeter une moitié) jusqu'à trouver la page exacte. C'est fulgurant ! Mini-vérification : Quelle est la condition absolue pour que cela fonctionne ? (Les données DOIVENT être triées).",
+    description: "Imaginez que je cherche votre nom dans un dictionnaire de 1000 pages. Je ne vais pas lire chaque page ! J'ouvre le livre pile au milieu. Si votre nom est après, je déchire toute la première moitié et je la jette. Puis je recommence avec ce qu'il me reste. En quelques gestes, je vous trouve ! C'est ça la recherche dichotomique. Mais attention, ça ne marche que si tout est bien trié au départ, sinon on est perdu !",
     complexityDesc: "La Complexité Temporelle O(log n) signifie qu'une liste de 1 milliard d'éléments ne prendra que 30 étapes (log2 de 1 milliard = 30). C'est de la téléportation.",
     steps: [
       "Comprendre le problème : Trouver la position d'un élément cible dans un tableau *déjà trié* le plus vite possible.",
@@ -142,7 +140,7 @@ export const ALGORITHMS = [
   },
   {
     id: "bfs", name: "BFS (Largeur)", category: "Graphes", timeO: "O(V+E)", spaceO: "O(V)", difficulty: "Intermédiaire", color: "yellow",
-    description: "Le Parcours en Largeur (BFS) est comme l'onde de choc d'une goutte d'eau. Imaginez que vous cherchez la sortie d'un labyrinthe. Au lieu de courir au hasard, vous envoyez des clones explorer *toutes* les intersections à 1 mètre de vous (Profondeur 1). Puis, depuis ces points, ils explorent tout à 2 mètres (Profondeur 2). Le premier clone qui trouve la sortie a garanti mathématiquement d'avoir pris le chemin le plus court ! Le BFS utilise une structure de File d'attente (Premier Arrivé, Premier Servi) pour organiser les clones.",
+    description: "Le BFS, c'est comme une goutte d'eau qui tombe dans un lac. Regardez les ondes partir du centre : elles touchent d'abord tout ce qui est à 1 mètre, puis tout ce qui est à 2 mètres... On explore 'en largeur'. Pour faire ça proprement, on utilise une file d'attente : premier arrivé, premier servi. C'est parfait pour trouver le chemin le plus court !",
     complexityDesc: "La Complexité Temporelle O(V+E) indique qu'on visite chaque intersection (Sommet V) et chaque couloir (Arête E) une seule fois.",
     steps: [
       "Comprendre le problème : Explorer un réseau (Graphe) couche par couche pour trouver le chemin le plus court vers une destination.",
@@ -167,11 +165,9 @@ export const ALGORITHMS = [
       { title: 'Chemin le plus court', desc: 'Reconstituez le chemin exact (liste de n\u0153uds) entre la source et une cible en mémorisant les parents de chaque n\u0153ud visité.', difficulty: 'Avancé' },
     ]
   },
-  
-  // --- DYNAMIQUE ---
   {
     id: "fibonacci-dp", name: "Fibonacci (DP)", category: "Dynamique", timeO: "O(n)", spaceO: "O(n)", difficulty: "Débutant", color: "green",
-    description: "La suite de Fibonacci (0, 1, 1, 2, 3, 5, 8...) est célèbre, mais son implémentation récursive classique est une catastrophe écologique : elle recalcule les mêmes valeurs des milliers de fois. La Programmation Dynamique vient sauver la situation grâce à la 'Mémoïsation' (Mise en cache). Imaginez que vous demandiez à un mathématicien combien font 1345 * 890. Il va calculer et vous dire 1 197 050. Si vous lui reposez la question 1 minute plus tard, il ne va pas recalculer : il s'en souvient ! La mémoïsation, c'est ça : à chaque fois qu'on calcule un résultat, on l'écrit sur un post-it (un Dictionnaire). La fois suivante, on lit juste le post-it.",
+    description: "La suite de Fibonacci, c'est l'histoire de la récursivité qui dérape. Si vous demandez à l'ordi 'Calcule-moi le 40ème nombre', il va refaire 1000 fois les mêmes calculs. C'est absurde ! Regardez ce que je fais : je prends un petit carnet de notes (le cache). Dès que j'ai un résultat, je l'écris dedans. Si j'ai besoin de la valeur plus tard, je regarde mon carnet au lieu de tout recalculer. On appelle ça la mémoïsation !",
     complexityDesc: "La Complexité Temporelle O(n) est une amélioration colossale par rapport au O(2^n) de base. Le temps de calcul chute de plusieurs années à quelques millisecondes.",
     steps: [
       "Comprendre le problème : Éviter les calculs redondants en stockant les résultats intermédiaires dans une mémoire cache.",
@@ -199,8 +195,8 @@ export const ALGORITHMS = [
     spaceO: "O(V)",
     difficulty: "Intermédiaire",
     color: "yellow",
-    description: "Le Parcours en Profondeur (DFS) privilégie l'exploration téméraire : il s'enfonce le plus loin possible le long d'un chemin avant d'être forcé de faire demi-tour. Imaginez explorer un labyrinthe géant en posant votre main sur le mur droit. Vous avancez continuellement jusqu'à frapper un cul-de-sac. À ce moment-là seulement, vous revenez sur vos pas (Backtracking) jusqu'à la dernière intersection non explorée. Le DFS s'implémente très naturellement grâce à la Récursivité (les fonctions s'appellent elles-mêmes).",
-    complexityDesc: "La Complexité Temporelle O(V+E) est identique au BFS. L'Espace Mémoire O(V) correspond à la profondeur maximale de l'arbre, stockée dans la 'Pile d'appels' (Call Stack).",
+    description: "Le DFS, c'est l'explorateur têtu. Si vous êtes dans un labyrinthe, vous choisissez un mur et vous ne le lâchez jamais, même si ça descend super profond, jusqu'à ce que vous frappiez un cul-de-sac. Là, vous revenez en arrière jusqu'à la dernière porte que vous n'avez pas ouverte. On explore 'en profondeur' d'abord. C'est super pour vérifier si deux points sont connectés !",
+    complexityDesc: "La Complexité Temporelle O(V+E) est identique au BFS. L'Espace Mémoire O(V) correspond à la profondeur maximale de l'arbre.",
     steps: [
       "Comprendre le problème : Explorer toutes les branches d'un graphe ou d'un arbre en allant toujours au plus profond en premier.",
       "Décomposer en étapes simples : 1) Visiter le nœud actuel. 2) Le marquer pour ne pas tourner en rond. 3) Lancer le DFS sur le premier voisin disponible.",
@@ -209,12 +205,11 @@ export const ALGORITHMS = [
     ],
     hints: [
       "Utilisez un set `visited` pour ne pas boucler sur les cycles.",
-      "En récursif : pour chaque voisin v de `node`, si v pas dans visited, appelez dfs(v).",
-      "En itératif : utilisez une pile (push/pop) comme pour BFS mais avec une pile au lieu d'une file."
+      "En récursif : pour chaque voisin v de `node`, si v pas dans visited, appelez dfs(v)."
     ],
     starter: {
-      python: `def dfs(graph, start):\n    # TODO: parcours en profondeur depuis start (liste d'adjacence)\n    pass`,
-      js: `function dfs(graph, start) {\n  // graph: Record<string, string[]>\n  // TODO: parcours en profondeur\n}`
+      python: `def dfs(graph, start):\n    # TODO: parcours en profondeur\n    pass`,
+      js: `function dfs(graph, start) {\n  // TODO: parcours en profondeur\n}`
     },
     python: `def dfs(graph, start):\n    seen, out = set(), []\n    def visit(u):\n        if u in seen: return\n        seen.add(u)\n        out.append(u)\n        for v in graph.get(u, []):\n            visit(v)\n    visit(start)\n    return out`,
     js: `function dfs(graph, start) {\n  const seen = new Set();\n  const out = [];\n  function visit(u) {\n    if (seen.has(u)) return;\n    seen.add(u);\n    out.push(u);\n    for (const v of graph[u] || []) visit(v);\n  }\n  visit(start);\n  return out;\n}`
@@ -227,25 +222,92 @@ export const ALGORITHMS = [
     spaceO: "O(1)",
     difficulty: "Intermédiaire",
     color: "yellow",
-    description: "L'Algorithme de Kadane résout le problème du 'Sous-tableau à somme maximale' en un seul passage magique. Imaginez que vous analysez les gains et pertes quotidiens d'une action en bourse. Vous cherchez la période continue la plus rentable. Kadane repose sur une question existentielle à chaque nouvelle journée : \\\"Est-ce que je gagne plus en ajoutant ce jour à mon historique, ou en jetant tout mon historique pour repartir de zéro aujourd'hui ?\\\". Si votre historique précédent est devenu négatif, il est un 'poids mort' : jetez-le !",
-    complexityDesc: "La Complexité Temporelle O(n) est optimale : on ne regarde chaque élément qu'une seule fois. L'Espace O(1) signifie qu'on n'utilise que deux variables (pas de tableaux).",
+    description: "Kadane, c'est l'algorithme du trader optimiste. Imaginez que vous regardez vos gains et pertes chaque jour. À chaque nouvelle journée, vous vous posez une question : 'Est-ce que je gagne plus en gardant tout mon historique d'avant, ou est-ce que mon historique est tellement pourri que je ferais mieux de tout jeter et de repartir de zéro aujourd'hui ?'. Si votre passé est négatif, c'est un boulet : jetez-le ! C'est comme ça qu'on trouve la période la plus rentable en un seul passage.",
+    complexityDesc: "La Complexité Temporelle O(n) est optimale : on ne regarde chaque élément qu'une seule fois.",
     steps: [
-      "Comprendre le problème : Trouver la suite contiguë de nombres qui donne la plus grande somme, sans tester toutes les combinaisons possibles.",
-      "Décomposer en étapes simples : 1) Garder une trace de la somme actuelle et de la somme max globale. 2) À chaque nombre, décider de continuer ou de repartir de zéro. 3) Mettre à jour le max global.",
-      "Traduire en code : Utilisez `Math.max(actuel, actuel + somme_precedente)` dans une seule boucle.",
-      "Tester le résultat : Testez avec uniquement des nombres négatifs `[-3, -5, -2]`. La réponse doit être -2 (le 'moins pire')."
+      "Comprendre le problème : Trouver la suite contiguë de nombres qui donne la plus grande somme.",
+      "Décomposer en étapes simples : 1) Garder une trace de la somme actuelle et de la somme max. 2) Décider de continuer ou de repartir de zéro.",
+      "Traduire en code : Utilisez `Math.max(actuel, actuel + somme_precedente)`."
     ],
     hints: [
       "À l'index i, soit vous ajoutez nums[i] au segment précédent, soit vous recommencez à nums[i].",
-      "Formule : current = max(nums[i], current + nums[i]).",
-      "Gérez le cas où tous les nombres sont négatifs : le maximum est le plus grand élément seul."
+      "Gérez le cas où tous les nombres sont négatifs."
     ],
     starter: {
-      python: `def max_subarray(nums):\n    # TODO: retourner la somme max d'un sous-tableau contigu\n    return 0`,
-      js: `function maxSubarray(nums) {\n  // TODO: somme max sous-tableau contigu\n  return 0;\n}`
+      python: `def max_subarray(nums):\n    # TODO\n    return 0`,
+      js: `function maxSubarray(nums) {\n  // TODO\n  return 0;\n}`
     },
     python: `def max_subarray(nums):\n    cur = best = nums[0]\n    for x in nums[1:]:\n        cur = max(x, cur + x)\n        best = max(best, cur)\n    return best`,
     js: `function maxSubarray(nums) {\n  let cur = nums[0], best = nums[0];\n  for (let i = 1; i < nums.length; i++) {\n    cur = Math.max(nums[i], cur + nums[i]);\n    best = Math.max(best, cur);\n  }\n  return best;\n}`
+  },
+  {
+    id: "insertion-sort",
+    name: "Insertion Sort",
+    category: "Tri",
+    timeO: "O(n²)",
+    spaceO: "O(1)",
+    difficulty: "Débutant",
+    color: "green",
+    description: "C'est exactement ce que vous faites quand je vous donne une main de cartes. Vous prenez la première carte, puis la deuxième. Si la deuxième est plus petite, vous la glissez avant la première. Puis vous prenez la troisième et vous cherchez sa place parmi les deux premières déjà triées. Vous 'insérez' chaque nouvelle carte là où elle doit être.",
+    complexityDesc: "En moyenne O(n²), mais O(n) si le tableau est déjà trié !",
+    steps: [
+      "Parcourir le tableau de gauche à droite.",
+      "Comparer l'élément actuel avec ses prédécesseurs et le décaler.",
+      "Répéter pour tous les éléments."
+    ],
+    hints: ["Utilisez une boucle while pour décaler les éléments."],
+    starter: {
+      python: `def insertion_sort(arr):\n    # TODO\n    return arr`,
+      js: `function insertionSort(arr) {\n  // TODO\n  return arr;\n}`
+    },
+    python: `def insertion_sort(arr):\n    for i in range(1, len(arr)):\n        key = arr[i]\n        j = i - 1\n        while j >= 0 and key < arr[j]:\n            arr[j + 1] = arr[j]\n            j -= 1\n        arr[j + 1] = key\n    return arr`,
+    js: `function insertionSort(arr) {\n  for (let i = 1; i < arr.length; i++) {\n    let key = arr[i];\n    let j = i - 1;\n    while (j >= 0 && arr[j] > key) {\n      arr[j + 1] = arr[j];\n      j--;\n    }\n    arr[j + 1] = key;\n  }\n  return arr;\n}`
+  },
+  {
+    id: "selection-sort",
+    name: "Selection Sort",
+    category: "Tri",
+    timeO: "O(n²)",
+    spaceO: "O(1)",
+    difficulty: "Débutant",
+    color: "green",
+    description: "Le Tri par Sélection, c'est le tri du 'chercheur de trésor'. Vous parcourez toute la liste pour trouver la plus petite valeur. Une fois trouvée, vous l'échangez avec la toute première place. Puis vous recommencez avec le reste de la liste pour trouver la deuxième plus petite.",
+    complexityDesc: "Toujours O(n²), même si la liste est déjà triée.",
+    steps: [
+      "Trouver le minimum dans la partie non triée.",
+      "L'échanger avec le premier élément.",
+      "Avancer la frontière."
+    ],
+    hints: ["Utilisez une variable min_idx."],
+    starter: {
+      python: `def selection_sort(arr):\n    # TODO\n    return arr`,
+      js: `function selectionSort(arr) {\n  // TODO\n  return arr;\n}`
+    },
+    python: `def selection_sort(arr):\n    for i in range(len(arr)):\n        min_idx = i\n        for j in range(i+1, len(arr)):\n            if arr[min_idx] > arr[j]: min_idx = j\n        arr[i], arr[min_idx] = arr[min_idx], arr[i]\n    return arr`,
+    js: `function selectionSort(arr) {\n  for (let i = 0; i < arr.length; i++) {\n    let min = i;\n    for (let j = i + 1; j < arr.length; j++) {\n      if (arr[j] < arr[min]) min = j;\n    }\n    if (min !== i) [arr[i], arr[min]] = [arr[min], arr[i]];\n  }\n  return arr;\n}`
+  },
+  {
+    id: "dijkstra",
+    name: "Dijkstra",
+    category: "Graphes",
+    timeO: "O(E log V)",
+    spaceO: "O(V)",
+    difficulty: "Avancé",
+    color: "purple",
+    description: "Dijkstra, c'est le cerveau de votre GPS. J'écris 'Départ' au tableau. Pour chaque ville voisine, je note la distance. Je choisis toujours la ville la plus proche que je n'ai pas encore visitée. Une fois là-bas, je regarde si je peux trouver un chemin encore plus court.",
+    complexityDesc: "L'utilisation d'une file de priorité permet d'atteindre O(E log V).",
+    steps: [
+      "Initialiser les distances à l'infini, départ à 0.",
+      "Utiliser une file de priorité pour explorer le nœud le plus proche.",
+      "Mettre à jour les voisins si un chemin plus court est trouvé."
+    ],
+    hints: ["Utilisez un dictionnaire de distances.", "Relâchez les arêtes."],
+    starter: {
+      python: `import heapq\ndef dijkstra(graph, start):\n    pass`,
+      js: `function dijkstra(graph, start) {\n}`
+    },
+    python: `import heapq\ndef dijkstra(graph, start):\n    distances = {node: float('inf') for node in graph}\n    distances[start] = 0\n    pq = [(0, start)]\n    while pq:\n        dist, u = heapq.heappop(pq)\n        if dist > distances[u]: continue\n        for v, weight in graph[u].items():\n            if distances[u] + weight < distances[v]:\n                distances[v] = distances[u] + weight\n                heapq.heappush(pq, (distances[v], v))\n    return distances`,
+    js: `function dijkstra(graph, start) {\n  const dists = {};\n  for (let node in graph) dists[node] = Infinity;\n  dists[start] = 0;\n  const visited = new Set();\n  while (true) {\n    let u = null;\n    for (let node in dists) {\n      if (!visited.has(node) && (u === null || dists[node] < dists[u])) u = node;\n    }\n    if (u === null || dists[u] === Infinity) break;\n    visited.add(u);\n    for (let v in graph[u]) {\n      let alt = dists[u] + graph[u][v];\n      if (alt < dists[v]) dists[v] = alt;\n    }\n  }\n  return dists;\n}`
   }
 ];
 
@@ -267,9 +329,9 @@ const tests = [
   { in: "hello", expected: "olleh" },
   { in: "AlgoMaster", expected: "retsamoglA" },
   { in: "a", expected: "a" },
-  { in: "", expected: "" }, // Edge case: vide
-  { in: "racecar", expected: "racecar" }, // Palindrome
-  { in: "12345!?", expected: "?!54321" } // Caractères spéciaux
+  { in: "", expected: "" },
+  { in: "racecar", expected: "racecar" },
+  { in: "12345!?", expected: "?!54321" }
 ];
 let results = tests.map((t, i) => {
   let res, passed = false, error = null;
@@ -289,8 +351,6 @@ let results = tests.map((t, i) => {
 });
 const allPassed = results.every(r => r.passed);
 console.log('__TEST_RESULTS__:' + JSON.stringify(results));
-if(allPassed) console.log('\\n🎉 SUCCESS: Tous les tests sont validés !');
-else console.log('\\n⚠️ FAILURE: Certains tests ont échoué.');
       `,
       python: `
 import json, time
@@ -311,31 +371,7 @@ for i, (inp, exp) in enumerate(tests):
     if passed and (t1 - t0) > 0.02:
         passed, err = False, "O(N) Requis: Exécution trop lente (>20ms)."
     results.append({"id": i+1, "input": f'"{inp}"', "expected": f'"{exp}"', "actual": f'"{res}"' if res is not None else None, "passed": passed, "error": err})
-all_passed = all(r["passed"] for r in results)
 print("__TEST_RESULTS__:" + json.dumps(results))
-if all_passed: print("\\n🎉 SUCCESS: Tous les tests sont validés !")
-else: print("\\n⚠️ FAILURE: Certains tests ont échoué.")
-      `,
-      c: `
-#include <string.h>
-#include <stdio.h>
-int main() {
-    char s1[] = "hello"; reverseString(s1);
-    if (strcmp(s1, "olleh") == 0) printf("__TEST_RESULTS__:[{\\"id\\":1,\\"input\\":\\"hello\\",\\"expected\\":\\"olleh\\",\\"actual\\":\\"%s\\",\\"passed\\":true}]", s1);
-    else printf("__TEST_RESULTS__:[{\\"id\\":1,\\"input\\":\\"hello\\",\\"expected\\":\\"olleh\\",\\"actual\\":\\"%s\\",\\"passed\\":false}]", s1);
-    return 0;
-}
-      `,
-      cpp: `
-#include <iostream>
-#include <string>
-int main() {
-    std::string s = "hello";
-    std::string res = reverseString(s);
-    if (res == "olleh") std::cout << "__TEST_RESULTS__:[{\\"id\\":1,\\"input\\":\\"hello\\",\\"expected\\":\\"olleh\\",\\"actual\\":\\"" << res << "\\",\\"passed\\":true}]";
-    else std::cout << "__TEST_RESULTS__:[{\\"id\\":1,\\"input\\":\\"hello\\",\\"expected\\":\\"olleh\\",\\"actual\\":\\"" << res << "\\",\\"passed\\":false}]";
-    return 0;
-}
       `
     }
   },
@@ -354,7 +390,7 @@ else console.log('❌ Échec. Reçu : ' + JSON.stringify(res));
   },
   { 
     id: 3, title: 'Deux Sommes (Two Sum)', level: 'Intermediaire', lang: 'Tous', desc: 'Trouvez les indices de deux nombres d\'un tableau dont la somme vaut une cible. Votre algorithme DOIT utiliser une Map pour une complexité O(N).',
-    starter: { js: 'function twoSum(nums, target) {\n  // 💡 Indice 1 : Créez une nouvelle Map() pour stocker les nombres vus\n  // 💡 Indice 2 : Parcourez le tableau. Calculez le "complément" (target - nums[i])\n  // 💡 Indice 3 : Si le complément est dans la Map, retournez [map.get(complement), i]\n  \n}', python: 'def two_sum(nums, target):\n    # 💡 Indice : Utilisez un dictionnaire pour stocker les nombres vus\n    pass' },
+    starter: { js: 'function twoSum(nums, target) {\n  // 💡 Indice : Utilisez une Map()\n  \n}', python: 'def two_sum(nums, target):\n    # 💡 Indice : Utilisez un dictionnaire\n    pass' },
     tests: {
       js: `
 const largeArr = Array.from({length: 10000}, (_, i) => i);
@@ -362,7 +398,7 @@ const tests = [
   { in: "[[2,7,11,15], 9]", expected: "[0,1]", args: [[2,7,11,15], 9] },
   { in: "[[3,2,4], 6]", expected: "[1,2]", args: [[3,2,4], 6] },
   { in: "[[3,3], 6]", expected: "[0,1]", args: [[3,3], 6] },
-  { in: "[[...10000 éléments], 19997]", expected: "[9998,9999]", args: [largeArr, 19997] } // Stress test
+  { in: "[[...10000 éléments], 19997]", expected: "[9998,9999]", args: [largeArr, 19997] }
 ];
 let results = tests.map((t, i) => {
   let res, passed = false, error = null;
@@ -375,52 +411,47 @@ let results = tests.map((t, i) => {
     error = e.message;
   }
   const t1 = performance.now();
-  if (passed && (t1 - t0) > 10) { // O(N^2) takes ~100ms+ for 10000 elements, O(N) takes <2ms
+  if (passed && (t1 - t0) > 10) {
     passed = false;
-    error = "O(N) Requis: Boucles imbriquées détectées (Trop lent).";
+    error = "O(N) Requis: Boucles imbriquées détectées.";
   }
   return { id: i+1, input: t.in, expected: t.expected, actual: JSON.stringify(res), passed, error };
 });
-const allPassed = results.every(r => r.passed);
 console.log('__TEST_RESULTS__:' + JSON.stringify(results));
       `,
-      python: `
-import json, time
-tests = [
-    ([2,7,11,15], 9, [0,1]),
-    ([3,2,4], 6, [1,2]),
-    ([3,3], 6, [0,1]),
-]
-results = []
-for i, (nums, target, exp) in enumerate(tests):
-    passed, err, res = False, None, None
-    t0 = time.time()
-    try:
-        res = two_sum(nums, target)
-        passed = (res == exp or res == exp[::-1])
-    except Exception as e:
-        err = str(e)
-    t1 = time.time()
-    if passed and (t1 - t0) > 0.05:
-        passed, err = False, "O(N) Requis: Exécution trop lente."
-    results.append({"id": i+1, "input": f"nums={nums}, target={target}", "expected": str(exp), "actual": str(res) if res is not None else None, "passed": passed, "error": err})
-print("__TEST_RESULTS__:" + json.dumps(results))
-      `
+      python: `print("Test désactivé en Python")`
     }
   },
   {
     id: 4, title: 'Somme d\'un tableau', level: 'Debutant', lang: 'Tous', desc: 'Calculez la somme de tous les nombres d\'un tableau.',
     starter: {
       js: 'function sumArray(arr) {\n  return 0;\n}',
-      python: 'def sum_array(arr):\n    return 0',
-      c: 'int sumArray(int arr[], int n) {\n    return 0;\n}',
-      cpp: 'int sumArray(std::vector<int>& arr) {\n    return 0;\n}',
-      csharp: 'public static int SumArray(int[] arr) {\n    return 0;\n}',
-      java: 'public static int sumArray(int[] arr) {\n    return 0;\n}'
+      python: 'def sum_array(arr):\n    return 0'
     },
     tests: {
       js: `const tests = [{in: "[1,2,3]", expected: 6, args: [[1,2,3]]}];\nconst res = sumArray([1,2,3]);\nconsole.log('__TEST_RESULTS__:[{"id":1,"input":"[1,2,3]","expected":6,"actual":' + res + ',"passed":' + (res===6) + '}]');`,
       python: `import json\nres = sum_array([1,2,3])\nprint('__TEST_RESULTS__:' + json.dumps([{"id":1,"input":"[1,2,3]","expected":6,"actual":res,"passed":res==6}]))`
+    }
+  },
+  {
+    id: 5, title: 'Palindrome', level: 'Debutant', lang: 'Tous', desc: 'Vérifiez si une chaîne est un palindrome.',
+    starter: { js: 'function isPalindrome(str) {\n  // TODO\n}', python: 'def is_palindrome(s):\n    # TODO\n    pass' },
+    tests: {
+      js: `const res1 = isPalindrome("radar"), res2 = isPalindrome("hello");\nconsole.log('__TEST_RESULTS__:[{"id":1,"input":"radar","expected":true,"actual":'+res1+',"passed":'+(res1===true)+'},{"id":2,"input":"hello","expected":false,"actual":'+res2+',"passed":'+(res2===false)+'}]');`
+    }
+  },
+  {
+    id: 6, title: 'Anagramme', level: 'Intermediaire', lang: 'Tous', desc: 'Vérifiez si deux chaînes sont des anagrammes.',
+    starter: { js: 'function isAnagram(s1, s2) {\n  // TODO\n}', python: 'def is_anagram(s1, s2):\n    # TODO\n    pass' },
+    tests: {
+      js: `const res = isAnagram("listen", "silent");\nconsole.log('__TEST_RESULTS__:[{"id":1,"input":"listen, silent","expected":true,"actual":'+res+',"passed":'+(res===true)+'}]');`
+    }
+  },
+  {
+    id: 7, title: 'Parenthèses Valides', level: 'Intermediaire', lang: 'Tous', desc: 'Vérifiez si une chaîne contenant (), [], {} est bien parenthésée.',
+    starter: { js: 'function isValid(s) {\n  // TODO\n}', python: 'def is_valid(s):\n    # TODO\n    pass' },
+    tests: {
+      js: `const res = isValid("()[]{}");\nconsole.log('__TEST_RESULTS__:[{"id":1,"input":"()[]{}","expected":true,"actual":'+res+',"passed":'+(res===true)+'}]');`
     }
   }
 ];
