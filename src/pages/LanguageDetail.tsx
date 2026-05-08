@@ -8,8 +8,10 @@ import PremiumModal from '../components/PremiumModal';
 import { 
   ArrowLeft, BookOpen, Code2, ExternalLink, ChevronRight, Play, CheckCircle2, 
   Zap, FileText, Video, AlertTriangle, Map as MapIcon, Trophy, Target, Sparkles, Star,
-  Lock, ArrowRight, MousePointer2, Bot
+  Lock, ArrowRight, MousePointer2, Bot, SquareSquare, Maximize2, Minimize2
 } from 'lucide-react';
+import CodeEditor from '../components/CodeEditor';
+import { executeCode } from '../utils/piston';
 
 type Tab = 'cours' | 'algos' | 'ressources';
 
@@ -25,14 +27,33 @@ export default function LanguageDetail() {
   const [showSuccess, setShowSuccess] = useState(false);
   const [mentorHint, setMentorHint] = useState<string | null>(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [userCode, setUserCode] = useState<string>('');
+  const [userOutput, setUserOutput] = useState<string | null>(null);
+  const [isRunning, setIsRunning] = useState(false);
 
   const handleMentorAnalyze = () => {
     setIsAnalyzing(true);
     setMentorHint(null);
     setTimeout(() => {
       setIsAnalyzing(false);
-      setMentorHint("Excellente question ! Ce code produit ce résultat car l'ordre d'exécution dépend de l'architecture du langage. Essayez de modifier les variables dans l'éditeur interactif (La Forge) pour voir comment la sortie évolue !");
+      setMentorHint("Excellente initiative ! L'exécution du code dépend de la machine virtuelle. Essayez de modifier les variables dans l'éditeur interactif (La Forge) pour voir comment la sortie évolue. Si vous avez une erreur, vérifiez la syntaxe !");
     }, 1500);
+  };
+
+  const handleRunCode = async () => {
+    setIsRunning(true);
+    setUserOutput('🚀 Connexion au terminal quantique...');
+    setMentorHint(null);
+    try {
+      const result = await executeCode(userCode, id || 'js');
+      setUserOutput(result.output || '✨ Exécution terminée avec succès (aucune sortie console).');
+      if (result.output?.toLowerCase().includes('erreur') || result.output?.toLowerCase().includes('error')) {
+        setTimeout(() => handleMentorAnalyze(), 1000);
+      }
+    } catch (err) {
+      setUserOutput(`❌ Erreur Critique : ${err instanceof Error ? err.message : String(err)}`);
+    }
+    setIsRunning(false);
   };
 
   if (!lang) {
@@ -51,6 +72,16 @@ export default function LanguageDetail() {
   
   const currentSection = lang.sections[activeSection];
   const currentLesson = currentSection?.lessons[activeLesson];
+
+  // Reset user code when lesson changes
+  import { useEffect } from 'react';
+  useEffect(() => {
+    if (currentLesson) {
+      setUserCode(currentLesson.code);
+      setUserOutput(null);
+      setMentorHint(null);
+    }
+  }, [currentLesson]);
 
   const markComplete = () => {
     const key = `${activeSection}-${activeLesson}`;
@@ -291,49 +322,88 @@ export default function LanguageDetail() {
                         )}
                       </div>
 
-                      {/* Code Block */}
-                      <div className="mt-10 rounded-2xl border border-white/10 overflow-hidden shadow-2xl">
-                        <div className="px-6 py-3 bg-white/5 border-b border-white/10 flex items-center justify-between">
-                          <div className="flex items-center gap-2">
-                            <Code2 size={14} style={{ color: lang.color }} />
-                            <span className="text-[10px] font-black uppercase tracking-widest opacity-60">Snippet {lang.name}</span>
-                          </div>
-                          <div className="flex gap-1.5">
-                            <div className="w-2.5 h-2.5 rounded-full bg-white/10" />
-                            <div className="w-2.5 h-2.5 rounded-full bg-white/10" />
-                            <div className="w-2.5 h-2.5 rounded-full bg-white/10" />
-                          </div>
-                        </div>
-                        <div className="p-6 bg-[#050505] font-mono text-sm leading-relaxed overflow-x-auto text-white/90">
-                          <code>{currentLesson.code}</code>
-                        </div>
-                        {currentLesson.output && (
-                          <div className="border-t border-white/5 bg-[#050505]/80">
-                            <div className="px-6 py-3 border-b border-white/5 bg-white/[0.02] flex items-center justify-between">
-                              <span className="text-[10px] font-black uppercase tracking-widest text-[var(--green)]">Sortie Terminal</span>
-                              <button 
-                                onClick={handleMentorAnalyze}
-                                disabled={isAnalyzing}
-                                className="flex items-center gap-1.5 px-3 py-1 bg-purple-500/10 hover:bg-purple-500/20 text-purple-400 rounded-lg text-[10px] font-black uppercase tracking-widest transition-colors border border-purple-500/20"
-                              >
-                                <Bot size={12} className={isAnalyzing ? "animate-bounce" : ""} />
-                                {isAnalyzing ? "Analyse..." : "Demander au Mentor IA"}
-                              </button>
+                      {/* Interactive Code Editor (The Forge) */}
+                      <div className="mt-12 rounded-[32px] border border-white/10 overflow-hidden shadow-2xl bg-[#050505] relative group">
+                        <div className="absolute -inset-1 bg-gradient-to-b from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
+                        
+                        {/* Editor Header */}
+                        <div className="px-6 py-4 bg-white/[0.02] border-b border-white/5 flex flex-wrap items-center justify-between gap-4">
+                          <div className="flex items-center gap-3">
+                            <div className="p-2 rounded-xl bg-white/5 flex items-center justify-center">
+                              <Code2 size={16} style={{ color: lang.color }} />
                             </div>
-                            <div className="p-6 text-[13px] text-white/70 font-mono whitespace-pre-wrap space-y-4">
-                              <div>{currentLesson.output}</div>
+                            <div>
+                              <div className="text-[10px] font-black uppercase tracking-[0.2em] opacity-50">Éditeur Interactif</div>
+                              <div className="text-sm font-black text-white">La Forge {lang.name}</div>
+                            </div>
+                          </div>
+                          
+                          <div className="flex items-center gap-3">
+                            <button
+                              onClick={handleRunCode}
+                              disabled={isRunning}
+                              className={`btn px-6 py-2 text-xs flex items-center gap-2 font-black rounded-xl transition-all ${
+                                isRunning ? 'bg-[var(--green)]/20 text-[var(--green)] border border-[var(--green)]/30 shadow-[0_0_20px_rgba(16,185,129,0.2)]' : 'bg-white text-black hover:scale-105 active:scale-95'
+                              }`}
+                            >
+                              {isRunning ? <SquareSquare size={14} className="animate-pulse" /> : <Play size={14} className="fill-current" />}
+                              {isRunning ? 'Compilation...' : 'Exécuter le code'}
+                            </button>
+                          </div>
+                        </div>
+
+                        {/* Editor Body */}
+                        <div className="h-[250px] relative z-10 border-b border-white/5">
+                          <CodeEditor
+                            value={userCode}
+                            language={id === 'js' ? 'javascript' : id === 'csharp' ? 'csharp' : id === 'cpp' ? 'cpp' : id === 'java' ? 'java' : id === 'c' ? 'c' : 'python'}
+                            onChange={(val) => setUserCode(val || '')}
+                          />
+                        </div>
+
+                        {/* Terminal Output */}
+                        <div className="bg-[#050505]">
+                          <div className="px-6 py-3 border-b border-white/5 bg-white/[0.01] flex items-center justify-between">
+                            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-[var(--green)] flex items-center gap-2">
+                              <Terminal size={14} /> Terminal
+                            </span>
+                            <button 
+                              onClick={handleMentorAnalyze}
+                              disabled={isAnalyzing}
+                              className="flex items-center gap-1.5 px-4 py-1.5 bg-purple-500/10 hover:bg-purple-500/20 text-purple-400 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all border border-purple-500/20 shadow-[0_0_15px_rgba(168,85,247,0.1)] hover:shadow-[0_0_25px_rgba(168,85,247,0.2)]"
+                            >
+                              <Bot size={14} className={isAnalyzing ? "animate-bounce" : ""} />
+                              {isAnalyzing ? "Analyse..." : "Demander au Mentor IA"}
+                            </button>
+                          </div>
+                          
+                          <div className="p-6 min-h-[120px] max-h-[250px] overflow-y-auto custom-scrollbar">
+                            <pre className="text-[13px] text-white/80 font-mono whitespace-pre-wrap leading-relaxed">
+                              {userOutput !== null ? userOutput : (currentLesson.output || '> Prêt pour exécution...')}
+                            </pre>
+                            
+                            <AnimatePresence>
                               {mentorHint && (
-                                <motion.div initial={{ opacity: 0, y: 5 }} animate={{ opacity: 1, y: 0 }} className="p-4 rounded-xl bg-purple-500/10 border border-purple-500/20 flex gap-3 mt-4">
-                                  <Bot className="w-5 h-5 text-purple-400 shrink-0 mt-0.5" />
+                                <motion.div 
+                                  initial={{ opacity: 0, y: 10, scale: 0.95 }} 
+                                  animate={{ opacity: 1, y: 0, scale: 1 }} 
+                                  exit={{ opacity: 0, scale: 0.95 }}
+                                  className="p-5 rounded-2xl bg-gradient-to-r from-purple-500/10 to-transparent border border-purple-500/20 flex gap-4 mt-6"
+                                >
+                                  <div className="w-10 h-10 rounded-xl bg-purple-500/20 flex items-center justify-center shrink-0 shadow-inner">
+                                    <Bot className="w-5 h-5 text-purple-400" />
+                                  </div>
                                   <div>
-                                    <div className="text-xs font-black uppercase tracking-widest text-purple-400 mb-1">Mentor IA</div>
-                                    <p className="text-sm text-purple-200/80 leading-relaxed font-sans">{mentorHint}</p>
+                                    <div className="text-[10px] font-black uppercase tracking-[0.2em] text-purple-400 mb-1.5 flex items-center gap-2">
+                                      Mentor IA <Sparkles size={10} />
+                                    </div>
+                                    <p className="text-sm text-purple-100/90 leading-relaxed font-medium">{mentorHint}</p>
                                   </div>
                                 </motion.div>
                               )}
-                            </div>
+                            </AnimatePresence>
                           </div>
-                        )}
+                        </div>
                       </div>
 
                       {/* Lesson Actions */}

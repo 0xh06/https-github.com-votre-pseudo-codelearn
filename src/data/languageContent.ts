@@ -44,14 +44,14 @@ export const LANGUAGE_COURSES: Record<string, LangCourse> = {
         lessons: [
           {
             title: '1. Votre Premier Code : Hello World!',
-            explanation: 'Étape 1 : Parler à l\\'ordinateur.\nPour dire à l\\'ordinateur d\\'afficher quelque chose à l\\'écran en JavaScript, on utilise la commande `console.log`.\n\nÉtape 2 : Les guillemets.\nL\\'ordinateur est littéral. Si vous voulez afficher du texte, vous devez le mettre entre guillemets (" ") pour qu\\'il comprenne que c\\'est une phrase.',
+            explanation: 'Étape 1 : Parler à l\'ordinateur.\nPour dire à l\'ordinateur d\'afficher quelque chose à l\'écran en JavaScript, on utilise la commande `console.log`.\n\nÉtape 2 : Les guillemets.\nL\'ordinateur est littéral. Si vous voulez afficher du texte, vous devez le mettre entre guillemets (" ") pour qu\'il comprenne que c\'est une phrase.',
             code: `// Appuyez sur Run pour afficher le message !\nconsole.log("Bonjour le monde !");\nconsole.log("Je suis prêt à coder en JavaScript.");`,
             output: 'Bonjour le monde !\nJe suis prêt à coder en JavaScript.',
-            realWorldUseCase: '`console.log` est l\\'outil principal des développeurs Web pour déboguer leurs applications et vérifier que les données sont correctes.'
+            realWorldUseCase: '`console.log` est l\'outil principal des développeurs Web pour déboguer leurs applications et vérifier que les données sont correctes.'
           },
           {
             title: '2. Les Variables (Boîtes de mémoire)',
-            explanation: 'Étape 1 : Stocker une information.\nImaginez une variable comme une boîte en carton sur laquelle vous écrivez un nom. À l\\'intérieur, vous pouvez y mettre ce que vous voulez.\n\nÉtape 2 : L\\'assignation avec let.\nEn JS, on crée la boîte en écrivant `let`, son nom, puis `=` pour la remplir. (ex: `let age = 25`).',
+            explanation: 'Étape 1 : Stocker une information.\nImaginez une variable comme une boîte en carton sur laquelle vous écrivez un nom. À l\'intérieur, vous pouvez y mettre ce que vous voulez.\n\nÉtape 2 : L\'assignation avec let.\nEn JS, on crée la boîte en écrivant `let`, son nom, puis `=` pour la remplir. (ex: `let age = 25`).',
             code: `// Création de nos "boîtes" (variables)\nlet nomDuJoueur = "Arthur";\nlet viesRestantes = 3;\n\nconsole.log("Héros :");\nconsole.log(nomDuJoueur);\nconsole.log("Vies :");\nconsole.log(viesRestantes);`,
             output: 'Héros :\nArthur\nVies :\n3'
           }
@@ -62,7 +62,7 @@ export const LANGUAGE_COURSES: Record<string, LangCourse> = {
         lessons: [
           {
             title: 'Variables & Types de données',
-            explanation: 'Étape 1 : Le concept de boîte.\nUne variable est comme une "boîte" dans laquelle on range une information pour la réutiliser.\n\nÉtape 2 : Choisir le bon mot-clé.\nUtilisez `let` si le contenu va changer (ex: un score). Utilisez `const` si la valeur est définitive (ex: date de naissance). Évitez `var`.\n\nÉtape 3 : Le Typage dynamique.\nVous n\\'avez pas besoin de préciser si la boîte contient du texte ou un nombre. JavaScript le devine et peut même changer d\\'avis !',
+            explanation: 'Étape 1 : Le concept de boîte.\nUne variable est comme une "boîte" dans laquelle on range une information pour la réutiliser.\n\nÉtape 2 : Choisir le bon mot-clé.\nUtilisez `let` si le contenu va changer (ex: un score). Utilisez `const` si la valeur est définitive (ex: date de naissance). Évitez `var`.\n\nÉtape 3 : Le Typage dynamique.\nVous n\'avez pas besoin de préciser si la boîte contient du texte ou un nombre. JavaScript le devine et peut même changer d\'avis !',
             code: `// 1. Déclarer des variables
 let score = 0;              // Un nombre entier (Number)
 const playerName = "Alice"; // Du texte (String)
@@ -83,7 +83,7 @@ console.log(typeof mystery); // "string"`,
           },
           {
             title: 'Structures conditionnelles (if/else)',
-            explanation: 'Étape 1 : Le principe de décision.\nLes conditions permettent à votre code de prendre des chemins différents selon la situation (Si... Alors... Sinon).\n\nÉtape 2 : La syntaxe if/else.\nJavaScript évalue la question entre parenthèses `()`. Si c\\'est "vrai" (true), il exécute le premier bloc `{}`. Sinon, il passe au bloc `else`.\n\nÉtape 3 : Les conditions multiples.\nVous pouvez enchaîner les vérifications avec `else if` pour tester plusieurs scénarios à la suite.',
+            explanation: 'Étape 1 : Le principe de décision.\nLes conditions permettent à votre code de prendre des chemins différents selon la situation (Si... Alors... Sinon).\n\nÉtape 2 : La syntaxe if/else.\nJavaScript évalue la question entre parenthèses `()`. Si c\'est "vrai" (true), il exécute le premier bloc `{}`. Sinon, il passe au bloc `else`.\n\nÉtape 3 : Les conditions multiples.\nVous pouvez enchaîner les vérifications avec `else if` pour tester plusieurs scénarios à la suite.',
             code: `const age = 16;
 const hasParentalConsent = true;
 
@@ -110,7 +110,7 @@ console.log("Statut : " + status);`,
         lessons: [
           {
             title: 'Tableaux et Boucles',
-            explanation: 'Étape 1 : Créer un Tableau (Array).\nUn tableau est une liste ordonnée. C\\'est comme un meuble à tiroirs numérotés : le premier tiroir porte le numéro 0, le deuxième le 1, etc.\n\nÉtape 2 : La Boucle classique.\nPour lire tous les tiroirs, on utilise une boucle `for` qui compte de 0 jusqu\\'à la fin du tableau.\n\nÉtape 3 : La Boucle moderne (for...of).\nPlus simple à lire ! Elle dit littéralement "Pour chaque élément de mon tableau, fais ceci", sans avoir à gérer les numéros (index).',
+            explanation: 'Étape 1 : Créer un Tableau (Array).\nUn tableau est une liste ordonnée. C\'est comme un meuble à tiroirs numérotés : le premier tiroir porte le numéro 0, le deuxième le 1, etc.\n\nÉtape 2 : La Boucle classique.\nPour lire tous les tiroirs, on utilise une boucle `for` qui compte de 0 jusqu\'à la fin du tableau.\n\nÉtape 3 : La Boucle moderne (for...of).\nPlus simple à lire ! Elle dit littéralement "Pour chaque élément de mon tableau, fais ceci", sans avoir à gérer les numéros (index).',
             code: `// Un tableau contenant des chaînes de caractères
 const inventory = ["Épée", "Bouclier", "Potion"];
 
@@ -137,7 +137,7 @@ for (const item of inventory) {
           },
           {
             title: 'Objets et Destructuration',
-            explanation: 'Étape 1 : Le concept d\\'Objet.\nContrairement aux tableaux (listes numérotées), les Objets sont des listes nommées (système "clé: valeur"). C\\'est idéal pour représenter quelque chose de complexe, comme un Joueur.\n\nÉtape 2 : Accéder aux données.\nOn utilise le point `.` pour lire une valeur (ex: `player.username`).\n\nÉtape 3 : La Destructuration.\nC\\'est une technique magique pour extraire directement les valeurs dans des variables séparées en une seule ligne de code : `const { username } = player`.',
+            explanation: 'Étape 1 : Le concept d\'Objet.\nContrairement aux tableaux (listes numérotées), les Objets sont des listes nommées (système "clé: valeur"). C\'est idéal pour représenter quelque chose de complexe, comme un Joueur.\n\nÉtape 2 : Accéder aux données.\nOn utilise le point `.` pour lire une valeur (ex: `player.username`).\n\nÉtape 3 : La Destructuration.\nC\'est une technique magique pour extraire directement les valeurs dans des variables séparées en une seule ligne de code : `const { username } = player`.',
             code: `// Création d'un objet "Joueur"
 const player = {
   id: 1042,
@@ -167,7 +167,7 @@ console.log(\`Points de vie : \${hp}\`);`,
         lessons: [
           {
             title: 'Asynchrone : Promises & Async/Await',
-            explanation: 'Étape 1 : Le problème du temps.\nJavaScript ne fait qu\\'une chose à la fois. Si on demande des données à un serveur lent, l\\'écran gèlerait.\n\nÉtape 2 : Les Promesses (Promises).\nAu lieu d\\'attendre bêtement, JS donne une "Promesse" qu\\'il fournira le résultat plus tard, et continue son travail.\n\nÉtape 3 : Async / Await.\nCe sont les mots magiques ! Ils permettent de mettre la fonction "en pause" (await) jusqu\\'à ce que la promesse soit tenue, rendant le code très facile à lire.',
+            explanation: 'Étape 1 : Le problème du temps.\nJavaScript ne fait qu\'une chose à la fois. Si on demande des données à un serveur lent, l\'écran gèlerait.\n\nÉtape 2 : Les Promesses (Promises).\nAu lieu d\'attendre bêtement, JS donne une "Promesse" qu\'il fournira le résultat plus tard, et continue son travail.\n\nÉtape 3 : Async / Await.\nCe sont les mots magiques ! Ils permettent de mettre la fonction "en pause" (await) jusqu\'à ce que la promesse soit tenue, rendant le code très facile à lire.',
             code: `// Simule un appel serveur qui prend 1 seconde
 function fetchUserData() {
   return new Promise((resolve, reject) => {
@@ -276,7 +276,7 @@ sauverVaisseau().catch(() => console.log("Sauvetage échoué (Non géré en inte
         lessons: [
           {
             title: '1. Votre Premier Code : Hello World!',
-            explanation: 'Étape 1 : Parler à l\\'ordinateur.\nPour dire à l\\'ordinateur d\\'afficher quelque chose à l\\'écran, Python utilise un ordre très simple : `print`.\n\nÉtape 2 : Les guillemets.\nL\\'ordinateur est littéral. Si vous voulez afficher du texte, vous devez le mettre entre guillemets (" ") pour qu\\'il comprenne que c\\'est une phrase et non pas une commande secrète.',
+            explanation: 'Étape 1 : Parler à l\'ordinateur.\nPour dire à l\'ordinateur d\'afficher quelque chose à l\'écran, Python utilise un ordre très simple : `print`.\n\nÉtape 2 : Les guillemets.\nL\'ordinateur est littéral. Si vous voulez afficher du texte, vous devez le mettre entre guillemets (" ") pour qu\'il comprenne que c\'est une phrase et non pas une commande secrète.',
             code: `# Appuyez sur Run pour afficher le message !
 print("Bonjour le monde !")
 print("Je suis prêt à apprendre à coder.")`,
@@ -285,7 +285,7 @@ print("Je suis prêt à apprendre à coder.")`,
           },
           {
             title: '2. Les Variables (Boîtes de mémoire)',
-            explanation: 'Étape 1 : Stocker une information.\nImaginez une variable comme une boîte en carton sur laquelle vous écrivez un nom au marqueur. À l\\'intérieur, vous pouvez y mettre ce que vous voulez.\n\nÉtape 2 : L\\'assignation avec le signe =.\nEn Python, on crée la boîte en écrivant son nom, puis `=` pour la remplir. (ex: `age = 25`).\n\nÉtape 3 : Réutiliser la boîte.\nUne fois la boîte créée, on peut utiliser son nom dans un `print` pour afficher son contenu.',
+            explanation: 'Étape 1 : Stocker une information.\nImaginez une variable comme une boîte en carton sur laquelle vous écrivez un nom au marqueur. À l\'intérieur, vous pouvez y mettre ce que vous voulez.\n\nÉtape 2 : L\'assignation avec le signe =.\nEn Python, on crée la boîte en écrivant son nom, puis `=` pour la remplir. (ex: `age = 25`).\n\nÉtape 3 : Réutiliser la boîte.\nUne fois la boîte créée, on peut utiliser son nom dans un `print` pour afficher son contenu.',
             code: `# Création de nos "boîtes" (variables)
 nom_du_joueur = "Arthur"
 vies_restantes = 3
@@ -295,7 +295,7 @@ print(nom_du_joueur)
 print("Vies :")
 print(vies_restantes)`,
             output: 'Héros :\nArthur\nVies :\n3',
-            commonErrors: '❌ Erreur classique : Oublier de mettre des guillemets autour du texte. `nom = Arthur` va faire crasher le code, car Python va chercher une variable qui s\\'appelle Arthur au lieu de comprendre que c\\'est juste le mot "Arthur".'
+            commonErrors: '❌ Erreur classique : Oublier de mettre des guillemets autour du texte. `nom = Arthur` va faire crasher le code, car Python va chercher une variable qui s\'appelle Arthur au lieu de comprendre que c\'est juste le mot "Arthur".'
           },
           {
             title: '3. Les Opérations Mathématiques',
@@ -310,7 +310,7 @@ print("J'ai acheté l'épée. Il me reste :")
 print(monnaie)
 print("pièces d'or.")`,
             output: 'J\'ai acheté l\'épée. Il me reste :\n3\npièces d\'or.',
-            realWorldUseCase: 'Calculer le score d\\'un utilisateur, le prix total d\\'un panier d\\'achat avec la TVA, ou les dégâts d\\'un boss dans un jeu.'
+            realWorldUseCase: 'Calculer le score d\'un utilisateur, le prix total d\'un panier d\'achat avec la TVA, ou les dégâts d\'un boss dans un jeu.'
           }
         ]
       },
@@ -319,7 +319,7 @@ print("pièces d'or.")`,
         lessons: [
           {
             title: 'Variables et l\'Indentation',
-            explanation: 'Étape 1 : Le pouvoir de l\\'Indentation.\nEn Python, pas besoin d\\'accolades `{}` ! On utilise des espaces (indentation) pour regrouper le code. Cela force à écrire du code propre.\n\nÉtape 2 : Créer des variables.\nPas de mot-clé spécial. On écrit juste le nom de la variable, un `=`, et sa valeur.\n\nÉtape 3 : Poser des conditions.\nUtilisez `if`, `elif` (sinon si), et `else`. N\\'oubliez pas les deux points `:` à la fin de la ligne de condition !',
+            explanation: 'Étape 1 : Le pouvoir de l\'Indentation.\nEn Python, pas besoin d\'accolades `{}` ! On utilise des espaces (indentation) pour regrouper le code. Cela force à écrire du code propre.\n\nÉtape 2 : Créer des variables.\nPas de mot-clé spécial. On écrit juste le nom de la variable, un `=`, et sa valeur.\n\nÉtape 3 : Poser des conditions.\nUtilisez `if`, `elif` (sinon si), et `else`. N\'oubliez pas les deux points `:` à la fin de la ligne de condition !',
             code: `# Déclaration simple
 hero_name = "Aragorn"
 level = 87
@@ -341,7 +341,7 @@ print("Fin de l'analyse.") # Hors de l'indentation = hors du if`,
           },
           {
             title: 'Listes et Dictionnaires',
-            explanation: 'Étape 1 : Les Listes (Crochets []).\nElles stockent plusieurs éléments dans un ordre précis. Vous pouvez ajouter des éléments avec `.append()` et lire à l\\'envers avec des index négatifs (ex: `-1`).\n\nÉtape 2 : Les Dictionnaires (Accolades {}).\nIls stockent des paires Clé-Valeur (comme un dictionnaire mot-définition). C\\'est parfait pour regrouper les propriétés d\\'un personnage ou des données serveur.\n\nÉtape 3 : Manipulation directe.\nVous pouvez facilement modifier la valeur d\\'un dictionnaire en appelant sa clé : `player["agility"] += 5`.',
+            explanation: 'Étape 1 : Les Listes (Crochets []).\nElles stockent plusieurs éléments dans un ordre précis. Vous pouvez ajouter des éléments avec `.append()` et lire à l\'envers avec des index négatifs (ex: `-1`).\n\nÉtape 2 : Les Dictionnaires (Accolades {}).\nIls stockent des paires Clé-Valeur (comme un dictionnaire mot-définition). C\'est parfait pour regrouper les propriétés d\'un personnage ou des données serveur.\n\nÉtape 3 : Manipulation directe.\nVous pouvez facilement modifier la valeur d\'un dictionnaire en appelant sa clé : `player["agility"] += 5`.',
             code: `# --- LISTES ---
 inventory = ["Épée", "Arc", "Potion"]
 inventory.append("Bouclier") # Ajoute à la fin
@@ -366,7 +366,7 @@ print(f"{player['name']} a {player['agility']} d'agilité.")`,
         lessons: [
           {
             title: 'Boucles et Compréhension de listes',
-            explanation: 'Étape 1 : La Boucle For-Each.\nEn Python, on ne compte pas de 0 à la fin. On dit simplement : `for num in numbers` (Pour chaque numéro dans la liste des numéros). C\\'est clair et direct.\n\nÉtape 2 : La Compréhension de liste.\nC\\'est LE super-pouvoir de Python. Cela permet de créer, filtrer et modifier une liste entière en une seule ligne très lisible.\n\nÉtape 3 : Syntaxe de la Compréhension.\n`[résultat for element in liste if condition]`. C\\'est de l\\'anglais mathématique !',
+            explanation: 'Étape 1 : La Boucle For-Each.\nEn Python, on ne compte pas de 0 à la fin. On dit simplement : `for num in numbers` (Pour chaque numéro dans la liste des numéros). C\'est clair et direct.\n\nÉtape 2 : La Compréhension de liste.\nC\'est LE super-pouvoir de Python. Cela permet de créer, filtrer et modifier une liste entière en une seule ligne très lisible.\n\nÉtape 3 : Syntaxe de la Compréhension.\n`[résultat for element in liste if condition]`. C\'est de l\'anglais mathématique !',
             code: `numbers = [1, 2, 3, 4, 5]
 
 # Boucle classique
@@ -387,7 +387,7 @@ print(f"Carrés des nombres pairs : {squares}")`,
           },
           {
             title: 'Fonctions et *args / **kwargs',
-            explanation: 'Étape 1 : Définir une fonction.\nOn utilise le mot-clé `def` suivi du nom et des paramètres.\n\nÉtape 2 : Les arguments multiples (*args).\nEn ajoutant une étoile `*` devant un paramètre, la fonction peut accepter une infinité d\\'arguments normaux.\n\nÉtape 3 : Les arguments nommés (**kwargs).\nEn ajoutant deux étoiles `**`, la fonction peut accepter une infinité d\\'arguments nommés (clés-valeurs), offrant une flexibilité totale.',
+            explanation: 'Étape 1 : Définir une fonction.\nOn utilise le mot-clé `def` suivi du nom et des paramètres.\n\nÉtape 2 : Les arguments multiples (*args).\nEn ajoutant une étoile `*` devant un paramètre, la fonction peut accepter une infinité d\'arguments normaux.\n\nÉtape 3 : Les arguments nommés (**kwargs).\nEn ajoutant deux étoiles `**`, la fonction peut accepter une infinité d\'arguments nommés (clés-valeurs), offrant une flexibilité totale.',
             code: `def calculate_damage(base, *multipliers, **bonuses):
     """Calcule les dégâts finaux d'une attaque."""
     total = base
@@ -416,7 +416,7 @@ print(f"Dégâts infligés : {dmg}")`,
         lessons: [
           {
             title: 'Générateurs et le mot-clé Yield',
-            explanation: 'Étape 1 : Le problème de la RAM.\nSi vous chargez un fichier de 50 Go dans une liste classique, votre ordinateur va planter car la mémoire RAM sera saturée.\n\nÉtape 2 : La magie du mot-clé Yield.\nUn Générateur (utilisant `yield` au lieu de `return`) calcule les valeurs **une par une**, seulement quand on les lui demande.\n\nÉtape 3 : La mise en pause.\nÀ chaque `yield`, la fonction s\\'arrête, renvoie la valeur, et "gèle" son état. Elle reprendra exactement là où elle s\\'était arrêtée au prochain appel.',
+            explanation: 'Étape 1 : Le problème de la RAM.\nSi vous chargez un fichier de 50 Go dans une liste classique, votre ordinateur va planter car la mémoire RAM sera saturée.\n\nÉtape 2 : La magie du mot-clé Yield.\nUn Générateur (utilisant `yield` au lieu de `return`) calcule les valeurs **une par une**, seulement quand on les lui demande.\n\nÉtape 3 : La mise en pause.\nÀ chaque `yield`, la fonction s\'arrête, renvoie la valeur, et "gèle" son état. Elle reprendra exactement là où elle s\'était arrêtée au prochain appel.',
             code: `# Fonction classique : crée la liste en mémoire (LOURD)
 def get_fibonacci_list(n):
     result = []
@@ -495,7 +495,7 @@ print("Création terminée.")`,
         lessons: [
           {
             title: '1. Votre Premier Code : Hello World!',
-            explanation: 'Étape 1 : Tout dans une classe.\nJava est très strict. Tout votre code doit vivre dans une "Boîte Principale" appelée une Classe (`class Main`).\n\nÉtape 2 : Le point d\\'entrée.\nEnsuite, il faut une porte d\\'entrée : `public static void main`. C\\'est là que l\\'exécution commence.\n\nÉtape 3 : Afficher du texte.\nPour afficher du texte, l\\'ordre est `System.out.println("Votre texte");`.',
+            explanation: 'Étape 1 : Tout dans une classe.\nJava est très strict. Tout votre code doit vivre dans une "Boîte Principale" appelée une Classe (`class Main`).\n\nÉtape 2 : Le point d\'entrée.\nEnsuite, il faut une porte d\'entrée : `public static void main`. C\'est là que l\'exécution commence.\n\nÉtape 3 : Afficher du texte.\nPour afficher du texte, l\'ordre est `System.out.println("Votre texte");`.',
             code: `// Classe principale obligatoire
 public class Main {
     // Porte d'entrée obligatoire
@@ -505,7 +505,7 @@ public class Main {
     }
 }`,
             output: 'Bonjour le monde !\nBienvenue dans le monde de Java.',
-            realWorldUseCase: 'C\\'est la structure exacte utilisée par les applications bancaires pour démarrer leurs serveurs sécurisés.'
+            realWorldUseCase: 'C\'est la structure exacte utilisée par les applications bancaires pour démarrer leurs serveurs sécurisés.'
           }
         ]
       },
@@ -514,7 +514,7 @@ public class Main {
         lessons: [
           {
             title: 'Syntaxe de base et Typage fort',
-            explanation: 'Étape 1 : Le Typage Fort.\nEn Java, chaque variable doit avoir un type déclaré (int, double, boolean, String) dès le début et ne peut plus en changer. C\\'est strict mais très sécurisé.\n\nÉtape 2 : Le concept de Classe.\nContrairement à d\\'autres langages, TOUT le code en Java doit s\\'inscrire à l\\'intérieur d\\'une "Class".\n\nÉtape 3 : Le Point d\\'entrée.\nPour que votre programme s\\'exécute, il doit toujours posséder une méthode spéciale appelée `public static void main`.',
+            explanation: 'Étape 1 : Le Typage Fort.\nEn Java, chaque variable doit avoir un type déclaré (int, double, boolean, String) dès le début et ne peut plus en changer. C\'est strict mais très sécurisé.\n\nÉtape 2 : Le concept de Classe.\nContrairement à d\'autres langages, TOUT le code en Java doit s\'inscrire à l\'intérieur d\'une "Class".\n\nÉtape 3 : Le Point d\'entrée.\nPour que votre programme s\'exécute, il doit toujours posséder une méthode spéciale appelée `public static void main`.',
             code: `public class Main {
     public static void main(String[] args) {
         int age = 25;
@@ -540,7 +540,7 @@ public class Main {
         lessons: [
           {
             title: 'Classes, Objets et Typage strict',
-            explanation: 'Étape 1 : Le plan de construction (Classe).\nUne Classe agit comme le plan de construction de votre application. Elle définit les caractéristiques (attributs) et les actions (méthodes).\n\nÉtape 2 : L\\'instance (Objet).\nL\\'Objet est la création physique de ce plan (utiliser `new Car()`). C\\'est comme construire une vraie maison à partir d\\'un plan.\n\nÉtape 3 : La rigueur du compilateur.\nSi vous essayez de mettre du texte dans une variable numérique, le compilateur refusera de lancer le code. C\\'est frustrant, mais cela sauve des millions de bugs en production.',
+            explanation: 'Étape 1 : Le plan de construction (Classe).\nUne Classe agit comme le plan de construction de votre application. Elle définit les caractéristiques (attributs) et les actions (méthodes).\n\nÉtape 2 : L\'instance (Objet).\nL\'Objet est la création physique de ce plan (utiliser `new Car()`). C\'est comme construire une vraie maison à partir d\'un plan.\n\nÉtape 3 : La rigueur du compilateur.\nSi vous essayez de mettre du texte dans une variable numérique, le compilateur refusera de lancer le code. C\'est frustrant, mais cela sauve des millions de bugs en production.',
             code: `class Car {
     String brand;
     int speed;
@@ -568,7 +568,7 @@ public class Main {
           },
           {
             title: 'Encapsulation et Modificateurs d\'accès',
-            explanation: 'Étape 1 : Protéger les données (Encapsulation).\nL\\'idée est d\\'empêcher le monde extérieur de modifier vos données n\\'importe comment. C\\'est crucial pour la sécurité.\n\nÉtape 2 : Le mot-clé Private.\nEn déclarant un attribut `private`, seule la classe elle-même y a accès.\n\nÉtape 3 : Les Getters et Setters.\nPour lire ou modifier ces données privées de façon contrôlée, on crée des fonctions publiques (ex: `getSolde()`, `deposer()`) qui vérifient que l\\'action est valide.',
+            explanation: 'Étape 1 : Protéger les données (Encapsulation).\nL\'idée est d\'empêcher le monde extérieur de modifier vos données n\'importe comment. C\'est crucial pour la sécurité.\n\nÉtape 2 : Le mot-clé Private.\nEn déclarant un attribut `private`, seule la classe elle-même y a accès.\n\nÉtape 3 : Les Getters et Setters.\nPour lire ou modifier ces données privées de façon contrôlée, on crée des fonctions publiques (ex: `getSolde()`, `deposer()`) qui vérifient que l\'action est valide.',
             code: `class BankAccount {
     private double balance; // Protégé de l'extérieur !
 
@@ -628,7 +628,7 @@ public class Main {
         lessons: [
           {
             title: '1. Votre Premier Code : Hello World!',
-            explanation: 'Étape 1 : Importer les outils.\nEn C++, par défaut vous n\\'avez rien, pas même la capacité d\\'afficher du texte. Il faut importer `iostream` (Input/Output Stream).\n\nÉtape 2 : std::cout.\nPour "pousser" du texte vers l\\'écran, on utilise `std::cout` (Character OUTput) suivi de flèches `<<`.\n\nÉtape 3 : Le main().\nTout programme commence par la fonction `int main()` et se termine par `return 0;` (0 signifie "Zéro erreur").',
+            explanation: 'Étape 1 : Importer les outils.\nEn C++, par défaut vous n\'avez rien, pas même la capacité d\'afficher du texte. Il faut importer `iostream` (Input/Output Stream).\n\nÉtape 2 : std::cout.\nPour "pousser" du texte vers l\'écran, on utilise `std::cout` (Character OUTput) suivi de flèches `<<`.\n\nÉtape 3 : Le main().\nTout programme commence par la fonction `int main()` et se termine par `return 0;` (0 signifie "Zéro erreur").',
             code: `#include <iostream>
 
 int main() {
@@ -649,7 +649,7 @@ int main() {
         lessons: [
           {
             title: 'Introduction au C++',
-            explanation: 'Étape 1 : Inclure des outils.\nEn C++, le fichier de base est vide. Vous devez inclure des bibliothèques (`#include <iostream>`) pour avoir accès aux fonctions basiques comme écrire du texte.\n\nÉtape 2 : L\\'espace de noms (Namespace).\nPour éviter d\\'écrire `std::cout` à chaque fois, on utilise `using namespace std;`.\n\nÉtape 3 : Le Point d\\'entrée.\nComme en C et Java, l\\'exécution commence obligatoirement à l\\'intérieur de la fonction `main()` et retourne 0 si tout s\\'est bien passé.',
+            explanation: 'Étape 1 : Inclure des outils.\nEn C++, le fichier de base est vide. Vous devez inclure des bibliothèques (`#include <iostream>`) pour avoir accès aux fonctions basiques comme écrire du texte.\n\nÉtape 2 : L\'espace de noms (Namespace).\nPour éviter d\'écrire `std::cout` à chaque fois, on utilise `using namespace std;`.\n\nÉtape 3 : Le Point d\'entrée.\nComme en C et Java, l\'exécution commence obligatoirement à l\'intérieur de la fonction `main()` et retourne 0 si tout s\'est bien passé.',
             code: `#include <iostream>
 #include <string>
 
@@ -677,7 +677,7 @@ int main() {
         lessons: [
           {
             title: 'Pointeurs et Gestion Mémoire',
-            explanation: 'Étape 1 : Pas de nettoyage automatique.\nContrairement à Java, le C++ n\\'a pas de "Garbage Collector". Vous devez gérer vous-même ce qui est stocké dans la mémoire RAM de l\\'ordinateur.\n\nÉtape 2 : L\\'adresse mémoire (&).\nLe symbole `&` permet de demander à l\\'ordinateur : "Où est stockée cette variable physiquement dans la puce de la RAM ?"\n\nÉtape 3 : Les Pointeurs (*).\nUn Pointeur est une variable spéciale qui stocke cette adresse physique. Il vous donne un accès direct et surpuissant au matériel.',
+            explanation: 'Étape 1 : Pas de nettoyage automatique.\nContrairement à Java, le C++ n\'a pas de "Garbage Collector". Vous devez gérer vous-même ce qui est stocké dans la mémoire RAM de l\'ordinateur.\n\nÉtape 2 : L\'adresse mémoire (&).\nLe symbole `&` permet de demander à l\'ordinateur : "Où est stockée cette variable physiquement dans la puce de la RAM ?"\n\nÉtape 3 : Les Pointeurs (*).\nUn Pointeur est une variable spéciale qui stocke cette adresse physique. Il vous donne un accès direct et surpuissant au matériel.',
             code: `#include <iostream>
 using namespace std;
 
@@ -703,7 +703,7 @@ int main() {
           },
           {
             title: 'Références et Passage par Référence',
-            explanation: 'Étape 1 : Le problème de la Copie.\nPar défaut, si vous donnez une liste à une fonction, le C++ va la photocopier intégralement (Pass by Value). C\\'est très lent pour les grosses listes !\n\nÉtape 2 : Utiliser les Références (&).\nEn ajoutant un `&` dans les paramètres de la fonction, vous passez l\\'objet original direct, sans copie (Pass by Reference).\n\nÉtape 3 : La Sécurité.\nLes références sont comme des pointeurs mais plus sûres : elles ne peuvent pas pointer vers "rien" (null).',
+            explanation: 'Étape 1 : Le problème de la Copie.\nPar défaut, si vous donnez une liste à une fonction, le C++ va la photocopier intégralement (Pass by Value). C\'est très lent pour les grosses listes !\n\nÉtape 2 : Utiliser les Références (&).\nEn ajoutant un `&` dans les paramètres de la fonction, vous passez l\'objet original direct, sans copie (Pass by Reference).\n\nÉtape 3 : La Sécurité.\nLes références sont comme des pointeurs mais plus sûres : elles ne peuvent pas pointer vers "rien" (null).',
             code: `#include <iostream>
 #include <vector>
 using namespace std;
@@ -751,7 +751,7 @@ int main() {
         lessons: [
           {
             title: '1. Votre Premier Code : Hello World!',
-            explanation: 'Étape 1 : Le namespace System.\nEn C#, de nombreux outils utiles (comme l\\'écriture à l\\'écran) sont stockés dans le dossier virtuel `System`. On l\\'importe avec `using System;`.\n\nÉtape 2 : L\\'organisation en classes.\nComme en Java, le code C# doit vivre dans une classe (`class Program`).\n\nÉtape 3 : Console.WriteLine.\nLa commande pour écrire du texte dans la console est `Console.WriteLine()`.',
+            explanation: 'Étape 1 : Le namespace System.\nEn C#, de nombreux outils utiles (comme l\'écriture à l\'écran) sont stockés dans le dossier virtuel `System`. On l\'importe avec `using System;`.\n\nÉtape 2 : L\'organisation en classes.\nComme en Java, le code C# doit vivre dans une classe (`class Program`).\n\nÉtape 3 : Console.WriteLine.\nLa commande pour écrire du texte dans la console est `Console.WriteLine()`.',
             code: `using System;
 
 public class Program {
@@ -761,7 +761,7 @@ public class Program {
     }
 }`,
             output: 'Bonjour le monde !\nBienvenue en C#, le langage de Unity et Microsoft.',
-            realWorldUseCase: 'C\\'est la commande la plus utilisée pour déboguer des comportements imprévus dans le développement d\\'un jeu sous Unity.'
+            realWorldUseCase: 'C\'est la commande la plus utilisée pour déboguer des comportements imprévus dans le développement d\'un jeu sous Unity.'
           }
         ]
       },
@@ -770,7 +770,7 @@ public class Program {
         lessons: [
           {
             title: 'Syntaxe et Types',
-            explanation: 'Étape 1 : L\\'écosystème Microsoft.\nC# est le langage incontournable pour les applications Windows, le back-end d\\'entreprise (.NET), et les jeux vidéo (Unity).\n\nÉtape 2 : Le typage strict mais intelligent.\nBien que le C# nécessite des types clairs, l\\'utilisation de `var` permet de laisser l\\'ordinateur deviner le type lors de la déclaration, allégeant l\\'écriture.\n\nÉtape 3 : L\\'interpolation de chaîne.\nTrès pratique : en mettant un `$` devant des guillemets, vous pouvez injecter des variables directement avec des accolades `{variable}`.',
+            explanation: 'Étape 1 : L\'écosystème Microsoft.\nC# est le langage incontournable pour les applications Windows, le back-end d\'entreprise (.NET), et les jeux vidéo (Unity).\n\nÉtape 2 : Le typage strict mais intelligent.\nBien que le C# nécessite des types clairs, l\'utilisation de `var` permet de laisser l\'ordinateur deviner le type lors de la déclaration, allégeant l\'écriture.\n\nÉtape 3 : L\'interpolation de chaîne.\nTrès pratique : en mettant un `$` devant des guillemets, vous pouvez injecter des variables directement avec des accolades `{variable}`.',
             code: `using System;
 
 public class Program {
@@ -798,7 +798,7 @@ public class Program {
         lessons: [
           {
             title: 'LINQ : La data élégante',
-            explanation: 'Étape 1 : Découvrir LINQ.\nLINQ (Language Integrated Query) est LE superpouvoir de C#. Il permet de filtrer, trier et manipuler des listes avec une facilité déconcertante.\n\nÉtape 2 : La syntaxe type "SQL".\nVous pouvez utiliser des mots clés directement dans le code comme `from`, `where` et `select` (très similaire aux bases de données).\n\nÉtape 3 : L\\'exécution différée.\nAttention ! La requête LINQ n\\'est pas exécutée au moment où vous l\\'écrivez, mais seulement au moment où vous essayez de lire le résultat final (ex: dans un foreach).',
+            explanation: 'Étape 1 : Découvrir LINQ.\nLINQ (Language Integrated Query) est LE superpouvoir de C#. Il permet de filtrer, trier et manipuler des listes avec une facilité déconcertante.\n\nÉtape 2 : La syntaxe type "SQL".\nVous pouvez utiliser des mots clés directement dans le code comme `from`, `where` et `select` (très similaire aux bases de données).\n\nÉtape 3 : L\'exécution différée.\nAttention ! La requête LINQ n\'est pas exécutée au moment où vous l\'écrivez, mais seulement au moment où vous essayez de lire le résultat final (ex: dans un foreach).',
             code: `using System;
 using System.Linq;
 using System.Collections.Generic;
@@ -825,7 +825,7 @@ public class Program {
           },
           {
             title: 'Programmation Asynchrone',
-            explanation: 'Étape 1 : Ne pas bloquer l\\'interface.\nSi votre application doit télécharger 5 Go sur internet, le système "Asynchrone" permet à l\\'application de rester fluide pendant l\\'attente au lieu de geler.\n\nÉtape 2 : Le mot-clé Async.\nOn l\\'ajoute devant une fonction pour signaler au compilateur que cette tâche s\\'exécutera en tâche de fond (Task).\n\nÉtape 3 : Le mot-clé Await.\nIl dit au code : "Mets cette partie en pause jusqu\\'à ce qu\\'on reçoive le résultat, pendant ce temps, l\\'application continue de vivre".',
+            explanation: 'Étape 1 : Ne pas bloquer l\'interface.\nSi votre application doit télécharger 5 Go sur internet, le système "Asynchrone" permet à l\'application de rester fluide pendant l\'attente au lieu de geler.\n\nÉtape 2 : Le mot-clé Async.\nOn l\'ajoute devant une fonction pour signaler au compilateur que cette tâche s\'exécutera en tâche de fond (Task).\n\nÉtape 3 : Le mot-clé Await.\nIl dit au code : "Mets cette partie en pause jusqu\'à ce qu\'on reçoive le résultat, pendant ce temps, l\'application continue de vivre".',
             code: `using System;
 using System.Threading.Tasks;
 
@@ -871,7 +871,7 @@ public class Program {
         lessons: [
           {
             title: '1. Votre Premier Code : Hello World!',
-            explanation: 'Étape 1 : La librairie d\\'entrée/sortie.\nLe langage C est nu par défaut. Pour écrire du texte, il faut d\\'abord importer la librairie Standard Input/Output avec `#include <stdio.h>`.\n\nÉtape 2 : La fonction printf.\nLa fonction `printf` (Print Formatted) sert à écrire du texte. Attention, il faut indiquer à la fin `\\n` pour dire "passe à la ligne suivante" (Newline).\n\nÉtape 3 : Le retour de main.\nLa fonction `main` doit toujours se terminer par `return 0;` (0 signifie tout s\\'est bien passé).',
+            explanation: 'Étape 1 : La librairie d\'entrée/sortie.\nLe langage C est nu par défaut. Pour écrire du texte, il faut d\'abord importer la librairie Standard Input/Output avec `#include <stdio.h>`.\n\nÉtape 2 : La fonction printf.\nLa fonction `printf` (Print Formatted) sert à écrire du texte. Attention, il faut indiquer à la fin `\\n` pour dire "passe à la ligne suivante" (Newline).\n\nÉtape 3 : Le retour de main.\nLa fonction `main` doit toujours se terminer par `return 0;` (0 signifie tout s\'est bien passé).',
             code: `#include <stdio.h>
 
 int main() {
@@ -880,8 +880,8 @@ int main() {
     
     return 0;
 }`,
-            output: 'Bonjour le monde !\nBienvenue dans les fondations de l\\'informatique.',
-            realWorldUseCase: 'Cette base structure absolument tous les programmes C, du plus simple script à l\\'ordinateur de bord d\\'une navette spatiale.'
+            output: 'Bonjour le monde !\nBienvenue dans les fondations de l\'informatique.',
+            realWorldUseCase: 'Cette base structure absolument tous les programmes C, du plus simple script à l\'ordinateur de bord d\'une navette spatiale.'
           }
         ]
       },
@@ -890,7 +890,7 @@ int main() {
         lessons: [
           {
             title: 'Les origines de la programmation',
-            explanation: 'Étape 1 : Au plus proche du matériel.\nLe C est ce qui se rapproche le plus du langage que votre processeur comprend, tout en restant lisible par un humain. C\\'est pourquoi c\\'est si rapide.\n\nÉtape 2 : Le moteur du C (Les librairies).\nPour faire les choses les plus basiques comme écrire du texte, il faut inclure une librairie : `#include <stdio.h>`.\n\nÉtape 3 : Pas de Booléens natifs.\nHistoriquement, le C n\\'a pas de concept "Vrai" (True) ou "Faux" (False). On utilise des nombres : 0 veut dire Faux, tout le reste (comme 1) veut dire Vrai.',
+            explanation: 'Étape 1 : Au plus proche du matériel.\nLe C est ce qui se rapproche le plus du langage que votre processeur comprend, tout en restant lisible par un humain. C\'est pourquoi c\'est si rapide.\n\nÉtape 2 : Le moteur du C (Les librairies).\nPour faire les choses les plus basiques comme écrire du texte, il faut inclure une librairie : `#include <stdio.h>`.\n\nÉtape 3 : Pas de Booléens natifs.\nHistoriquement, le C n\'a pas de concept "Vrai" (True) ou "Faux" (False). On utilise des nombres : 0 veut dire Faux, tout le reste (comme 1) veut dire Vrai.',
             code: `#include <stdio.h>
 
 int main() {
@@ -918,7 +918,7 @@ int main() {
         lessons: [
           {
             title: 'L\'absence de "vrais" Tableaux et Chaines',
-            explanation: 'Étape 1 : Le mythe du Texte.\nIl n\\'y a pas de "Texte" (String) en C ! Ce que vous appelez du texte est simplement une série de lettres individuelles placées l\\'une à côté de l\\'autre.\n\nÉtape 2 : Le Caractère de fin (\\0).\nComment l\\'ordinateur sait-il que le mot est terminé ? Il faut toujours une case supplémentaire à la fin contenant un zéro spécial (`\\0`).\n\nÉtape 3 : L\\'écriture aveugle en mémoire.\nLe C ne vérifie pas la taille des mots. Si vous mettez un mot de 10 lettres dans un espace prévu pour 5, le C acceptera et écrasera silencieusement la mémoire voisine (Dépassement de Buffer).',
+            explanation: 'Étape 1 : Le mythe du Texte.\nIl n\'y a pas de "Texte" (String) en C ! Ce que vous appelez du texte est simplement une série de lettres individuelles placées l\'une à côté de l\'autre.\n\nÉtape 2 : Le Caractère de fin (\\0).\nComment l\'ordinateur sait-il que le mot est terminé ? Il faut toujours une case supplémentaire à la fin contenant un zéro spécial (`\\0`).\n\nÉtape 3 : L\'écriture aveugle en mémoire.\nLe C ne vérifie pas la taille des mots. Si vous mettez un mot de 10 lettres dans un espace prévu pour 5, le C acceptera et écrasera silencieusement la mémoire voisine (Dépassement de Buffer).',
             code: `#include <stdio.h>
 #include <string.h>
 
@@ -943,7 +943,7 @@ int main() {
           },
           {
             title: 'Allocation Dynamique de Mémoire (Malloc)',
-            explanation: 'Étape 1 : La taille fixe.\nPar défaut, en C, si vous créez un tableau pour 10 éléments, il ne pourra jamais en contenir 11. C\\'est gravé dans le marbre.\n\nÉtape 2 : Demander la permission à l\\'OS (malloc).\nPour avoir un tableau flexible, vous devez utiliser la fonction `malloc()` pour "Réserver de l\\'espace" directement à votre Système d\\'Exploitation.\n\nÉtape 3 : Libérer la mémoire (free).\nSi vous ne rendez pas cet espace avec `free()`, la RAM de votre ordinateur restera occupée (Fuite de mémoire) jusqu\\'au crash total.',
+            explanation: 'Étape 1 : La taille fixe.\nPar défaut, en C, si vous créez un tableau pour 10 éléments, il ne pourra jamais en contenir 11. C\'est gravé dans le marbre.\n\nÉtape 2 : Demander la permission à l\'OS (malloc).\nPour avoir un tableau flexible, vous devez utiliser la fonction `malloc()` pour "Réserver de l\'espace" directement à votre Système d\'Exploitation.\n\nÉtape 3 : Libérer la mémoire (free).\nSi vous ne rendez pas cet espace avec `free()`, la RAM de votre ordinateur restera occupée (Fuite de mémoire) jusqu\'au crash total.',
             code: `#include <stdio.h>
 #include <stdlib.h> // Requis pour malloc et free
 
@@ -983,3 +983,4 @@ int main() {
     algoExamples: []
   }
 };
+
