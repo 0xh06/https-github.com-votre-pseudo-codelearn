@@ -35,6 +35,7 @@ import Chatbot from './components/Chatbot';
 import UIPolish from './components/UIPolish';
 import XPBubbles from './components/XPBubbles';
 import QuestWidget from './components/QuestWidget';
+import CommandPalette from './components/CommandPalette';
 
 export default function App() {
   const setUser = useStore(state => state.setUser);
@@ -56,6 +57,7 @@ export default function App() {
       <UIPolish />
       <XPBubbles />
       <QuestWidget />
+      <CommandPalette />
       <Toaster 
         position="bottom-center" 
         toastOptions={{ 

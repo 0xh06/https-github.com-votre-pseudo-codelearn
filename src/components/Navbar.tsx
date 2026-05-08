@@ -21,7 +21,8 @@ import {
   Trophy,
   Paintbrush,
   Flame,
-  Hammer
+  Hammer,
+  Search
 } from 'lucide-react';
 import { getLevelInfo } from '../utils/levels';
 import { t } from '../utils/i18n';
@@ -100,6 +101,19 @@ export default function Navbar() {
 
           {/* Quick Actions */}
           <div className="flex items-center gap-2">
+            <button
+              onClick={() => {
+                const event = new KeyboardEvent('keydown', { key: 'k', metaKey: true, ctrlKey: true });
+                window.dispatchEvent(event);
+              }}
+              className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-[14px] bg-[var(--bg3)]/50 border border-[var(--border)] hover:border-[var(--text-dim)]/30 transition-all text-xs text-[var(--text-dim)]"
+              title="Recherche globale"
+            >
+              <Search size={14} />
+              <span className="font-medium">Rechercher</span>
+              <kbd className="px-1.5 py-0.5 rounded bg-white/5 border border-white/10 text-[10px] font-mono">⌘K</kbd>
+            </button>
+
             <button
               onClick={() => setUiLang(uiLang === 'fr' ? 'en' : 'fr')}
               className="p-2 rounded-xl bg-[var(--bg3)]/50 border border-[var(--border)] hover:border-[var(--text-dim)]/30 transition-all text-xs"

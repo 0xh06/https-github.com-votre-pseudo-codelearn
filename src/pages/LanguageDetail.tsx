@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { LANGUAGE_COURSES } from '../data/languageContent';
@@ -8,7 +8,7 @@ import PremiumModal from '../components/PremiumModal';
 import { 
   ArrowLeft, BookOpen, Code2, ExternalLink, ChevronRight, Play, CheckCircle2, 
   Zap, FileText, Video, AlertTriangle, Map as MapIcon, Trophy, Target, Sparkles, Star,
-  Lock, ArrowRight, MousePointer2, Bot, SquareSquare, Maximize2, Minimize2
+  Lock, ArrowRight, MousePointer2, Bot, SquareSquare, Maximize2, Minimize2, Terminal
 } from 'lucide-react';
 import CodeEditor from '../components/CodeEditor';
 import { executeCode } from '../utils/piston';
@@ -74,7 +74,7 @@ export default function LanguageDetail() {
   const currentLesson = currentSection?.lessons[activeLesson];
 
   // Reset user code when lesson changes
-  import { useEffect } from 'react';
+
   useEffect(() => {
     if (currentLesson) {
       setUserCode(currentLesson.code);
