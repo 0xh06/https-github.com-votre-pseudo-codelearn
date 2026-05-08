@@ -1,5 +1,5 @@
 import React from 'react';
-import { useStore, AvatarConfig } from '../store/useStore';
+import { useStore, type AvatarConfig } from '../store/useStore';
 import AvatarRenderer from './AvatarRenderer';
 import { Sparkles, Dice5, Zap, ShieldCheck } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -259,5 +259,6 @@ export default function AvatarCreator() {
           </div>
         </div>
       </div>
+    </div>
   );
 }

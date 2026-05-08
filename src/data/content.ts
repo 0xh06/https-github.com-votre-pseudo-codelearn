@@ -1,8 +1,28 @@
 export const ALGORITHMS = [
+  // --- BASES ABSOLUES ---
+  {
+    id: "bases-algorithmique", name: "Qu'est-ce qu'un algorithme ?", category: "Bases", timeO: "N/A", spaceO: "N/A", difficulty: "Débutant", color: "green",
+    description: "Avant de plonger dans le code complexe, comprenons ce qu'est un algorithme. Un algorithme est simplement une recette de cuisine. \n\nPar exemple, pour faire des pâtes : \n1. Faire bouillir de l'eau. \n2. Mettre les pâtes. \n3. Attendre 10 min. \n4. Égoutter.\n\nEn informatique, l'ordinateur est le cuisinier, et l'algorithme est la recette. Si la recette est mauvaise, le plat sera mauvais. Si elle est trop longue, les clients vont s'impatienter (c'est ce qu'on appelle la Complexité).\n\nDans cette première étape, nous allons écrire un algorithme très simple : Dire bonjour 3 fois.",
+    complexityDesc: "La Complexité Temporelle (Time Complexity) mesure à quelle vitesse votre 'recette' devient lente si on ajoute plus d'invités. Ici, dire bonjour 3 fois prend toujours le même temps, on dit que la complexité est constante : O(1).",
+    steps: ["Comprendre le problème", "Décomposer en étapes simples", "Traduire en code", "Tester le résultat"],
+    hints: [
+      "Il n'y a pas de piège ! Utilisez juste une boucle pour répéter l'action.",
+      "En Python, `for i in range(3):` fait l'affaire."
+    ],
+    starter: {
+      python: `def dire_bonjour():\n    # TODO: Afficher 'Bonjour' 3 fois\n    pass`,
+      js: `function direBonjour() {\n  // TODO: Afficher 'Bonjour' 3 fois\n}`
+    },
+    python: `def dire_bonjour():\n    for i in range(3):\n        print("Bonjour")`,
+    js: `function direBonjour() {\n  for (let i = 0; i < 3; i++) {\n    console.log("Bonjour");\n  }\n}`,
+    challenges: [
+      { title: 'Ma Première Boucle', desc: 'Affichez simplement "Bonjour" trois fois dans la console. Ce petit script est techniquement un algorithme !', difficulty: 'Débutant' }
+    ]
+  },
   // --- TRI ---
   {
     id: "bubble-sort", name: "Bubble Sort", category: "Tri", timeO: "O(n²)", spaceO: "O(1)", difficulty: "Débutant", color: "green",
-    description: "Algorithme de tri simple qui compare et échange les éléments adjacents répétitivement.",
+    description: "Le Tri à Bulles (Bubble Sort) est souvent le tout premier algorithme de tri enseigné. Imaginez une file d'élèves qui doivent se ranger par taille. L'instituteur commence par la gauche, compare les deux premiers élèves et les inverse si le premier est plus grand que le second. Il avance ensuite d'un pas et répète l'opération. À la fin de ce premier passage complet, le plus grand élève se retrouve forcément tout à droite (il a fait des 'bulles' jusqu'à la surface). L'algorithme répète ensuite ces passages jusqu'à ce qu'aucun échange ne soit plus nécessaire. Bien qu'il soit très intuitif, il est inefficace pour les grandes listes.",
     complexityDesc: "Temps O(n²) car on utilise deux boucles imbriquées. Espace O(1) car le tri se fait 'sur place' sans créer de nouveau tableau.",
     steps: ["Parcourir le tableau", "Comparer adjacents", "Échanger si désordonné", "Répéter jusqu'au tri"],
     hints: [
@@ -33,7 +53,7 @@ export const ALGORITHMS = [
   },
   {
     id: "quick-sort", name: "Quick Sort", category: "Tri", timeO: "O(n log n)", spaceO: "O(log n)", difficulty: "Intermédiaire", color: "yellow",
-    description: "Algorithme Diviser-pour-régner : utilise un pivot pour partitionner le tableau en deux sous-tableaux.",
+    description: "Le Tri Rapide (Quick Sort) est un algorithme de tri très performant basé sur le principe 'Diviser pour Régner'. L'idée est de choisir un élément appelé 'pivot' (souvent le dernier élément du tableau). Ensuite, on réorganise le tableau pour que tous les éléments plus petits que le pivot soient placés à sa gauche, et tous les éléments plus grands soient placés à sa droite. À ce stade, le pivot est à sa position finale ! Il suffit alors de répéter récursivement cette même opération sur le sous-tableau de gauche et le sous-tableau de droite.",
     complexityDesc: "Temps O(n log n) en moyenne grâce à la division par 2 de l'espace de recherche à chaque niveau. O(n²) dans le pire des cas (déjà trié). Espace O(log n) lié à la pile d'appels récursifs.",
     steps: ["Choisir un pivot (ex: dernier élément)", "Placer les plus petits à gauche, les plus grands à droite", "Répéter récursivement sur les deux moitiés"],
     hints: [
@@ -55,7 +75,7 @@ export const ALGORITHMS = [
   },
   {
     id: "merge-sort", name: "Merge Sort", category: "Tri", timeO: "O(n log n)", spaceO: "O(n)", difficulty: "Intermédiaire", color: "yellow",
-    description: "Tri stable qui divise continuellement le tableau en deux moitiés, les trie, puis les fusionne.",
+    description: "Le Tri Fusion (Merge Sort) est un algorithme puissant garantissant une performance stable, également basé sur le paradigme 'Diviser pour Régner'. Son fonctionnement se fait en deux grandes phases. Phase 1 (Diviser) : on coupe continuellement le tableau en deux moitiés égales jusqu'à obtenir des sous-tableaux ne contenant qu'un seul élément (un tableau d'un élément est, par définition, trié). Phase 2 (Fusionner) : on remonte la chaîne en fusionnant ces petits tableaux triés deux par deux pour former des tableaux triés de plus en plus grands, jusqu'à reconstituer le tableau complet.",
     complexityDesc: "Temps O(n log n) garanti dans tous les cas. Espace O(n) car on doit créer de nouveaux tableaux pour la fusion.",
     steps: ["Diviser le tableau en deux", "Trier récursivement chaque moitié", "Fusionner les résultats triés"],
     hints: [
@@ -74,7 +94,7 @@ export const ALGORITHMS = [
   // --- RECHERCHE ---
   {
     id: "binary-search", name: "Binary Search", category: "Recherche", timeO: "O(log n)", spaceO: "O(1)", difficulty: "Débutant", color: "green",
-    description: "Recherche un élément dans un tableau trié en divisant l'intervalle de recherche par deux à chaque étape.",
+    description: "La Recherche Dichotomique (Binary Search) est extrêmement efficace, mais requiert une condition absolue : le tableau doit déjà être trié. Imaginez chercher un mot dans un dictionnaire. Vous n'allez pas lire page par page (recherche linéaire). Vous ouvrez le dictionnaire au milieu. Si le mot cherché est alphabétiquement 'avant', vous ignorez complètement la seconde moitié. L'algorithme fait exactement cela : il compare la cible avec l'élément central, élimine la moitié incorrecte, et répète. On réduit ainsi l'espace de recherche de manière exponentielle.",
     complexityDesc: "Temps O(log n) car on réduit la zone de recherche de moitié à chaque itération. Espace O(1) en utilisant deux pointeurs (left et right).",
     steps: ["Prendre l'index du milieu", "Comparer avec la cible", "Éliminer la moitié inutile", "Répéter tant que gauche <= droite"],
     hints: [
@@ -96,7 +116,7 @@ export const ALGORITHMS = [
   },
   {
     id: "bfs", name: "BFS (Largeur)", category: "Graphes", timeO: "O(V+E)", spaceO: "O(V)", difficulty: "Intermédiaire", color: "yellow",
-    description: "Parcours en largeur : Explore les nœuds voisins niveau par niveau en utilisant une file (Queue).",
+    description: "Le Parcours en Largeur (Breadth-First Search ou BFS) explore les graphes ou arbres de manière concentrique, comme la propagation d'une onde. Il visite d'abord tous les voisins directs du nœud de départ (profondeur 1), puis tous les voisins de ces voisins (profondeur 2), etc. Pour retenir l'ordre de visite, le BFS utilise une structure de données en File (Queue) avec la règle 'Premier Arrivé, Premier Servi'. C'est l'algorithme incontournable pour trouver le chemin le plus court (en nombre d'étapes) dans un réseau non pondéré.",
     complexityDesc: "Temps O(V+E) où V=Sommets (Vertices) et E=Arêtes (Edges), car chaque nœud et arête est visité une fois. Espace O(V) pour la file et le set des nœuds visités.",
     steps: ["Ajouter le nœud source dans une file", "Le marquer comme visité", "Défiler, puis enfiler tous ses voisins non visités"],
     hints: [
@@ -120,7 +140,7 @@ export const ALGORITHMS = [
   // --- DYNAMIQUE ---
   {
     id: "fibonacci-dp", name: "Fibonacci (DP)", category: "Dynamique", timeO: "O(n)", spaceO: "O(n)", difficulty: "Débutant", color: "green",
-    description: "Calcul efficace de la suite de Fibonacci grâce à la mémoïsation (mise en cache des résultats).",
+    description: "La suite de Fibonacci (0, 1, 1, 2, 3, 5, 8...) est classique, mais son implémentation récursive basique est catastrophique car elle recalcule les mêmes valeurs des milliers de fois. La Programmation Dynamique vient sauver la situation grâce à la 'Mémoïsation'. L'idée : à chaque fois qu'on calcule un résultat, on le stocke dans un dictionnaire. La prochaine fois qu'on a besoin de ce même calcul, on récupère instantanément la valeur stockée, transformant une complexité exponentielle en un temps linéaire.",
     complexityDesc: "Temps O(n) car chaque nombre jusqu'à n n'est calculé qu'une seule fois. Espace O(n) utilisé par l'objet de cache et la pile d'appels.",
     steps: ["Vérifier si le calcul est dans le cache", "Traiter les cas de base (n <= 1)", "Calculer, stocker dans le cache, puis retourner"],
     hints: [
@@ -143,7 +163,7 @@ export const ALGORITHMS = [
     spaceO: "O(V)",
     difficulty: "Intermédiaire",
     color: "yellow",
-    description: "Parcours en profondeur : on explore un chemin jusqu'au bout avant de revenir en arrière (pile ou récursion).",
+    description: "Le Parcours en Profondeur (Depth-First Search ou DFS) privilégie l'exploration : il s'enfonce le plus loin possible le long d'une branche avant d'être forcé de faire demi-tour (Backtracking). Imaginez explorer un labyrinthe géant : vous choisissez un chemin et le suivez jusqu'à un cul-de-sac. Seulement là, vous revenez sur vos pas jusqu'à la dernière intersection. Le DFS utilise naturellement une Pile (Stack) LIFO, ce qui le rend très élégant à implémenter via la récursivité.",
     complexityDesc: "Comme pour le BFS, chaque sommet et arête est visité au plus une fois : O(V+E). La pile d'appels ou une pile explicite peut stocker jusqu'à O(V) sommets.",
     steps: ["Marquer le nœud courant comme visité", "Pour chaque voisin non visité, appeler DFS récursivement", "Revenir en arrière quand plus de voisins"],
     hints: [
@@ -166,7 +186,7 @@ export const ALGORITHMS = [
     spaceO: "O(1)",
     difficulty: "Intermédiaire",
     color: "yellow",
-    description: "Trouve la somme maximale d'un sous-tableau contigu en un seul passage, classique en entretien.",
+    description: "L'Algorithme de Kadane résout le célèbre problème du 'Sous-tableau à somme maximale' en un seul passage (O(n)). Imaginez que vous analysez les gains et pertes d'une action en bourse et cherchez la meilleure période continue de rentabilité. Kadane repose sur une idée élégante : à chaque nouvelle journée, dois-je ajouter cette valeur à mon accumulation, ou dois-je jeter mon accumulation et recommencer une série ? Si l'accumulation précédente devient négative, elle devient un 'poids mort' et on repart de zéro.",
     complexityDesc: "Un seul parcours : à chaque indice on décide d'étendre le segment courant ou de repartir de l'élément actuel. Temps O(n), espace O(1).",
     steps: ["Initialiser current = nums[0] et best = nums[0]", "Pour chaque élément suivant : current = max(x, current + x)", "Mettre à jour best = max(best, current)"],
     hints: [

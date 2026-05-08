@@ -19,14 +19,16 @@ import {
   Moon,
   Sun,
   Trophy,
-  Paintbrush
+  Paintbrush,
+  Flame,
+  Hammer
 } from 'lucide-react';
 import { getLevelInfo } from '../utils/levels';
 import { t } from '../utils/i18n';
 import AvatarRenderer from './AvatarRenderer';
 
 export default function Navbar() {
-  const { xp, user, setUser, subscriptionPlan, uiLang, setUiLang, avatar, completedUniversal } = useStore();
+  const { xp, user, setUser, subscriptionPlan, uiLang, setUiLang, avatar, completedUniversal, streakData } = useStore();
   const location = useLocation();
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -54,6 +56,7 @@ export default function Navbar() {
     { name: t('nav_exercises', uiLang),  path: '/exercises',  icon: <Terminal className="w-4 h-4" /> },
     { name: t('nav_roadmap', uiLang),    path: '/paths',      icon: <MapIcon className="w-4 h-4" /> },
     { name: t('nav_languages', uiLang),  path: '/languages',  icon: <Globe className="w-4 h-4" /> },
+    { name: uiLang === 'fr' ? 'La Forge' : 'The Forge', path: '/projects', icon: <Hammer className="w-4 h-4" /> },
     { name: t('nav_pricing', uiLang),    path: '/pricing',    icon: <CreditCard className="w-4 h-4" /> },
   ];
 
@@ -111,15 +114,24 @@ export default function Navbar() {
             >
               {isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
             </button>
+
+            {/* 🔥 LE FEU DE CAMP (STREAK) */}
+            <div 
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-[14px] bg-[var(--bg3)]/50 border border-white/5 cursor-default ${streakData.count > 0 ? 'text-orange-400' : 'text-white/20'}`}
+              title={uiLang === 'fr' ? 'Série quotidienne' : 'Daily Streak'}
+            >
+              <Flame className={`w-4 h-4 ${streakData.count > 0 ? 'animate-pulse' : ''}`} />
+              <span className="text-[11px] font-black">{streakData.count}</span>
+            </div>
           </div>
 
           {user ? (
             <div className="flex items-center gap-2 p-1 rounded-[20px] bg-[var(--bg3)]/50 border border-white/5">
               {/* Level Badge - Integrated */}
-              <div className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-[14px] bg-[var(--bg)] border border-white/5">
+              <Link to="/leaderboard" className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-[14px] bg-[var(--bg)] border border-white/5 hover:bg-white/5 transition-colors cursor-pointer">
                 <Trophy className="w-3.5 h-3.5 text-[var(--yellow)]" />
                 <span className="text-[11px] font-black text-white">{levelData.level}</span>
-              </div>
+              </Link>
 
               {/* Profile Pill */}
               <div className="relative">

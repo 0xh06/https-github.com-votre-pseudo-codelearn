@@ -12,7 +12,7 @@ import { t } from '../utils/i18n';
 import {
   Play, Maximize2, Minimize2, Lightbulb, SquareSquare, ChevronDown,
   CheckCircle2, BookOpen, Eye, Code2, Zap, Target, Clock, Database,
-  ArrowLeft, Info, Sparkles, Trophy, ChevronRight, Terminal, Share2
+  ArrowLeft, Info, Sparkles, Trophy, ChevronRight, Terminal, Share2, Bot
 } from 'lucide-react';
 import { Panel, PanelGroup, PanelResizeHandle } from 'react-resizable-panels';
 
@@ -39,7 +39,7 @@ const USE_CASES: Record<string, string[]> = {
 
 export default function AlgorithmDetail() {
   const { id } = useParams();
-  const { uiLang, addXp } = useStore();
+  const { uiLang, addXp, checkStreak } = useStore();
   const algo = ALGORITHMS.find(a => a.id === id);
   const [activeTab, setActiveTab] = useState<Tab>('comprendre');
   const [lang, setLang] = useState('js');
@@ -50,6 +50,8 @@ export default function AlgorithmDetail() {
   const [showSolution, setShowSolution] = useState(false);
   const [hintLevel, setHintLevel] = useState(0);
   const [showSuccess, setShowSuccess] = useState(false);
+  const [mentorHint, setMentorHint] = useState<string | null>(null);
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
 
   useEffect(() => {
     if (algo) {
@@ -58,6 +60,7 @@ export default function AlgorithmDetail() {
       setShowSolution(false);
       setHintLevel(0);
       setOutput('');
+      setMentorHint(null);
     }
   }, [algo, lang, id]);
 
@@ -78,12 +81,14 @@ export default function AlgorithmDetail() {
     
     if (isSuccess && !showSuccess) {
       addXp(250);
+      checkStreak();
       setShowSuccess(true);
     }
   };
 
   const handleRun = async () => {
     setIsRunning(true);
+    setMentorHint(null);
     setOutput('🚀 Exécution du kernel en cours...\n');
     let isTimeout = false;
     const timeoutId = setTimeout(() => {
@@ -108,6 +113,23 @@ export default function AlgorithmDetail() {
       }
     }
     setIsRunning(false);
+  };
+
+  const handleMentorAnalyze = () => {
+    setIsAnalyzing(true);
+    setMentorHint(null);
+    setTimeout(() => {
+      setIsAnalyzing(false);
+      if (output.includes('Timeout')) {
+        setMentorHint("Il semble que votre code contienne une boucle infinie. Vérifiez vos conditions d'arrêt (ex: i < n) et assurez-vous que vos variables d'itération sont bien mises à jour !");
+      } else if (output.includes('ReferenceError') || output.includes('NameError')) {
+        setMentorHint("Vous essayez d'utiliser une variable ou une fonction qui n'existe pas encore. Vérifiez les fautes de frappe !");
+      } else if (output.includes('SyntaxError')) {
+        setMentorHint("Il y a une erreur de syntaxe. Avez-vous oublié une parenthèse, une virgule ou deux points (:) ?");
+      } else {
+        setMentorHint("Le code s'exécute mais ne produit pas le résultat attendu. Essayez d'ajouter des 'print' ou 'console.log' à chaque étape pour inspecter vos variables.");
+      }
+    }, 1500);
   };
 
   const handleRevealSolution = () => {
@@ -332,12 +354,33 @@ export default function AlgorithmDetail() {
             <Terminal size={14} className="text-[var(--green)]" />
             <span className="text-[10px] font-black uppercase tracking-widest text-[var(--text-dim)]">Debug Console</span>
           </div>
-          <div className="text-[10px] text-white/20 font-black">127.0.0.1:8080</div>
+          {output.includes('❌') && (
+            <button 
+              onClick={handleMentorAnalyze}
+              disabled={isAnalyzing}
+              className="flex items-center gap-1.5 px-3 py-1.5 bg-purple-500/10 hover:bg-purple-500/20 text-purple-400 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all border border-purple-500/20"
+            >
+              <Bot size={14} className={isAnalyzing ? "animate-bounce" : ""} />
+              {isAnalyzing ? "Analyse..." : "Demander au Mentor IA"}
+            </button>
+          )}
         </div>
-        <div className="p-6 overflow-y-auto custom-scrollbar flex-1">
+        <div className="p-6 overflow-y-auto custom-scrollbar flex-1 space-y-6">
           <pre className={`text-sm leading-relaxed ${output.includes('❌') ? 'text-red-400' : 'text-white/80'} whitespace-pre-wrap`}>
             {output || '> Waiting for kernel input...'}
           </pre>
+
+          {mentorHint && (
+            <motion.div initial={{ opacity: 0, y: 10, scale: 0.98 }} animate={{ opacity: 1, y: 0, scale: 1 }} className="p-5 rounded-2xl bg-purple-500/10 border border-purple-500/20 flex gap-4">
+              <div className="w-10 h-10 rounded-xl bg-purple-500/20 flex items-center justify-center shrink-0 shadow-lg">
+                <Bot className="w-5 h-5 text-purple-400" />
+              </div>
+              <div>
+                <div className="text-[10px] font-black uppercase tracking-widest text-purple-400 mb-1.5">Mentor IA</div>
+                <p className="text-sm font-medium text-purple-200/90 leading-relaxed">{mentorHint}</p>
+              </div>
+            </motion.div>
+          )}
         </div>
       </div>
     </div>

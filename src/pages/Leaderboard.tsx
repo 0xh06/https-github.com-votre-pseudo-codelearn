@@ -27,9 +27,9 @@ const MOCK_LEADERS: LeaderboardEntry[] = [
   { id: '10', email: 'sarah.css@gmail.com', xp: 1620, streak: 3, rank: 10 },
 ];
 
-function maskEmail(email: string) {
-  const [local, domain] = email.split('@');
-  return `${local[0]}${'*'.repeat(Math.min(local.length - 1, 4))}@${domain}`;
+function getPseudo(email: string) {
+  if (!email) return 'Anonyme';
+  return email.split('@')[0];
 }
 
 const rankIcon = (rank: number) => {
@@ -45,30 +45,61 @@ export default function Leaderboard() {
   const [userRank, setUserRank] = useState<number | null>(null);
 
   useEffect(() => {
-    const combined = [...MOCK_LEADERS];
-    if (user) {
-      const existingIdx = combined.findIndex(l => l.id === user.id);
-      if (existingIdx !== -1) {
-        combined[existingIdx].xp = xp;
-      } else {
-        const userEntry = {
-          id: user.id,
-          email: user.email || 'Anonyme',
-          xp,
-          streak: 1,
-          rank: 0,
-        };
-        combined.push(userEntry);
+    async function fetchLeaderboard() {
+      try {
+        // Fetch real users from profiles table if it exists
+        const { data, error } = await supabase
+          .from('profiles')
+          .select('id, email, xp, streak, avatar_config')
+          .order('xp', { ascending: false })
+          .limit(50);
+
+        let combined = [];
+
+        if (!error && data && data.length > 0) {
+          combined = data.map(row => ({
+            id: row.id,
+            email: row.email || 'Anonyme',
+            xp: row.xp || 0,
+            streak: row.streak || 0,
+            rank: 0,
+            avatar: row.avatar_config
+          }));
+        } else {
+          // Fallback to mock data if the profiles table is not yet set up
+          combined = [...MOCK_LEADERS];
+        }
+
+        if (user) {
+          const existingIdx = combined.findIndex(l => l.id === user.id);
+          if (existingIdx !== -1) {
+            combined[existingIdx].xp = Math.max(combined[existingIdx].xp, xp);
+          } else {
+            const userEntry = {
+              id: user.id,
+              email: user.email || 'Anonyme',
+              xp,
+              streak: 1, // Placeholder
+              rank: 0,
+              avatar: avatar
+            };
+            combined.push(userEntry);
+          }
+        }
+        
+        combined.sort((a, b) => b.xp - a.xp);
+        combined.forEach((l, i) => (l.rank = i + 1));
+        
+        const userRankFound = combined.find(l => l.id === user?.id)?.rank;
+        setUserRank(userRankFound || null);
+        setLeaders(combined.slice(0, 50));
+      } catch (err) {
+        console.error('Erreur lors du chargement du classement:', err);
       }
-      
-      combined.sort((a, b) => b.xp - a.xp);
-      combined.forEach((l, i) => (l.rank = i + 1));
-      
-      const userRankFound = combined.find(l => l.id === user.id)?.rank;
-      setUserRank(userRankFound || null);
     }
-    setLeaders(combined.slice(0, 50));
-  }, [xp, user]);
+
+    fetchLeaderboard();
+  }, [xp, user, avatar]);
 
   return (
     <div className="container mx-auto px-4 py-24 relative overflow-hidden">
@@ -129,7 +160,7 @@ export default function Leaderboard() {
                 </div>
                 <div className={`p-1 rounded-[40px] border-2 ${isWinner ? 'border-yellow-400' : 'border-white/10'} shadow-2xl overflow-hidden glass`}>
                   <AvatarRenderer 
-                    config={leader.id === user?.id ? avatar : {
+                    config={(leader as any).avatar || (leader.id === user?.id ? avatar : {
                       skin: i === 0 ? 'tan' : i === 1 ? 'light' : 'brown',
                       hair: i === 0 ? 'fluffy' : 'short',
                       hairColor: i === 0 ? 'pink' : 'black',
@@ -138,7 +169,7 @@ export default function Leaderboard() {
                       clothes: 'overalls',
                       clothesColor: i === 1 ? '#F1C40F' : '#3498DB',
                       accessory: i === 1 ? 'expert-crown' : null
-                    }} 
+                    })} 
                     size={isWinner ? 160 : 120} 
                   />
                 </div>
@@ -146,7 +177,7 @@ export default function Leaderboard() {
 
               <div className="text-center space-y-2 relative z-10">
                 <div className={`text-[10px] font-black uppercase tracking-[0.3em] ${posColor}`}>{posLabel} Place</div>
-                <div className="text-xl font-black text-white">{maskEmail(leader.email)}</div>
+                <div className="text-xl font-black text-white">{getPseudo(leader.email)}</div>
                 <div className="text-2xl font-black text-white flex items-center justify-center gap-2">
                   {leader.xp.toLocaleString()}
                   <span className="text-[10px] text-[var(--text-dim)] uppercase tracking-widest">XP</span>
@@ -205,7 +236,7 @@ export default function Leaderboard() {
                 </div>
                 <div>
                   <div className={`text-lg font-black ${isMe ? 'text-[var(--green)]' : 'text-white'}`}>
-                    {isMe ? 'Toi ✨' : maskEmail(leader.email)}
+                    {isMe ? 'Toi ✨' : getPseudo(leader.email)}
                   </div>
                   <div className="text-[10px] text-[var(--text-dim)] font-black uppercase tracking-widest">
                     Expert en Algorithmes
@@ -244,7 +275,5 @@ export default function Leaderboard() {
         <Zap className="text-[var(--green)] mx-auto mt-4 animate-pulse" />
       </div>
     </div>
-  );
-}
   );
 }

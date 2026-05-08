@@ -8,14 +8,14 @@ import PremiumModal from '../components/PremiumModal';
 import { 
   ArrowLeft, BookOpen, Code2, ExternalLink, ChevronRight, Play, CheckCircle2, 
   Zap, FileText, Video, AlertTriangle, Map as MapIcon, Trophy, Target, Sparkles, Star,
-  Lock, ArrowRight, MousePointer2
+  Lock, ArrowRight, MousePointer2, Bot
 } from 'lucide-react';
 
 type Tab = 'cours' | 'algos' | 'ressources';
 
 export default function LanguageDetail() {
   const { id } = useParams<{ id: string }>();
-  const { uiLang, addXp } = useStore();
+  const { uiLang, addXp, checkStreak } = useStore();
   const lang = LANGUAGE_COURSES[id ?? ''];
 
   const [activeTab, setActiveTab] = useState<Tab>('cours');
@@ -23,6 +23,17 @@ export default function LanguageDetail() {
   const [activeLesson, setActiveLesson] = useState(0);
   const [completedLessons, setCompletedLessons] = useState<Set<string>>(new Set());
   const [showSuccess, setShowSuccess] = useState(false);
+  const [mentorHint, setMentorHint] = useState<string | null>(null);
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
+
+  const handleMentorAnalyze = () => {
+    setIsAnalyzing(true);
+    setMentorHint(null);
+    setTimeout(() => {
+      setIsAnalyzing(false);
+      setMentorHint("Excellente question ! Ce code produit ce résultat car l'ordre d'exécution dépend de l'architecture du langage. Essayez de modifier les variables dans l'éditeur interactif (La Forge) pour voir comment la sortie évolue !");
+    }, 1500);
+  };
 
   if (!lang) {
     return (
@@ -45,7 +56,8 @@ export default function LanguageDetail() {
     const key = `${activeSection}-${activeLesson}`;
     if (!completedLessons.has(key)) {
       setCompletedLessons(prev => new Set([...prev, key]));
-      addXp(150);
+      addXp(currentLesson.isBoss ? 500 : 150);
+      checkStreak();
       setShowSuccess(true);
     } else {
       advance();
@@ -60,6 +72,7 @@ export default function LanguageDetail() {
     } else if (activeSection < lang.sections.length - 1) {
       setActiveSection(s => s + 1);
       setActiveLesson(0);
+      setMentorHint(null);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
@@ -164,7 +177,7 @@ export default function LanguageDetail() {
                       className={`rounded-2xl border transition-all ${activeSection === si ? 'glass border-white/10 shadow-xl' : 'bg-transparent border-transparent'}`}
                     >
                       <button
-                        onClick={() => { setActiveSection(si); setActiveLesson(0); }}
+                        onClick={() => { setActiveSection(si); setActiveLesson(0); setMentorHint(null); }}
                         className="w-full flex items-center gap-4 p-4 text-left group"
                       >
                         <div className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0 glass shadow-inner group-hover:scale-110 transition-transform">
@@ -192,7 +205,7 @@ export default function LanguageDetail() {
                                 return (
                                   <button
                                     key={li}
-                                    onClick={() => setActiveLesson(li)}
+                                    onClick={() => { setActiveLesson(li); setMentorHint(null); }}
                                     className={`w-full flex items-center gap-3 p-3 rounded-xl text-xs transition-all ${
                                       active ? 'glass border-white/10 shadow-lg scale-[1.02]' : 'hover:bg-white/5'
                                     }`}
@@ -231,8 +244,8 @@ export default function LanguageDetail() {
                     className="space-y-8"
                   >
                     {/* Lesson Hero */}
-                    <div className="p-10 rounded-[32px] glass relative overflow-hidden border-white/10 shadow-2xl">
-                      <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-white/5 to-transparent -z-10 blur-3xl" />
+                    <div className={`p-10 rounded-[32px] glass relative overflow-hidden border-white/10 shadow-2xl ${currentLesson.isBoss ? 'border-red-500/30 bg-red-950/10' : ''}`}>
+                      <div className={`absolute top-0 right-0 w-64 h-64 bg-gradient-to-br ${currentLesson.isBoss ? 'from-red-500/10' : 'from-white/5'} to-transparent -z-10 blur-3xl`} />
                       
                       <div className="flex items-center justify-between mb-8">
                         <div>
@@ -249,14 +262,31 @@ export default function LanguageDetail() {
                       </div>
 
                       <div className="prose prose-invert max-w-none text-[var(--text)] leading-relaxed space-y-6">
-                        <p className="text-lg font-medium opacity-90">{currentLesson.explanation}</p>
+                        <p className="text-lg font-medium opacity-90 whitespace-pre-wrap">{currentLesson.explanation}</p>
                         
-                        {currentLesson.realWorldUseCase && (
+                        {currentLesson.realWorldUseCase && !currentLesson.isBoss && (
                           <div className="p-6 rounded-2xl bg-white/5 border-l-4 border-[var(--blue)]">
                             <h4 className="text-xs font-black uppercase tracking-widest text-[var(--blue)] mb-3 flex items-center gap-2">
                               <Zap size={14} /> Cas d'usage en production
                             </h4>
                             <p className="text-sm italic opacity-80">{currentLesson.realWorldUseCase}</p>
+                          </div>
+                        )}
+
+                        {currentLesson.isBoss && currentLesson.bossConstraints && (
+                          <div className="p-6 rounded-2xl bg-red-500/5 border border-red-500/20">
+                            <h4 className="text-xs font-black uppercase tracking-widest text-red-400 mb-4 flex items-center gap-2 animate-pulse">
+                              <AlertTriangle size={14} /> Contraintes du Boss
+                            </h4>
+                            <div className="flex gap-4 mb-4">
+                              <div className="px-3 py-1.5 rounded-lg bg-red-500/10 text-red-300 text-xs font-black font-mono">
+                                Temps : {currentLesson.bossConstraints.timeLimit}
+                              </div>
+                              <div className="px-3 py-1.5 rounded-lg bg-red-500/10 text-red-300 text-xs font-black font-mono">
+                                Espace : {currentLesson.bossConstraints.spaceLimit}
+                              </div>
+                            </div>
+                            <p className="text-sm font-medium text-red-200">{currentLesson.bossConstraints.description}</p>
                           </div>
                         )}
                       </div>
@@ -277,14 +307,41 @@ export default function LanguageDetail() {
                         <div className="p-6 bg-[#050505] font-mono text-sm leading-relaxed overflow-x-auto text-white/90">
                           <code>{currentLesson.code}</code>
                         </div>
+                        {currentLesson.output && (
+                          <div className="border-t border-white/5 bg-[#050505]/80">
+                            <div className="px-6 py-3 border-b border-white/5 bg-white/[0.02] flex items-center justify-between">
+                              <span className="text-[10px] font-black uppercase tracking-widest text-[var(--green)]">Sortie Terminal</span>
+                              <button 
+                                onClick={handleMentorAnalyze}
+                                disabled={isAnalyzing}
+                                className="flex items-center gap-1.5 px-3 py-1 bg-purple-500/10 hover:bg-purple-500/20 text-purple-400 rounded-lg text-[10px] font-black uppercase tracking-widest transition-colors border border-purple-500/20"
+                              >
+                                <Bot size={12} className={isAnalyzing ? "animate-bounce" : ""} />
+                                {isAnalyzing ? "Analyse..." : "Demander au Mentor IA"}
+                              </button>
+                            </div>
+                            <div className="p-6 text-[13px] text-white/70 font-mono whitespace-pre-wrap space-y-4">
+                              <div>{currentLesson.output}</div>
+                              {mentorHint && (
+                                <motion.div initial={{ opacity: 0, y: 5 }} animate={{ opacity: 1, y: 0 }} className="p-4 rounded-xl bg-purple-500/10 border border-purple-500/20 flex gap-3 mt-4">
+                                  <Bot className="w-5 h-5 text-purple-400 shrink-0 mt-0.5" />
+                                  <div>
+                                    <div className="text-xs font-black uppercase tracking-widest text-purple-400 mb-1">Mentor IA</div>
+                                    <p className="text-sm text-purple-200/80 leading-relaxed font-sans">{mentorHint}</p>
+                                  </div>
+                                </motion.div>
+                              )}
+                            </div>
+                          </div>
+                        )}
                       </div>
 
                       {/* Lesson Actions */}
                       <div className="mt-12 pt-8 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-6">
                         <button 
                           onClick={() => {
-                            if (activeLesson > 0) setActiveLesson(l => l - 1);
-                            else if (activeSection > 0) { setActiveSection(s => s - 1); setActiveLesson(lang.sections[activeSection - 1].lessons.length - 1); }
+                            if (activeLesson > 0) { setActiveLesson(l => l - 1); setMentorHint(null); }
+                            else if (activeSection > 0) { setActiveSection(s => s - 1); setActiveLesson(lang.sections[activeSection - 1].lessons.length - 1); setMentorHint(null); }
                           }}
                           disabled={activeSection === 0 && activeLesson === 0}
                           className="flex items-center gap-2 text-xs font-black uppercase tracking-widest text-[var(--text-dim)] hover:text-white transition-colors disabled:opacity-0"
@@ -294,12 +351,12 @@ export default function LanguageDetail() {
 
                         <button
                           onClick={markComplete}
-                          className="btn btn-primary px-10 py-4 text-sm font-black rounded-2xl shadow-[0_10px_30px_var(--green-glow)] flex items-center gap-3"
+                          className={`btn px-10 py-4 text-sm font-black rounded-2xl flex items-center gap-3 ${currentLesson.isBoss && !isCompleted(activeSection, activeLesson) ? 'bg-red-500 hover:bg-red-600 text-white shadow-[0_10px_30px_rgba(239,68,68,0.3)]' : 'btn-primary shadow-[0_10px_30px_var(--green-glow)]'}`}
                         >
                           {isCompleted(activeSection, activeLesson) ? (
                             <>Prochaine Quête <ArrowRight size={18} /></>
                           ) : (
-                            <><Sparkles size={18} /> Compléter (+150 XP)</>
+                            <><Sparkles size={18} /> {currentLesson.isBoss ? 'Vaincre le Boss (+500 XP)' : 'Compléter (+150 XP)'}</>
                           )}
                         </button>
                       </div>
@@ -354,10 +411,10 @@ export default function LanguageDetail() {
       <PremiumModal 
         isOpen={showSuccess}
         onClose={advance}
-        title={uiLang === 'fr' ? 'Quête Accomplie !' : 'Quest Accomplished!'}
+        title={currentLesson.isBoss ? (uiLang === 'fr' ? 'BOSS VAINCU !' : 'BOSS DEFEATED!') : (uiLang === 'fr' ? 'Quête Accomplie !' : 'Quest Accomplished!')}
         subtitle={uiLang === 'fr' ? `Bravo ! Vous avez maîtrisé : ${currentLesson.title}` : `Great job! You mastered: ${currentLesson.title}`}
-        xpEarned={150}
-        badge={completedCount % 5 === 0 ? { icon: '🏅', name: 'Apprenti Rigoureux', color: '#2ecc71' } : undefined}
+        xpEarned={currentLesson.isBoss ? 500 : 150}
+        badge={currentLesson.isBoss ? { icon: '🐉', name: 'Slayer', color: '#ef4444' } : (completedCount % 5 === 0 ? { icon: '🏅', name: 'Apprenti Rigoureux', color: '#2ecc71' } : undefined)}
         actionLabel={uiLang === 'fr' ? 'Continuer la Route' : 'Continue Journey'}
         onAction={advance}
       />

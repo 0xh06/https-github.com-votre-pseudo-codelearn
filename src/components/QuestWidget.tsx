@@ -18,13 +18,13 @@ export default function QuestWidget() {
   const progressPct = (completedCount / quests.length) * 100;
 
   return (
-    <div className="fixed bottom-8 right-8 z-[1000] flex flex-col items-end gap-4">
+    <div className="fixed bottom-8 left-8 z-[1000] flex flex-col items-start gap-4">
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, scale: 0.9, y: 20, x: 20 }}
+            initial={{ opacity: 0, scale: 0.9, y: 20, x: -20 }}
             animate={{ opacity: 1, scale: 1, y: 0, x: 0 }}
-            exit={{ opacity: 0, scale: 0.9, y: 20, x: 20 }}
+            exit={{ opacity: 0, scale: 0.9, y: 20, x: -20 }}
             className="w-80 glass rounded-[40px] border-white/10 shadow-[0_20px_60px_rgba(0,0,0,0.5)] overflow-hidden"
           >
             {/* Header */}
