@@ -72,9 +72,12 @@ export default function Projects() {
               {project.desc}
             </p>
 
-            <button disabled={project.locked} className="w-full btn btn-primary py-3 rounded-xl text-sm flex items-center justify-center gap-2 group-hover:shadow-[0_0_20px_var(--green-glow)] transition-all">
+            <Link 
+              to={project.locked ? '#' : `/projects/${project.id}`}
+              className={`w-full btn btn-primary py-3 rounded-xl text-sm flex items-center justify-center gap-2 group-hover:shadow-[0_0_20px_var(--green-glow)] transition-all ${project.locked ? 'cursor-not-allowed opacity-50' : ''}`}
+            >
               {project.locked ? 'Verrouillé' : 'Démarrer le Projet'} <ChevronRight size={16} />
-            </button>
+            </Link>
           </motion.div>
         ))}
       </div>

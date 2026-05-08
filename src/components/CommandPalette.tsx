@@ -46,7 +46,11 @@ export default function CommandPalette() {
       icon: <Zap />,
       type: 'Exercice',
       path: `/exercises/${e.id}`
-    }))
+    })),
+
+    // Projects (La Forge)
+    { id: 'proj_1', title: 'Projet : Todo List React', icon: <Hammer />, type: 'Projet', path: '/projects/todo-react' },
+    { id: 'proj_2', title: 'Projet : Bot Météo Python', icon: <Hammer />, type: 'Projet', path: '/projects/weather-py' }
   ];
 
   const filteredItems = items.filter(item => 

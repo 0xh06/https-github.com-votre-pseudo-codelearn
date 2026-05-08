@@ -20,6 +20,7 @@ import Languages from './pages/Languages';
 import LanguageDetail from './pages/LanguageDetail';
 import Profile from './pages/Profile';
 import Projects from './pages/Projects';
+import ProjectDetail from './pages/ProjectDetail';
 import AvatarCreatorPage from './pages/AvatarCreatorPage';
 import Settings from './pages/Settings';
 import Contact from './pages/Contact';
@@ -86,6 +87,7 @@ export default function App() {
           <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
           <Route path="/dashboard" element={<Navigate to="/profile" replace />} />
           <Route path="/projects" element={<Projects />} />
+          <Route path="/projects/:id" element={<ProjectDetail />} />
           <Route path="/avatar" element={<ProtectedRoute><AvatarCreatorPage /></ProtectedRoute>} />
           <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
           <Route path="/flashcards" element={<ProtectedRoute><Flashcards /></ProtectedRoute>} />
