@@ -92,6 +92,27 @@
   .badge {
     @apply px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest border border-current bg-current/10;
   }
+  .markdown-content h1, .markdown-content h2, .markdown-content h3 {
+    @apply font-black text-[var(--text-bright)] mt-4 mb-2;
+  }
+  .markdown-content p {
+    @apply mb-4 leading-relaxed;
+  }
+  .markdown-content ul, .markdown-content ol {
+    @apply pl-5 mb-4 space-y-2;
+  }
+  .markdown-content li {
+    @apply list-disc;
+  }
+  .markdown-content code {
+    @apply bg-white/10 px-1.5 py-0.5 rounded font-mono text-[var(--primary)] text-xs;
+  }
+  .markdown-content pre {
+    @apply bg-black/40 p-4 rounded-xl border border-white/5 my-4 overflow-x-auto;
+  }
+  .markdown-content pre code {
+    @apply bg-transparent p-0 text-white;
+  }
 }
 
 @layer utilities {

@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MessageSquare, X, Send, Bot, Sparkles } from 'lucide-react';
 import toast from 'react-hot-toast';
+import ReactMarkdown from 'react-markdown';
 
 interface Message {
   role: 'user' | 'bot';
@@ -9,10 +10,13 @@ interface Message {
   isTyping?: boolean;
 }
 
-const SYSTEM_PROMPT = `Tu es l'assistant d'AlgoMaster, une plateforme francophone d'apprentissage du code et des algorithmes. 
-Tu aides les utilisateurs à comprendre les algorithmes, les structures de données, les langages de programmation, et à préparer leurs entretiens techniques. 
-Réponds toujours en français, de manière claire, concise et pédagogique. Tu peux utiliser des exemples de code quand c'est utile. 
-Rappelle-toi que les réponses IA peuvent être inexactes : encourage la vérification pour le code critique ou les examens.`;
+const SYSTEM_PROMPT = `Tu es l'Expert-Instructeur d'AlgoMaster. Ton ton est sérieux, professionnel, mais encourageant (style mentor de la Silicon Valley). 
+Ton objectif est d'aider les développeurs à maîtriser l'algorithmique de haut niveau. 
+- Ne donne jamais la solution complète immédiatement : guide l'utilisateur par des questions ou des indices.
+- Utilise des termes techniques précis (Big O, Structure de Données, Optimisation).
+- Formate tes réponses avec du Markdown propre.
+- Si on te demande du code, explique chaque ligne de manière pédagogique.
+- Rappelle-toi que tes réponses IA peuvent être imprécises.`;
 
 async function callGeminiAPI(messages: Message[]): Promise<string> {
   const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
@@ -202,20 +206,29 @@ export default function Chatbot() {
             </div>
 
             {/* Messages */}
-            <div className="flex-1 overflow-y-auto p-4 space-y-4" style={{ scrollbarWidth: 'none' }}>
+            <div className="flex-1 overflow-y-auto p-6 space-y-6 bg-gradient-to-b from-[var(--bg)] to-[var(--bg2)]" style={{ scrollbarWidth: 'none' }}>
               {messages.map((m, i) => (
                 <motion.div
                   key={i}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
+                  initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
                   className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}
                 >
-                  <div className={`max-w-[82%] px-4 py-2.5 rounded-2xl text-sm leading-relaxed ${
+                  <div className={`relative max-w-[85%] px-5 py-3.5 rounded-2xl text-sm leading-relaxed shadow-lg ${
                     m.role === 'user'
                       ? 'bg-[var(--primary)] text-white rounded-tr-sm font-medium'
-                      : 'bg-[var(--bg3)] text-[var(--text-bright)] rounded-tl-sm border border-[var(--border)]'
+                      : 'bg-[var(--bg3)] text-[var(--text-bright)] rounded-tl-sm border border-[var(--border)] glass'
                   }`}>
-                    {m.isTyping ? <TypingIndicator /> : m.text}
+                    {m.role === 'bot' && (
+                      <div className="absolute -top-6 left-0 text-[9px] font-black uppercase tracking-tighter text-[var(--primary)] mb-1 opacity-60">
+                        Expert Instructeur
+                      </div>
+                    )}
+                    {m.isTyping ? <TypingIndicator /> : (
+                      <div className="markdown-content">
+                        <ReactMarkdown>{m.text}</ReactMarkdown>
+                      </div>
+                    )}
                   </div>
                 </motion.div>
               ))}

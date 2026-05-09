@@ -4,11 +4,13 @@ import confetti from 'canvas-confetti';
 import { EXERCISES } from '../data/content';
 import CodeEditor from '../components/CodeEditor';
 import Seo from '../components/Seo';
+import ReactMarkdown from 'react-markdown';
 import { useStore } from '../store/useStore';
 import { useState, useEffect } from 'react';
 import { executeCode } from '../utils/piston';
-import { Play, Maximize2, Minimize2, CheckCircle2, SquareSquare, ChevronDown } from 'lucide-react';
+import { Play, Maximize2, Minimize2, CheckCircle2, SquareSquare, ChevronDown, Sparkles, AlertCircle } from 'lucide-react';
 import { Panel, PanelGroup, PanelResizeHandle } from 'react-resizable-panels';
+import toast from 'react-hot-toast';
 
 export default function ExerciseDetail() {
   const { id } = useParams();
@@ -20,6 +22,8 @@ export default function ExerciseDetail() {
   const [testResults, setTestResults] = useState<any[] | null>(null);
   const [isRunning, setIsRunning] = useState(false);
   const [isFocusMode, setIsFocusMode] = useState(false);
+  const [aiFeedback, setAiFeedback] = useState<string | null>(null);
+  const [isAiLoading, setIsAiLoading] = useState(false);
 
   useEffect(() => {
     if (ex) {
@@ -27,6 +31,7 @@ export default function ExerciseDetail() {
       setCode(savedCode || (ex.starter as any)[lang] || (lang === 'js' ? (ex.starter as any).js : (ex.starter as any).python));
       setOutput('');
       setTestResults(null);
+      setAiFeedback(null);
     }
   }, [ex, lang, id]);
 
@@ -34,6 +39,42 @@ export default function ExerciseDetail() {
 
   const testCasesObj = (ex as any).tests || {};
   const currentTests = testCasesObj[lang];
+
+  const getAIFeedback = async (userCode: string, testResults: any[]) => {
+    const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
+    if (!apiKey) return;
+
+    setIsAiLoading(true);
+    try {
+      const prompt = `Tu es l'Expert-Instructeur d'AlgoMaster. Analyse ce code et les résultats des tests.
+Exercice: ${ex.title}
+Énoncé: ${ex.desc}
+Langage: ${lang}
+Code de l'utilisateur:
+\`\`\`${lang}
+${userCode}
+\`\`\`
+Résultats des tests: ${JSON.stringify(testResults)}
+
+Instructions:
+1. Si tous les tests passent, félicite brièvement et suggère une petite optimisation ou une bonne pratique.
+2. Si des tests échouent, explique POURQUOI sans donner le code corrigé. Guide l'utilisateur vers la logique correcte.
+3. Sois concis, professionnel et mentor. Utilise le Markdown.`;
+
+      const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
+      });
+      const data = await res.json();
+      const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
+      if (text) setAiFeedback(text);
+    } catch (e) {
+      console.error("AI Feedback Error:", e);
+    } finally {
+      setIsAiLoading(false);
+    }
+  };
 
   const handleRun = async () => {
     setIsRunning(true);
@@ -69,6 +110,9 @@ export default function ExerciseDetail() {
               }
             }
             outText = outText.replace(/__TEST_RESULTS__:\[.*\]\n?/, '');
+            
+            // Call AI for feedback automatically
+            getAIFeedback(codeToRun, parsed);
           } catch(e) {}
         }
         setOutput(outText || 'Exécuté avec succès (aucune sortie console).');
@@ -135,6 +179,34 @@ export default function ExerciseDetail() {
         </div>
         
         <div className="p-4 flex-1">
+          {aiFeedback && (
+            <motion.div 
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="mb-6 p-5 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 relative overflow-hidden group"
+            >
+              <div className="absolute top-0 right-0 p-2 opacity-10 group-hover:opacity-30 transition-opacity">
+                <Sparkles className="w-12 h-12 text-indigo-400" />
+              </div>
+              <div className="flex items-center gap-2 mb-3">
+                <div className="w-7 h-7 rounded-lg bg-indigo-500/20 flex items-center justify-center">
+                  <Sparkles className="w-4 h-4 text-indigo-400" />
+                </div>
+                <h4 className="text-xs font-black uppercase tracking-widest text-indigo-400">Analyse de l'Expert IA</h4>
+              </div>
+              <div className="markdown-content text-sm text-indigo-100/90 leading-relaxed">
+                <ReactMarkdown>{aiFeedback}</ReactMarkdown>
+              </div>
+            </motion.div>
+          )}
+
+          {isAiLoading && (
+            <div className="flex items-center gap-3 p-4 mb-6 rounded-2xl bg-indigo-500/5 border border-indigo-500/10 animate-pulse">
+              <Sparkles className="w-4 h-4 text-indigo-400 animate-spin" />
+              <span className="text-xs font-bold text-indigo-400/70 uppercase tracking-widest">L'IA analyse votre code...</span>
+            </div>
+          )}
+
           {testResults ? (
             <div className="space-y-3">
               <AnimatePresence>
