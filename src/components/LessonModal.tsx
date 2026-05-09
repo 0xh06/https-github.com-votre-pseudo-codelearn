@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, BookOpen, Code2, AlertTriangle, Lightbulb, ArrowRight, CheckCircle2 } from 'lucide-react';
+import { X, BookOpen, Code2, AlertTriangle, Lightbulb, ArrowRight, CheckCircle2, Zap } from 'lucide-react';
 import type { UniversalLesson } from '../data/universalCurriculum';
 
 interface Props {
@@ -93,6 +93,24 @@ export default function LessonModal({ lesson, onClose, onComplete, isCompleted }
                     <pre className="p-4 text-sm font-mono text-blue-300 overflow-x-auto">
                       <code>{ex.code}</code>
                     </pre>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            {/* Challenges Section */}
+            <section className="p-8 rounded-[32px] bg-[var(--primary)]/5 border border-[var(--primary)]/10 space-y-6">
+              <div className="flex items-center gap-3 text-[var(--primary)]">
+                <Zap size={20} />
+                <h3 className="text-sm font-black uppercase tracking-widest">Tes Défis</h3>
+              </div>
+              <div className="space-y-4">
+                {lesson.challenges.map((challenge, i) => (
+                  <div key={i} className="flex items-start gap-4 group/item">
+                    <div className="mt-1 w-5 h-5 rounded-lg border-2 border-[var(--primary)]/30 flex items-center justify-center shrink-0 group-hover/item:border-[var(--primary)] transition-colors">
+                      <div className="w-2.5 h-2.5 rounded-sm bg-[var(--primary)] opacity-0 group-hover/item:opacity-30 transition-opacity" />
+                    </div>
+                    <p className="text-[var(--text)] group-hover/item:text-[var(--text-bright)] transition-colors">{challenge}</p>
                   </div>
                 ))}
               </div>

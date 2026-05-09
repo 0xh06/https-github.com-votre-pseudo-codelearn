@@ -8,6 +8,7 @@ export type UniversalLesson = {
   realWorld: string;
   traps: string;
   nextSteps: string;
+  challenges: string[];
 };
 
 export type UniversalLevel = {
@@ -38,7 +39,12 @@ export const UNIVERSAL_CURRICULUM: UniversalLevel[] = [
         ],
         realWorld: 'Stocker le score d\'un joueur ou le nom d\'un utilisateur connecté.',
         traps: 'Attention à ne pas oublier de déclarer la variable avant de l\'utiliser !',
-        nextSteps: 'Apprendre les types de données.'
+        nextSteps: 'Apprendre les types de données.',
+        challenges: [
+          'Crée une variable "pseudo" et mets-y ton nom de codeur !',
+          'Crée une variable "xp" avec la valeur 0.',
+          'Affiche ton pseudo dans la console pour voir si ça marche.'
+        ]
       },
       {
         id: 'b1_types',
@@ -52,7 +58,12 @@ export const UNIVERSAL_CURRICULUM: UniversalLevel[] = [
         ],
         realWorld: 'Afficher un message de bienvenue personnalisé ou calculer des points de vie.',
         traps: 'Essayer d\'additionner un texte et un nombre ("10" + 5) peut donner des résultats bizarres.',
-        nextSteps: 'Les opérateurs mathématiques.'
+        nextSteps: 'Les opérateurs mathématiques.',
+        challenges: [
+          'Déclare une variable "estEnTrainDapprendre" et mets-y la valeur vrai (true).',
+          'Crée une phrase (string) qui dit "J\'ai" et ajoute ton âge après.',
+          'Vérifie le type de ta variable xp avec typeof.'
+        ]
       },
       {
         id: 'b2',
@@ -66,7 +77,12 @@ export const UNIVERSAL_CURRICULUM: UniversalLevel[] = [
         ],
         realWorld: 'Calculer le prix total d\'un panier d\'achat avec les taxes.',
         traps: 'Confondre "=" (donner une valeur) et "==" (vérifier si c\'est égal).',
-        nextSteps: 'Les structures de contrôle (If/Else).'
+        nextSteps: 'Les structures de contrôle (If/Else).',
+        challenges: [
+          'Additionne deux nombres et stocke le résultat dans "somme".',
+          'Vérifie si 10 est strictement égal à "10". Qu\'en dit ton code ?',
+          'Calcule le reste de la division de 10 par 3 avec l\'opérateur modulo (%).'
+        ]
       },
       {
         id: 'b3_if',
@@ -80,7 +96,12 @@ export const UNIVERSAL_CURRICULUM: UniversalLevel[] = [
         ],
         realWorld: 'Vérifier si un mot de passe est correct ou si un utilisateur a assez d\'argent pour un achat.',
         traps: 'Oublier le "else" peut laisser votre programme dans un état indéfini.',
-        nextSteps: 'Les boucles (répétition).'
+        nextSteps: 'Les boucles (répétition).',
+        challenges: [
+          'Écris un "if" qui affiche "Bravo" si ton score est supérieur à 50.',
+          'Ajoute un "else" pour afficher "Encore un effort !" sinon.',
+          'Utilise "else if" pour gérer un cas où le score est pile égal à 50.'
+        ]
       },
       {
         id: 'b4_loops',
@@ -94,7 +115,12 @@ export const UNIVERSAL_CURRICULUM: UniversalLevel[] = [
         ],
         realWorld: 'Afficher tous les messages d\'une boîte de réception ou traiter chaque pixel d\'une image.',
         traps: 'La boucle infinie ! Si la condition n\'est jamais fausse, votre ordinateur va chauffer.',
-        nextSteps: 'Les fonctions (réutilisation).'
+        nextSteps: 'Les fonctions (réutilisation).',
+        challenges: [
+          'Fais une boucle qui affiche les nombres de 1 à 10.',
+          'Modifie-la pour qu\'elle n\'affiche que les nombres pairs.',
+          'Essaie de faire un décompte de 10 à 0.'
+        ]
       }
     ]
   },
@@ -116,7 +142,12 @@ export const UNIVERSAL_CURRICULUM: UniversalLevel[] = [
         ],
         realWorld: 'Une fonction "calculerTVA()" utilisée sur toutes les factures d\'un site.',
         traps: 'Essayer d\'utiliser une variable créée à l\'intérieur d\'une fonction à l\'extérieur.',
-        nextSteps: 'Les structures de données (Tableaux).'
+        nextSteps: 'Les structures de données (Tableaux).',
+        challenges: [
+          'Crée une fonction "saluer" qui prend un nom en paramètre.',
+          'Fais une fonction qui calcule le carré d\'un nombre et le renvoie (return).',
+          'Appelle ta fonction et stocke le résultat dans une variable.'
+        ]
       },
       {
         id: 'i2_arrays',
@@ -130,7 +161,12 @@ export const UNIVERSAL_CURRICULUM: UniversalLevel[] = [
         ],
         realWorld: 'Gérer la liste des articles dans un panier ou les scores des 10 meilleurs joueurs.',
         traps: 'L\'index commence à 0, pas à 1 ! Le premier élément est à l\'index 0.',
-        nextSteps: 'Les objets et dictionnaires.'
+        nextSteps: 'Les objets et dictionnaires.',
+        challenges: [
+          'Crée un tableau "panier" avec 3 noms de fruits.',
+          'Ajoute un fruit à la fin de ton tableau avec la méthode ".push()".',
+          'Affiche la longueur de ton tableau (sa taille).'
+        ]
       },
       {
         id: 'i3_objects',
@@ -144,7 +180,12 @@ export const UNIVERSAL_CURRICULUM: UniversalLevel[] = [
         ],
         realWorld: 'Représenter un profil utilisateur complet avec photo, email et préférences.',
         traps: 'Confondre le point (user.nom) et les crochets (user["nom"]).',
-        nextSteps: 'La récursivité.'
+        nextSteps: 'La récursivité.',
+        challenges: [
+          'Crée un objet "hero" avec un nom, une classe et un niveau.',
+          'Augmente le niveau de ton hero de 1.',
+          'Ajoute une nouvelle propriété "force" à ton hero.'
+        ]
       }
     ]
   },
@@ -165,7 +206,12 @@ export const UNIVERSAL_CURRICULUM: UniversalLevel[] = [
         ],
         realWorld: 'Google Maps doit calculer un itinéraire en millisecondes parmi des milliards de routes possibles.',
         traps: 'Optimiser prématurément. Parfois le code simple est suffisant.',
-        nextSteps: 'Structures de données avancées.'
+        nextSteps: 'Structures de données avancées.',
+        challenges: [
+          'Explique pourquoi une boucle imbriquée est plus lente qu\'une boucle simple.',
+          'Quel est le Big O d\'une recherche dans un tableau non trié ?',
+          'Pourquoi O(1) est-il le graal de l\'optimisation ?'
+        ]
       },
       {
         id: 'e2_linkedlists',
@@ -178,7 +224,12 @@ export const UNIVERSAL_CURRICULUM: UniversalLevel[] = [
         ],
         realWorld: 'Gérer l\'historique "Suivant / Précédent" d\'un navigateur web.',
         traps: 'Perdre le pointeur vers la tête de la liste : vous perdez toute la liste !',
-        nextSteps: 'Les arbres et graphes.'
+        nextSteps: 'Les arbres et graphes.',
+        challenges: [
+          'Crée manuellement trois nœuds (nodes) A, B et C.',
+          'Relie A vers B, et B vers C.',
+          'Écris une fonction qui parcourt la liste pour afficher toutes les valeurs.'
+        ]
       },
       {
         id: 'e3_oop',
@@ -191,7 +242,12 @@ export const UNIVERSAL_CURRICULUM: UniversalLevel[] = [
         ],
         realWorld: 'Définir un comportement commun pour tous les ennemis d\'un jeu vidéo.',
         traps: 'L\'héritage trop complexe : on finit par s\'y perdre.',
-        nextSteps: 'Design Patterns.'
+        nextSteps: 'Design Patterns.',
+        challenges: [
+          'Crée une classe "Vehicule" avec une méthode "demarrer()".',
+          'Crée une instance (un objet) de ta classe avec "new".',
+          'Ajoute un constructeur pour donner un nom à ton véhicule.'
+        ]
       }
     ]
   }
