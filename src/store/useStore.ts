@@ -67,7 +67,7 @@ const getNextInterval = (score: number, quality: number) => {
 
 export const useStore = create<StoreState>()(
   persist(
-    (set) => ({
+    (set, get) => ({
       xp: 0,
       favorites: [],
       completed: [],
@@ -91,34 +91,51 @@ export const useStore = create<StoreState>()(
       subscriptionPlan: 'free',
       uiLang: 'fr',
 
-      addXp: (amount) => set((state) => ({ xp: state.xp + amount })),
+      addXp: (amount) => {
+        set((state) => ({ xp: state.xp + amount }));
+        get().syncToCloud();
+      },
       
-      toggleUniversalCompleted: (id) => set((state) => ({
-        completedUniversal: state.completedUniversal.includes(id)
-          ? state.completedUniversal.filter(cid => cid !== id)
-          : [...state.completedUniversal, id]
-      })),
+      toggleUniversalCompleted: (id) => {
+        set((state) => ({
+          completedUniversal: state.completedUniversal.includes(id)
+            ? state.completedUniversal.filter(cid => cid !== id)
+            : [...state.completedUniversal, id]
+        }));
+        get().syncToCloud();
+      },
 
-      updateAvatar: (config) => set((state) => ({
-        avatar: { ...state.avatar, ...config }
-      })),
+      updateAvatar: (config) => {
+        set((state) => ({ avatar: { ...state.avatar, ...config } }));
+        get().syncToCloud();
+      },
 
-      unlockAccessory: (id) => set((state) => ({
-        unlockedAccessories: state.unlockedAccessories.includes(id)
-          ? state.unlockedAccessories
-          : [...state.unlockedAccessories, id]
-      })),
-      toggleFavorite: (id) => set((state) => ({
-        favorites: state.favorites.includes(id)
-          ? state.favorites.filter(fid => fid !== id)
-          : [...state.favorites, id]
-      })),
+      unlockAccessory: (id) => {
+        set((state) => ({
+          unlockedAccessories: state.unlockedAccessories.includes(id)
+            ? state.unlockedAccessories
+            : [...state.unlockedAccessories, id]
+        }));
+        get().syncToCloud();
+      },
       
-      toggleCompleted: (id) => set((state) => ({
-        completed: state.completed.includes(id)
-          ? state.completed.filter(cid => cid !== id)
-          : [...state.completed, id]
-      })),
+      toggleFavorite: (id) => {
+        set((state) => ({
+          favorites: state.favorites.includes(id)
+            ? state.favorites.filter(fid => fid !== id)
+            : [...state.favorites, id]
+        }));
+        get().syncToCloud();
+      },
+      
+      toggleCompleted: (id) => {
+        set((state) => ({
+          completed: state.completed.includes(id)
+            ? state.completed.filter(cid => cid !== id)
+            : [...state.completed, id]
+        }));
+        get().syncToCloud();
+      },
       
       updateSrs: (id, quality) => set((state) => {
         const item = state.srs[id] || { score: 0 };
@@ -138,29 +155,83 @@ export const useStore = create<StoreState>()(
 
       setLastAlgo: (algoId) => set({ lastAlgo: algoId }),
 
-      checkStreak: () => set((state) => {
-        const today = new Date().toDateString();
-        if (state.streakData.lastDate === today) return state;
+      checkStreak: () => {
+        set((state) => {
+          const today = new Date().toDateString();
+          if (state.streakData.lastDate === today) return state;
 
-        const yesterday = new Date(Date.now() - 86400000).toDateString();
-        let newHist = [...state.streakData.history];
-        if (newHist.length > 6) newHist.shift();
+          const yesterday = new Date(Date.now() - 86400000).toDateString();
+          let newHist = [...state.streakData.history];
+          if (newHist.length > 6) newHist.shift();
 
-        if (state.streakData.lastDate === yesterday) {
-          const newCount = state.streakData.count + 1;
-          newHist.push(newCount);
-          return { streakData: { count: newCount, lastDate: today, history: newHist } };
-        } else {
-          newHist.push(1);
-          return { streakData: { count: 1, lastDate: today, history: newHist } };
+          if (state.streakData.lastDate === yesterday) {
+            const newCount = state.streakData.count + 1;
+            newHist.push(newCount);
+            return { streakData: { count: newCount, lastDate: today, history: newHist } };
+          } else {
+            newHist.push(1);
+            return { streakData: { count: 1, lastDate: today, history: newHist } };
+          }
+        });
+        get().syncToCloud();
+      },
+
+      setUser: (user) => {
+        set({ user });
+        if (user) {
+          get().loadFromCloud(user.id);
         }
-      }),
-
-      setUser: (user) => set({ user }),
+      },
       setProfile: (profile) => set({ profile }),
       setSubscriptionPlan: (plan) => set({ subscriptionPlan: plan }),
       setUiLang: (lang) => set({ uiLang: lang }),
-      signOut: () => set({ user: null, profile: null })
+      signOut: () => set({ user: null, profile: null }),
+
+      loadFromCloud: async (userId: string) => {
+        try {
+          const { supabase } = await import('../lib/supabase');
+          const { data, error } = await supabase
+            .from('profiles')
+            .select('xp, streak, avatar_config, completed_exercises, completed_universal, favorites')
+            .eq('id', userId)
+            .single();
+            
+          if (data && !error) {
+            set((state) => ({
+              xp: data.xp ?? state.xp,
+              streakData: { ...state.streakData, count: data.streak ?? state.streakData.count },
+              avatar: data.avatar_config || state.avatar,
+              completed: data.completed_exercises || state.completed,
+              completedUniversal: data.completed_universal || state.completedUniversal,
+              favorites: data.favorites || state.favorites
+            }));
+          }
+        } catch (err) {
+          console.error("Erreur chargement cloud:", err);
+        }
+      },
+
+      syncToCloud: async () => {
+        const state = get();
+        if (!state.user) return; // Ne pas sync si non connecté
+
+        try {
+          const { supabase } = await import('../lib/supabase');
+          await supabase.from('profiles').upsert({
+            id: state.user.id,
+            email: state.user.email,
+            xp: state.xp,
+            streak: state.streakData.count,
+            avatar_config: state.avatar,
+            completed_exercises: state.completed,
+            completed_universal: state.completedUniversal,
+            favorites: state.favorites,
+            updated_at: new Date().toISOString()
+          });
+        } catch (err) {
+          console.error("Erreur sync cloud:", err);
+        }
+      }
     }),
     {
       name: 'codelearn-storage',
