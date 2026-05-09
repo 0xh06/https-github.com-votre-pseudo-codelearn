@@ -13,7 +13,7 @@ interface Message {
   isTyping?: boolean;
 }
 
-const getSystemPrompt = (context: any) => `Tu es l'Expert-Instructeur d'AlgoMaster, une IA de tutorat de classe mondiale. 
+const getSystemPrompt = (context: any) => `Tu es l'Expert-Instructeur d'CodeLearn, une IA de tutorat de classe mondiale. 
 Ton ton est celui d'un mentor technique de haut niveau : direct, brillant, analytique et inspirant.
 
 CONTEXTE ACTUEL DE L'UTILISATEUR :
@@ -104,7 +104,7 @@ function smartFallback(input: string): string {
 export default function Chatbot() {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
-    { role: 'bot', text: "Bonjour ! Je suis l'assistant AlgoMaster. Comment puis-je vous aider aujourd'hui ? (Les réponses IA peuvent contenir des erreurs — vérifiez les points importants.)" }
+    { role: 'bot', text: "Bonjour ! Je suis l'assistant CodeLearn. Comment puis-je vous aider aujourd'hui ? (Les réponses IA peuvent contenir des erreurs — vérifiez les points importants.)" }
   ]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -210,7 +210,7 @@ export default function Chatbot() {
                   <Bot className="w-5 h-5 text-[var(--primary)]" />
                 </div>
                 <div>
-                  <div className="text-sm font-bold">Assistant AlgoMaster</div>
+                  <div className="text-sm font-bold">Assistant CodeLearn</div>
                   <div className="flex items-center gap-1.5">
                     <div className="w-1.5 h-1.5 bg-[var(--primary)] rounded-full animate-pulse" />
                     <span className="text-[10px] text-[var(--text-dim)]">

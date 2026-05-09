@@ -255,7 +255,7 @@ sauverVaisseau().catch(() => console.log("Sauvetage échoué (Non géré en inte
     resources: [
       { title: 'MDN Web Docs (La bible absolue)', url: 'https://developer.mozilla.org/fr/docs/Web/JavaScript', type: 'doc' },
       { title: 'JavaScript.info (Cours détaillé complet)', url: 'https://javascript.info', type: 'doc' },
-      { title: 'Exercices Pratiques JS sur AlgoMaster', url: '/exercises', type: 'practice' }
+      { title: 'Exercices Pratiques JS sur CodeLearn', url: '/exercises', type: 'practice' }
     ],
     algoExamples: [
       { name: 'Bubble Sort', id: 'bubble-sort' },
@@ -474,7 +474,7 @@ print("Création terminée.")`,
     resources: [
       { title: 'Documentation Officielle', url: 'https://docs.python.org/fr/3/tutorial/index.html', type: 'doc' },
       { title: 'RealPython (Superbes articles et visualisations)', url: 'https://realpython.com', type: 'doc' },
-      { title: 'Pratique Algorithmique AlgoMaster', url: '/algorithms', type: 'practice' }
+      { title: 'Pratique Algorithmique CodeLearn', url: '/algorithms', type: 'practice' }
     ],
     algoExamples: [
       { name: 'Bubble Sort', id: 'bubble-sort' },
@@ -520,7 +520,7 @@ public class Main {
         int age = 25;
         double price = 19.99;
         boolean isValid = true;
-        String name = "AlgoMaster";
+        String name = "CodeLearn";
 
         System.out.println("Bonjour " + name);
         System.out.println("Âge : " + age);
@@ -529,7 +529,7 @@ public class Main {
         // age = "vingt-cinq"; // Incompatible types!
     }
 }`,
-            output: 'Bonjour AlgoMaster\nÂge : 25',
+            output: 'Bonjour CodeLearn\nÂge : 25',
             realWorldUseCase: 'Création d\'applications d\'entreprise robustes. Le typage fort évite des bugs silencieux en production.',
             commonErrors: '❌ Oublier le point-virgule à la fin d\'une instruction. Contrairement à Python ou JS (souvent permissif), Java refusera de compiler sans `;`.'
           }

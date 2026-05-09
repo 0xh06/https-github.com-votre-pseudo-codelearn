@@ -41,7 +41,7 @@ export default function Contact() {
 
   return (
     <div className="container mx-auto px-4 py-20 max-w-2xl">
-      <Seo title="Contact" description="Contactez l'équipe AlgoMaster." />
+      <Seo title="Contact" description="Contactez l'équipe CodeLearn." />
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-12">
         <div className="w-16 h-16 bg-[var(--primary)]/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
           <MessageSquare className="w-8 h-8 text-[var(--primary)]" />

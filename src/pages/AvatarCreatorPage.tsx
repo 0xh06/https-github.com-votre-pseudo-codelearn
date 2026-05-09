@@ -9,7 +9,7 @@ export default function AvatarCreatorPage() {
     <div className="container mx-auto px-4 py-20">
       <Seo
         title="Personnaliser mon Avatar"
-        description="Créez votre personnage unique sur AlgoMaster. Débloquez de nouveaux accessoires au fil de votre progression."
+        description="Créez votre personnage unique sur CodeLearn. Débloquez de nouveaux accessoires au fil de votre progression."
       />
 
       <div className="max-w-5xl mx-auto space-y-12">

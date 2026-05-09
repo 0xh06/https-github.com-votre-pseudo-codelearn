@@ -61,7 +61,7 @@ export default function Home() {
             </h1>
             
             <p className="text-xl md:text-2xl text-[var(--text-dim)] font-medium max-w-3xl mx-auto leading-relaxed">
-              AlgoMaster transforme l'apprentissage des algorithmes en une aventure épique. 
+              CodeLearn transforme l'apprentissage des algorithmes en une aventure épique. 
               Maîtrise les structures de données, valide tes acquis avec des tests réels et forge ton identité numérique.
             </p>
 
@@ -117,7 +117,7 @@ export default function Home() {
         {/* Features Grid */}
         <section className="py-32">
           <div className="text-center mb-20 space-y-4">
-            <h2 className="text-4xl md:text-6xl font-black tracking-tight">Pourquoi AlgoMaster ?</h2>
+            <h2 className="text-4xl md:text-6xl font-black tracking-tight">Pourquoi CodeLearn ?</h2>
             <p className="text-[var(--text-dim)] text-xl max-w-2xl mx-auto">Une approche holistique pour devenir un ingénieur d'élite.</p>
           </div>
 

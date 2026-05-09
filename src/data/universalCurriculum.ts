@@ -250,8 +250,7 @@ export const UNIVERSAL_CURRICULUM: UniversalLevel[] = [
         ]
       }
     ]
-  }
-    },
+  },
     {
       id: 'advanced',
       title: 'Module 4 : Algorithmes Avancés',

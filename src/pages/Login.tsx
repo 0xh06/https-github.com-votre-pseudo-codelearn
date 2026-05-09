@@ -63,7 +63,7 @@ export default function Login() {
 
   return (
     <div className="container mx-auto px-4 py-20 flex justify-center items-center min-h-[80vh]">
-      <Seo title="Connexion" description="Connectez-vous à votre compte AlgoMaster." />
+      <Seo title="Connexion" description="Connectez-vous à votre compte CodeLearn." />
 
       <div className="card w-full max-w-md p-10 border border-[var(--border)] shadow-2xl">
         <div className="text-center mb-10">

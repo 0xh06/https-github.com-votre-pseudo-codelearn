@@ -327,7 +327,7 @@ export const EXERCISES = [
 // --- Tests Injections ---
 const tests = [
   { in: "hello", expected: "olleh" },
-  { in: "AlgoMaster", expected: "retsamoglA" },
+  { in: "CodeLearn", expected: "retsamoglA" },
   { in: "a", expected: "a" },
   { in: "", expected: "" },
   { in: "racecar", expected: "racecar" },
@@ -355,7 +355,7 @@ console.log('__TEST_RESULTS__:' + JSON.stringify(results));
       python: `
 import json, time
 tests = [
-    ("hello", "olleh"), ("AlgoMaster", "retsamoglA"), ("a", "a"),
+    ("hello", "olleh"), ("CodeLearn", "retsamoglA"), ("a", "a"),
     ("", ""), ("racecar", "racecar"), ("12345!?", "?!54321")
 ]
 results = []

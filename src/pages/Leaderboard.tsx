@@ -103,7 +103,7 @@ export default function Leaderboard() {
 
   return (
     <div className="container mx-auto px-4 py-24 relative overflow-hidden">
-      <Seo title="Classement | Les Maîtres du Code" description="Découvre qui domine le classement AlgoMaster." />
+      <Seo title="Classement | Les Maîtres du Code" description="Découvre qui domine le classement CodeLearn." />
 
       {/* Background Glows */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-[600px] bg-yellow-400/5 blur-[120px] pointer-events-none -z-10" />

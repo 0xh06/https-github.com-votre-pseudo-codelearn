@@ -117,7 +117,7 @@ export default function Pricing() {
     <div className="container mx-auto px-4 py-24 relative">
       <Seo
         title="Tarifs | Upgrade ton Potentiel"
-        description="Plans Gratuit, Pro et Équipe pour AlgoMaster — parcours Expert, flashcards étendues et support prioritaire."
+        description="Plans Gratuit, Pro et Équipe pour CodeLearn — parcours Expert, flashcards étendues et support prioritaire."
       />
 
       {/* Decorative Background */}

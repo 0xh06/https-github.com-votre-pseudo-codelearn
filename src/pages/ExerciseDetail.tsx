@@ -46,7 +46,7 @@ export default function ExerciseDetail() {
 
     setIsAiLoading(true);
     try {
-      const prompt = `Tu es l'Expert-Instructeur d'AlgoMaster. Analyse ce code et les résultats des tests.
+      const prompt = `Tu es l'Expert-Instructeur d'CodeLearn. Analyse ce code et les résultats des tests.
 Exercice: ${ex.title}
 Énoncé: ${ex.desc}
 Langage: ${lang}

@@ -73,7 +73,7 @@ export default function Signup() {
 
   return (
     <div className="container mx-auto px-4 py-20 flex justify-center items-center min-h-[80vh]">
-      <Seo title="Inscription" description="Rejoignez AlgoMaster et commencez votre parcours algorithmique." />
+      <Seo title="Inscription" description="Rejoignez CodeLearn et commencez votre parcours algorithmique." />
       
       <div className="card w-full max-w-md p-10 border border-[var(--border)] shadow-2xl">
         <div className="text-center mb-10">

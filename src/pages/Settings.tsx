@@ -38,7 +38,7 @@ export default function Settings() {
 
   return (
     <div className="container mx-auto px-4 py-12 max-w-2xl">
-      <Seo title="Paramètres" description="Gérez votre compte AlgoMaster." />
+      <Seo title="Paramètres" description="Gérez votre compte CodeLearn." />
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mb-10">
         <h1 className="text-4xl font-bold mb-2">Paramètres du compte</h1>
         <p className="text-[var(--text-dim)]">Gérez vos informations et préférences.</p>

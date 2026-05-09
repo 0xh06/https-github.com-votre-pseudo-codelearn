@@ -1,5 +1,5 @@
 // ============================================================
-//  AlgoMaster — i18n translations
+//  CodeLearn — i18n translations
 //  Only UI labels are translated. Code stays in English.
 // ============================================================
 

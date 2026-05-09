@@ -61,7 +61,7 @@ export default function ResetPassword() {
 
   return (
     <div className="container mx-auto px-4 py-20 flex justify-center items-center min-h-[80vh]">
-      <Seo title="Nouveau mot de passe" description="Réinitialisez votre mot de passe AlgoMaster." />
+      <Seo title="Nouveau mot de passe" description="Réinitialisez votre mot de passe CodeLearn." />
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}

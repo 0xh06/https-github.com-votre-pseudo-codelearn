@@ -18,7 +18,7 @@ export default function Profile() {
 
   return (
     <div className="container mx-auto px-4 py-24 max-w-6xl relative overflow-hidden">
-      <Seo title="Mon Profil | AlgoMaster" description="Consulte ton tableau de bord personnel, tes stats et ton avatar sur AlgoMaster." />
+      <Seo title="Mon Profil | CodeLearn" description="Consulte ton tableau de bord personnel, tes stats et ton avatar sur CodeLearn." />
 
       {/* Decorative Elements */}
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[var(--primary)]/5 blur-[120px] -z-10 rounded-full" />

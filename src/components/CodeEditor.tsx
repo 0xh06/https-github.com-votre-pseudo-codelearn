@@ -7,9 +7,9 @@ type CodeEditorProps = {
   theme?: string;
 };
 
-export default function CodeEditor({ value, language, onChange, theme = 'algomaster-premium' }: CodeEditorProps) {
+export default function CodeEditor({ value, language, onChange, theme = 'codelearn-premium' }: CodeEditorProps) {
   const handleEditorWillMount = (monaco: any) => {
-    monaco.editor.defineTheme('algomaster-premium', {
+    monaco.editor.defineTheme('codelearn-premium', {
       base: 'vs-dark',
       inherit: true,
       rules: [

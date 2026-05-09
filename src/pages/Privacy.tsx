@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 const sections = [
   {
     title: '1. Responsable du traitement',
-    content: `AlgoMaster est le responsable des traitements décrits ici. Pour toute question relative aux données personnelles ou pour exercer vos droits, utilisez la page Contact en précisant « RGPD » dans l'objet. Pour les demandes sensibles, un point de contact dédié peut être indiqué sur cette page lorsque la structure juridique finale sera fixée.`,
+    content: `CodeLearn est le responsable des traitements décrits ici. Pour toute question relative aux données personnelles ou pour exercer vos droits, utilisez la page Contact en précisant « RGPD » dans l'objet. Pour les demandes sensibles, un point de contact dédié peut être indiqué sur cette page lorsque la structure juridique finale sera fixée.`,
   },
   {
     title: '2. Données collectées',
@@ -41,7 +41,7 @@ const sections = [
 export default function Privacy() {
   return (
     <div className="container mx-auto px-4 py-20 max-w-3xl">
-      <Seo title="Politique de confidentialité" description="Politique de confidentialité et traitement des données — AlgoMaster." />
+      <Seo title="Politique de confidentialité" description="Politique de confidentialité et traitement des données — CodeLearn." />
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-16">
         <div className="w-16 h-16 bg-[var(--blue)]/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
           <Shield className="w-8 h-8 text-[var(--blue)]" />

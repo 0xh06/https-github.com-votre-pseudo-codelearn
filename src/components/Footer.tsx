@@ -80,7 +80,7 @@ export default function Footer() {
         </div>
 
         <div className="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-[var(--border)] text-[10px] text-[var(--text-dim)] uppercase tracking-widest gap-4">
-          <div>© 2026 AlgoMaster. Tous droits réservés.</div>
+          <div>© 2026 CodeLearn. Tous droits réservés.</div>
           <div className="flex gap-6 flex-wrap justify-center">
             <span>Hébergement sécurisé · HTTPS</span>
           </div>

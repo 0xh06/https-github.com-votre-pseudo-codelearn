@@ -14,7 +14,7 @@ const PROJECTS = [
 export default function Projects() {
   return (
     <div className="container mx-auto px-4 py-24 max-w-6xl relative min-h-screen">
-      <Seo title="La Forge | AlgoMaster" description="Construisez de vrais projets pour appliquer vos compétences." />
+      <Seo title="La Forge | CodeLearn" description="Construisez de vrais projets pour appliquer vos compétences." />
 
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[var(--primary)]/5 blur-[120px] -z-10 rounded-full" />
       <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-orange-500/5 blur-[120px] -z-10 rounded-full" />

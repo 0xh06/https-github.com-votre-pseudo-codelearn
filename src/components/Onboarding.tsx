@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Bot, Sparkles, ChevronRight, Trophy, Code2 } from 'lucide-react';
 
-const ONBOARDING_KEY = 'algomaster_onboarding_completed';
+const ONBOARDING_KEY = 'codelearn_onboarding_completed';
 
 const STEPS = [
   {
     icon: <Bot className="w-12 h-12 text-[var(--primary)]" />,
-    title: "Bienvenue sur AlgoMaster",
+    title: "Bienvenue sur CodeLearn",
     desc: "L'académie d'élite pour maîtriser les algorithmes et la logique de programmation. Je serai ton Expert-Instructeur.",
     color: "var(--primary)"
   },
