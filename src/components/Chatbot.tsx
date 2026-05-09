@@ -152,7 +152,7 @@ export default function Chatbot() {
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed bottom-6 right-6 w-14 h-14 bg-[var(--primary)] text-white rounded-full shadow-[0_0_30px_rgba(57,211,83,0.4)] flex items-center justify-center z-[9999]"
+        className="fixed bottom-6 right-6 w-14 h-14 bg-[var(--primary)] text-white rounded-full shadow-[0_0_30px_rgba(99,102,241,0.4)] flex items-center justify-center z-[9999]"
         aria-label="Ouvrir l'assistant"
       >
         <AnimatePresence mode="wait">

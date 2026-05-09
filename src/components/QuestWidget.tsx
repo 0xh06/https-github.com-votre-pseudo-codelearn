@@ -4,7 +4,7 @@ import { useStore } from '../store/useStore';
 import { Target, CheckCircle2, X, Trophy } from 'lucide-react';
 
 export default function QuestWidget() {
-  const { xp, completedUniversal, unlockedAccessories } = useStore();
+  const { xp, completed, completedUniversal, unlockedAccessories } = useStore();
   const [isOpen, setIsOpen] = useState(false);
 
   const quests = [

@@ -79,7 +79,7 @@ export default function UIPolish() {
 
       {/* Noise Texture Overlay */}
       <div className="fixed inset-0 pointer-events-none opacity-[0.02] mix-blend-overlay -z-[40]" 
-           style={{ backgroundImage: 'url(https://grainy-gradients.vercel.app/noise.svg)' }} />
+           style={{ backgroundImage: 'url(https://www.transparenttextures.com/patterns/pinstripe-dark.png)' }} />
     </>
   );
 }
