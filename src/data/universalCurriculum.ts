@@ -251,4 +251,149 @@ export const UNIVERSAL_CURRICULUM: UniversalLevel[] = [
       }
     ]
   }
+    },
+    {
+      id: 'advanced',
+      title: 'Module 4 : Algorithmes Avancés',
+      subtitle: 'Approfondissement des structures et algorithmes.',
+      reward: { id: 'advanced-badge', name: 'Badge Avancé', icon: '🚀' },
+      lessons: [
+        {
+          id: 'alg_iter',
+          title: 'Itérations Simples',
+          concept: 'Utiliser les boucles pour répéter des actions.',
+          explanation: "La boucle `Pour` permet d'exécuter une séquence d'instructions un nombre fixe de fois. Chaque itération incrémente un compteur qui contrôle la durée de la boucle.",
+          analogy: "C’est comme tourner les pages d’un livre jusqu'à la fin.",
+          codeExamples: [
+            { lang: 'JavaScript', code: 'for (let i = 0; i < 5; i++) { console.log(i); }' }
+          ],
+          realWorld: "Afficher les scores d'un tableau, répéter une animation.",
+          traps: "Boucle infinie si la condition d'arrêt n'est jamais fausse.",
+          nextSteps: 'Tableaux et structures de données.',
+          challenges: [
+            'Écris une boucle qui affiche les nombres de 1 à 10.',
+            "Modifie‑la pour n'afficher que les nombres pairs.",
+            "Ajoute un compteur qui compte le nombre d'itérations."
+          ]
+        },
+        {
+          id: 'alg_array_insert',
+          title: 'Insertion dans un Tableau',
+          concept: 'Déplacer les éléments pour créer un trou et insérer une valeur.',
+          explanation: "On décale les éléments à droite à partir de la fin du tableau jusqu'à la position d'insertion, puis on place la nouvelle valeur dans le trou ainsi créé.",
+          analogy: "C’est comme faire de la place sur une étagère avant de mettre un nouveau livre.",
+          codeExamples: [
+            { lang: 'JavaScript', code: 'function inserer(tab, val, pos) { for (let i = tab.length; i > pos; i--) { tab[i] = tab[i-1]; } tab[pos] = val; return tab; }' }
+          ],
+          realWorld: "Ajouter un élève dans une liste ordonnée.",
+          traps: "Oublier de mettre à jour la taille du tableau après insertion.",
+          nextSteps: "Suppression d'éléments.",
+          challenges: [
+            "Crée un tableau [1,2,4,5] et insère le nombre 3 à la position 2.",
+            "Vérifie le tableau après insertion."
+          ]
+        },
+        {
+          id: 'alg_sum',
+          title: "Somme d'un Tableau (Itératif)",
+          concept: "Accumuler les valeurs d'un tableau avec un accumulateur.",
+          explanation: "On initialise une variable `somme` à 0 puis on ajoute chaque élément du tableau.",
+          analogy: "Comme remplir un seau en versant de petites quantités.",
+          codeExamples: [
+            { lang: 'JavaScript', code: 'function somme(tab) { let s = 0; for (let i = 0; i < tab.length; i++) { s += tab[i]; } return s; }' }
+          ],
+          realWorld: "Calculer le total des points d'un joueur.",
+          traps: "Ne pas réinitialiser la variable somme avant chaque appel.",
+          nextSteps: "Fonctions récursives.",
+          challenges: [
+            "Calcule la somme du tableau [3,5,2,8].",
+            "Modifie la fonction pour retourner la moyenne."
+          ]
+        },
+        {
+          id: 'alg_factorial',
+          title: 'Factorielle Récursive',
+          concept: "Fonction qui s'appelle elle‑même jusqu'à un cas de base.",
+          explanation: "Le cas de base est `n = 0` qui retourne 1. Sinon on multiplie `n` par la factorielle de `n‑1`.",
+          analogy: "Comme une poupée russe : chaque appel ouvre une poupée plus petite.",
+          codeExamples: [
+            { lang: 'JavaScript', code: 'function fact(n) { return n === 0 ? 1 : n * fact(n-1); }' }
+          ],
+          realWorld: "Calculer le nombre de permutations possibles.",
+          traps: "Oublier le cas de base entraîne une récursion infinie.",
+          nextSteps: "Algorithmes de recherche.",
+          challenges: [
+            "Calcule 5! avec la fonction.",
+            "Modifie‑la pour gérer les nombres négatifs en renvoyant `null`."
+          ]
+        },
+        {
+          id: 'alg_record',
+          title: 'Enregistrement (Struct)',
+          concept: 'Regrouper plusieurs champs sous un même nom.',
+          explanation: "Un enregistrement `Eleve` contient un nom, un âge et une classe. Chaque champ est accessible via le point.",
+          analogy: "Comme une fiche d'identité contenant plusieurs informations.",
+          codeExamples: [
+            { lang: 'JavaScript', code: 'let eleve = { nom: "Alice", age: 19, classe: "L2" };' }
+          ],
+          realWorld: "Stocker les informations d'un étudiant dans une base.",
+          traps: "Accéder à un champ qui n'existe pas retourne `undefined`.",
+          nextSteps: "Manipulation de fichiers.",
+          challenges: [
+            "Crée un enregistrement pour un véhicule avec marque, modèle et année.",
+            "Affiche chaque champ."
+          ]
+        },
+        {
+          id: 'alg_file',
+          title: 'Manipulation de Fichier Texte',
+          concept: "Lire ligne par ligne avec un pointeur de fichier.",
+          explanation: "On ouvre le fichier en lecture, puis on parcourt tant que `EOF` n'est pas atteint, en lisant chaque ligne.",
+          analogy: "Comme tourner les pages d'un manuel jusqu'à la dernière.",
+          codeExamples: [
+            { lang: 'Pseudo', code: 'Ouvrir(f, "fic.txt", "r")\nTantQue NON EOF(f) Faire\n  Lire(f, ligne)\n  Ecrire(ligne)\nFinTantQue\nFermer(f)' }
+          ],
+          realWorld: "Afficher le contenu d'un journal d'événements.",
+          traps: "Ne pas fermer le fichier entraîne des fuites de descripteurs.",
+          nextSteps: "Recherche linéaire.",
+          challenges: [
+            "Écris le pseudocode pour lire un fichier et compter le nombre de lignes."
+          ]
+        },
+        {
+          id: 'alg_search',
+          title: 'Recherche Linéaire',
+          concept: "Parcourir un tableau pour trouver une valeur.",
+          explanation: "On parcourt chaque élément et on compare à la valeur cible. Retourne l'indice dès qu'on trouve la correspondance.",
+          analogy: "Comme chercher un mot dans une liste de mots en les lisant un à un.",
+          codeExamples: [
+            { lang: 'JavaScript', code: 'function recherche(tab, cible) { for (let i = 0; i < tab.length; i++) { if (tab[i] === cible) return i; } return -1; }' }
+          ],
+          realWorld: "Trouver un produit dans un inventaire non trié.",
+          traps: "Oublier de retourner -1 si la valeur n'est pas trouvée.",
+          nextSteps: "Tri par sélection.",
+          challenges: [
+            "Recherche la valeur 7 dans le tableau [3,7,2,9].",
+            "Modifie la fonction pour retourner le nombre d'occurences."
+          ]
+        },
+        {
+          id: 'alg_selection_sort',
+          title: 'Tri par Sélection',
+          concept: "Sélectionner le minimum et le placer en position correcte.",
+          explanation: "Pour chaque position i, on cherche le plus petit élément du suffixe et on l'échange avec i.",
+          analogy: "Comme choisir le plus petit bout de papier et le placer en haut d'une pile.",
+          codeExamples: [
+            { lang: 'JavaScript', code: 'function selectionSort(tab) { for (let i = 0; i < tab.length-1; i++) { let min = i; for (let j = i+1; j < tab.length; j++) { if (tab[j] < tab[min]) min = j; } if (min !== i) { let tmp = tab[i]; tab[i] = tab[min]; tab[min] = tmp; } } return tab; }' }
+          ],
+          realWorld: "Organiser une pile de cartes du plus petit au plus grand.",
+          traps: "Faire l'échange même si le minimum est déjà à la bonne place.",
+          nextSteps: "Algorithmes de tri plus rapides (Merge, Quick).",
+          challenges: [
+            "Trie le tableau [29,10,14,37,13] avec le tri par sélection.",
+            "Analyse la complexité temporelle."
+          ]
+        }
+      ]
+    }
 ];
