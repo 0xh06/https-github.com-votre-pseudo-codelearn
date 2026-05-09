@@ -169,6 +169,42 @@ export default function Profile() {
             </div>
           </div>
           
+          {/* Advanced Statistics Section */}
+          <div className="glass p-10 rounded-[48px] border-white/5 space-y-8 mt-8">
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-3">
+                <Target className="w-8 h-8 text-[var(--blue)]" />
+                <h3 className="text-2xl font-black text-white tracking-tight">Maîtrise par Domaine</h3>
+              </div>
+            </div>
+            
+            <div className="space-y-6">
+              {[
+                { name: 'Algorithmes de Tri', score: Math.min(100, xp / 100), color: 'var(--primary)' },
+                { name: 'Structures de Données', score: Math.min(100, completedExercises * 15), color: 'var(--blue)' },
+                { name: 'Programmation Dynamique', score: Math.min(100, streakData.count * 10), color: 'var(--purple)' },
+                { name: 'Logique & Mathématiques', score: Math.min(100, favorites.length * 20), color: 'var(--yellow)' },
+              ].map((skill, i) => (
+                <div key={i} className="space-y-2">
+                  <div className="flex justify-between items-center text-sm font-black text-white uppercase tracking-wider">
+                    <span>{skill.name}</span>
+                    <span style={{ color: skill.color }}>{Math.round(skill.score)}%</span>
+                  </div>
+                  <div className="h-3 bg-white/5 rounded-full overflow-hidden p-0.5 border border-white/5">
+                    <motion.div
+                      initial={{ width: 0 }}
+                      whileInView={{ width: `${skill.score}%` }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 1, delay: i * 0.2, ease: "easeOut" }}
+                      className="h-full rounded-full shadow-[0_0_10px_currentColor]"
+                      style={{ backgroundColor: skill.color, color: skill.color }}
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+          
           {/* Badges & Achievements Section */}
           <div className="glass p-10 rounded-[48px] border-white/5 space-y-8 mt-8">
             <div className="flex items-center gap-3 mb-4">

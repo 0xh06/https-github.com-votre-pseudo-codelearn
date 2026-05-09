@@ -308,6 +308,34 @@ export const ALGORITHMS = [
     },
     python: `import heapq\ndef dijkstra(graph, start):\n    distances = {node: float('inf') for node in graph}\n    distances[start] = 0\n    pq = [(0, start)]\n    while pq:\n        dist, u = heapq.heappop(pq)\n        if dist > distances[u]: continue\n        for v, weight in graph[u].items():\n            if distances[u] + weight < distances[v]:\n                distances[v] = distances[u] + weight\n                heapq.heappush(pq, (distances[v], v))\n    return distances`,
     js: `function dijkstra(graph, start) {\n  const dists = {};\n  for (let node in graph) dists[node] = Infinity;\n  dists[start] = 0;\n  const visited = new Set();\n  while (true) {\n    let u = null;\n    for (let node in dists) {\n      if (!visited.has(node) && (u === null || dists[node] < dists[u])) u = node;\n    }\n    if (u === null || dists[u] === Infinity) break;\n    visited.add(u);\n    for (let v in graph[u]) {\n      let alt = dists[u] + graph[u][v];\n      if (alt < dists[v]) dists[v] = alt;\n    }\n  }\n  return dists;\n}`
+  },
+  {
+    id: "sliding-window",
+    name: "Sliding Window",
+    category: "Tableaux",
+    timeO: "O(n)",
+    spaceO: "O(1)",
+    difficulty: "Intermédiaire",
+    color: "blue",
+    description: "Imaginez que vous prenez une photo de groupe, mais votre appareil ne peut cadrer que 3 personnes à la fois. Pour photographier tout le monde, vous 'glissez' votre appareil vers la droite, une personne à la fois. Au lieu de recalculer qui est dans le cadre à chaque fois, vous remarquez juste qu'une personne sort à gauche et une nouvelle entre à droite. C'est ça la Fenêtre Glissante : optimiser les calculs sur des sous-ensembles contigus !",
+    complexityDesc: "La Complexité Temporelle O(n) est magique car au lieu d'avoir deux boucles imbriquées (O(n²)) pour vérifier tous les sous-tableaux, on ne fait qu'un seul passage de gauche à droite.",
+    steps: [
+      "Initialiser deux pointeurs (début et fin de la fenêtre) et une variable pour l'état actuel.",
+      "Étendre la fenêtre en déplaçant le pointeur de fin (ajouter le nouvel élément).",
+      "Si la condition n'est plus respectée, rétrécir la fenêtre depuis la gauche jusqu'à la valider.",
+      "Mémoriser le meilleur résultat trouvé à chaque étape."
+    ],
+    hints: [
+      "Utilisez une boucle for pour le pointeur droit.",
+      "Utilisez une boucle while à l'intérieur pour avancer le pointeur gauche quand la contrainte est violée.",
+      "Cette technique est idéale pour les problèmes du type 'plus longue sous-chaîne' ou 'sous-tableau de taille k'."
+    ],
+    starter: {
+      python: `def max_sum_subarray(arr, k):\n    # TODO: Trouver la somme maximale d'un sous-tableau de taille k\n    pass`,
+      js: `function maxSumSubarray(arr, k) {\n  // TODO: Trouver la somme maximale d'un sous-tableau de taille k\n}`
+    },
+    python: `def max_sum_subarray(arr, k):\n    if len(arr) < k: return 0\n    window_sum = sum(arr[:k])\n    max_sum = window_sum\n    for i in range(k, len(arr)):\n        window_sum += arr[i] - arr[i-k]\n        max_sum = max(max_sum, window_sum)\n    return max_sum`,
+    js: `function maxSumSubarray(arr, k) {\n  if(arr.length < k) return 0;\n  let windowSum = 0;\n  for(let i = 0; i < k; i++) windowSum += arr[i];\n  let maxSum = windowSum;\n  for(let i = k; i < arr.length; i++) {\n    windowSum += arr[i] - arr[i-k];\n    maxSum = Math.max(maxSum, windowSum);\n  }\n  return maxSum;\n}`
   }
 ];
 
@@ -452,6 +480,32 @@ console.log('__TEST_RESULTS__:' + JSON.stringify(results));
     starter: { js: 'function isValid(s) {\n  // TODO\n}', python: 'def is_valid(s):\n    # TODO\n    pass' },
     tests: {
       js: `const res = isValid("()[]{}");\nconsole.log('__TEST_RESULTS__:[{"id":1,"input":"()[]{}","expected":true,"actual":'+res+',"passed":'+(res===true)+'}]');`
+    }
+  },
+  {
+    id: 8, title: 'Sliding Window (Max Sum)', level: 'Avancé', lang: 'Tous', desc: 'Trouvez la somme maximale d\'un sous-tableau de taille k. Vous devez utiliser une Fenêtre Glissante pour atteindre O(N).',
+    starter: { 
+      js: 'function maxSumSubarray(arr, k) {\n  // 💡 Indice: Calculez la somme des k premiers éléments.\n  // 💡 Ensuite, glissez la fenêtre en ajoutant arr[i] et retirant arr[i-k].\n  \n}', 
+      python: 'def max_sum_subarray(arr, k):\n    # TODO\n    pass' 
+    },
+    tests: {
+      js: `
+const tests = [
+  { in: "([2,1,5,1,3,2], 3)", expected: "9", args: [[2,1,5,1,3,2], 3] },
+  { in: "([2,3,4,1,5], 2)", expected: "7", args: [[2,3,4,1,5], 2] },
+  { in: "([1], 2)", expected: "0", args: [[1], 2] }
+];
+let results = tests.map((t, i) => {
+  let res, passed = false;
+  try {
+    res = maxSumSubarray(...t.args);
+    passed = (res.toString() === t.expected);
+  } catch(e) {}
+  return { id: i+1, input: t.in, expected: t.expected, actual: res, passed };
+});
+console.log('__TEST_RESULTS__:' + JSON.stringify(results));
+      `,
+      python: `print("Test désactivé")`
     }
   }
 ];
