@@ -168,6 +168,43 @@ export default function Profile() {
               </Link>
             </div>
           </div>
+          
+          {/* Badges & Achievements Section */}
+          <div className="glass p-10 rounded-[48px] border-white/5 space-y-8 mt-8">
+            <div className="flex items-center gap-3 mb-4">
+              <Crown className="w-8 h-8 text-[var(--yellow)]" />
+              <h3 className="text-2xl font-black text-white tracking-tight">Badges & Succès</h3>
+            </div>
+            
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              {[
+                { id: 'first_steps', name: 'Explorateur', desc: 'Première connexion', icon: '🗺️', unlocked: true },
+                { id: 'streak_3', name: 'Régulier', desc: 'Série de 3 jours', icon: '🔥', unlocked: streakData.count >= 3 },
+                { id: 'xp_1000', name: 'Apprenti', desc: '1000 XP atteints', icon: '🌱', unlocked: xp >= 1000 },
+                { id: 'xp_5000', name: 'Initié', desc: '5000 XP atteints', icon: '⚔️', unlocked: xp >= 5000 },
+                { id: '10_algos', name: 'Cerveau', desc: '10 Algos maîtrisés', icon: '🧠', unlocked: completedAlgos >= 10 },
+                { id: 'module_1', name: 'Diplômé', desc: 'Module débutant fini', icon: '🎓', unlocked: completed.length >= 5 },
+                { id: 'collector', name: 'Fashion', desc: '3 accessoires', icon: '🕶️', unlocked: avatar.accessory !== null },
+                { id: 'legend', name: 'Légende', desc: '10000 XP', icon: '👑', unlocked: xp >= 10000 },
+              ].map(badge => (
+                <div 
+                  key={badge.id}
+                  className={`p-4 rounded-3xl border flex flex-col items-center text-center transition-all duration-500 ${
+                    badge.unlocked 
+                    ? 'bg-gradient-to-br from-[var(--primary)]/10 to-[var(--purple)]/10 border-[var(--primary)]/20 shadow-[0_0_15px_var(--primary-glow)] group hover:scale-105' 
+                    : 'bg-white/5 border-white/5 opacity-50 grayscale'
+                  }`}
+                  title={badge.desc}
+                >
+                  <div className={`text-4xl mb-3 ${badge.unlocked ? 'group-hover:scale-110 transition-transform' : ''}`}>
+                    {badge.icon}
+                  </div>
+                  <div className="font-black text-white text-sm">{badge.name}</div>
+                  <div className="text-[9px] font-bold text-[var(--text-dim)] mt-1 uppercase tracking-widest">{badge.desc}</div>
+                </div>
+              ))}
+            </div>
+          </div>
         </motion.div>
       </div>
     </div>

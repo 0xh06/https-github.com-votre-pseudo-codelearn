@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import confetti from 'canvas-confetti';
 import { useStore } from '../store/useStore';
 
 interface Particle {
@@ -37,6 +38,23 @@ export default function XPBubbles() {
       
       setParticles((prev) => [...prev, ...newParticles]);
       setPrevXp(xp);
+
+      // Trigger Confetti Effect
+      if (amountGain >= 50) {
+        confetti({
+          particleCount: Math.min(amountGain, 100),
+          spread: 70,
+          origin: { y: 0.6 },
+          colors: ['#6366f1', '#3b82f6', '#f59e0b']
+        });
+      } else {
+        confetti({
+          particleCount: 20,
+          spread: 40,
+          origin: { y: 0.8 },
+          colors: ['#6366f1']
+        });
+      }
 
       // Auto-remove after animation
       setTimeout(() => {

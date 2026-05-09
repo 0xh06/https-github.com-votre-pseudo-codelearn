@@ -14,6 +14,10 @@ export default function QuestWidget() {
     { id: 4, title: 'Érudit', task: 'Finir le module débutant', done: completedUniversal.includes('b4_loops'), icon: '📚' },
     { id: 5, title: 'Architecte', task: 'Débloquer le module Expert', done: completedUniversal.includes('i3_objects'), icon: '🏛️' },
     { id: 6, title: 'Codeur Aguerri', task: 'Compléter 5 défis de l\'Arène', done: (completed?.length || 0) >= 5, icon: '⚔️' },
+    { id: 7, title: 'Maître des Boucles', task: 'Finir les itérations', done: completedUniversal.includes('alg_iter'), icon: '🔄' },
+    { id: 8, title: 'Ninja du Tri', task: 'Apprendre le tri par sélection', done: completedUniversal.includes('alg_selection_sort'), icon: '🥷' },
+    { id: 9, title: 'Chasseur de Trésor', task: 'Atteindre 5000 XP', done: xp >= 5000, icon: '💎' },
+    { id: 10, title: 'Légende', task: 'Terminer toutes les quêtes', done: completedUniversal.length > 10 && xp >= 5000, icon: '👑' },
   ];
 
   const completedCount = quests.filter(q => q.done).length;
