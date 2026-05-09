@@ -47,7 +47,7 @@ export default function HeroTerminal() {
         <div className="flex gap-1.5">
           <Circle size={10} className="fill-red-500/50 text-red-500/50" />
           <Circle size={10} className="fill-yellow-500/50 text-yellow-500/50" />
-          <Circle size={10} className="fill-green-500/50 text-green-500/50" />
+          <Circle size={10} className="fill-indigo-500/50 text-indigo-500/50" />
         </div>
         <div className="flex items-center gap-2 text-[var(--text-dim)] font-black uppercase tracking-widest text-[10px]">
           <Terminal size={12} /> {CODE_SNIPPETS[snippetIndex].lang}

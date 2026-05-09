@@ -192,7 +192,7 @@ export default function Algorithms() {
                             </span>
                           )}
                           {isCompleted && (
-                            <span className="flex items-center gap-1 text-[9px] font-bold px-2 py-0.5 rounded-full bg-indigo-500/10 text-indigo-400 border border-green-500/20">
+                            <span className="flex items-center gap-1 text-[9px] font-bold px-2 py-0.5 rounded-full bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
                               <CheckCircle2 className="w-2.5 h-2.5" /> OK
                             </span>
                           )}

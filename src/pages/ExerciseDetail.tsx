@@ -144,10 +144,10 @@ export default function ExerciseDetail() {
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: i * 0.1, type: 'spring', stiffness: 100 }}
                     key={i} 
-                    className={`p-3 rounded border ${t.passed ? 'bg-indigo-500/5 border-green-500/20' : 'bg-red-500/5 border-red-500/20'}`}
+                    className={`p-3 rounded border ${t.passed ? 'bg-indigo-500/5 border-indigo-500/20' : 'bg-red-500/5 border-red-500/20'}`}
                   >
                     <div className="flex items-center gap-2 font-bold text-xs mb-2">
-                      {t.passed ? <CheckCircle2 className="w-4 h-4 text-green-500" /> : <div className="w-4 h-4 rounded-full bg-red-500 flex items-center justify-center text-[10px] text-white">×</div>}
+                      {t.passed ? <CheckCircle2 className="w-4 h-4 text-indigo-500" /> : <div className="w-4 h-4 rounded-full bg-red-500 flex items-center justify-center text-[10px] text-white">×</div>}
                       <span className={t.passed ? 'text-indigo-400' : 'text-red-400'}>Test Case {t.id}</span>
                     </div>
                     <div className="text-xs text-[var(--text-dim)] grid grid-cols-1 gap-1 pl-6">
