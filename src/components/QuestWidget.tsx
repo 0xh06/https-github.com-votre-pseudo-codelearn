@@ -50,7 +50,7 @@ export default function QuestWidget() {
             </div>
 
             {/* List */}
-            <div className="p-6 space-y-3">
+            <div className="p-6 space-y-3 max-h-[50vh] overflow-y-auto custom-scrollbar">
               {quests.map((q) => (
                 <div 
                   key={q.id} 
