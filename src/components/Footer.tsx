@@ -12,7 +12,7 @@ export default function Footer() {
                 <Code2 className="text-[var(--primary)] w-6 h-6" />
               </div>
               <span className="text-xl font-black tracking-tighter text-[var(--text-bright)]">
-                ALGO<span className="text-[var(--primary)]">MASTER</span>
+                CODE<span className="text-[var(--primary)]">LEARN</span>
               </span>
             </Link>
             <p className="text-[var(--text-dim)] max-w-sm leading-relaxed">
