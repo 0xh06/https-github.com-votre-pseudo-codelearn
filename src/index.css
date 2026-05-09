@@ -4,45 +4,45 @@
 
 @layer base {
   :root {
-    /* Premium Dark Palette (Deep Slate & Graphite) */
-    --bg: hsl(230, 25%, 5%);
-    --bg2: hsl(230, 25%, 8%);
-    --bg3: hsl(230, 25%, 12%);
-    --border: hsla(230, 20%, 20%, 0.4);
+    /* Premium Dark Palette (Abyss & Neon) */
+    --bg: #09090b;
+    --bg2: #18181b;
+    --bg3: #27272a;
+    --border: rgba(255, 255, 255, 0.1);
     
-    --text: hsl(210, 20%, 80%);
-    --text-bright: hsl(0, 0%, 100%);
-    --text-dim: hsl(210, 15%, 60%);
+    --text: #a1a1aa;
+    --text-bright: #ffffff;
+    --text-dim: #71717a;
     
-    /* Signature Colors */
+    /* Signature Colors (Vibrant Neon) */
     --primary: #6366f1;
-    --primary-glow: hsla(239, 84%, 67%, 0.3);
+    --primary-glow: rgba(99, 102, 241, 0.4);
     --secondary: #3b82f6;
-    --secondary-glow: hsla(217, 91%, 60%, 0.3);
-    --blue: #3498db;
-    --blue-glow: hsla(204, 70%, 53%, 0.3);
-    --purple: #9b59b6;
-    --purple-glow: hsla(282, 44%, 53%, 0.3);
-    --yellow: #f1c40f;
-    --red: #e74c3c;
+    --secondary-glow: rgba(59, 130, 246, 0.4);
+    --blue: #0ea5e9;
+    --blue-glow: rgba(14, 165, 233, 0.4);
+    --purple: #8b5cf6;
+    --purple-glow: rgba(139, 92, 246, 0.4);
+    --yellow: #f59e0b;
+    --red: #ef4444;
 
     --font-display: 'Outfit', sans-serif;
     --font-sans: 'Inter', sans-serif;
 
-    --glass-bg: hsla(230, 25%, 7%, 0.75);
-    --glass-border: hsla(230, 20%, 30%, 0.15);
+    --glass-bg: rgba(24, 24, 27, 0.6);
+    --glass-border: rgba(255, 255, 255, 0.08);
   }
 
   .light-theme {
-    --bg: hsl(210, 20%, 98%);
-    --bg2: hsl(210, 20%, 95%);
-    --bg3: hsl(210, 20%, 90%);
-    --border: hsla(210, 20%, 80%, 0.5);
-    --text: hsl(210, 20%, 20%);
-    --text-bright: hsl(210, 20%, 10%);
-    --text-dim: hsl(210, 15%, 40%);
-    --glass-bg: hsla(210, 20%, 98%, 0.8);
-    --glass-border: hsla(210, 20%, 80%, 0.3);
+    --bg: #ffffff;
+    --bg2: #f4f4f5;
+    --bg3: #e4e4e7;
+    --border: rgba(0, 0, 0, 0.1);
+    --text: #3f3f46;
+    --text-bright: #09090b;
+    --text-dim: #71717a;
+    --glass-bg: rgba(255, 255, 255, 0.7);
+    --glass-border: rgba(0, 0, 0, 0.08);
   }
 
   body {
