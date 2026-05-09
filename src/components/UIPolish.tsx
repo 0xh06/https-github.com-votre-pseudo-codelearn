@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { motion, useScroll, useSpring } from 'framer-motion';
+import { motion, useScroll, useSpring, AnimatePresence } from 'framer-motion';
 
 export default function UIPolish() {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const [clicks, setClicks] = useState<{ id: number, x: number, y: number }[]>([]);
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
     stiffness: 100,
@@ -14,8 +15,21 @@ export default function UIPolish() {
     const handleMouseMove = (e: MouseEvent) => {
       setMousePos({ x: e.clientX, y: e.clientY });
     };
+    
+    const handleClick = (e: MouseEvent) => {
+      const newClick = { id: Date.now(), x: e.clientX, y: e.clientY };
+      setClicks((prev) => [...prev, newClick]);
+      setTimeout(() => {
+        setClicks((prev) => prev.filter(c => c.id !== newClick.id));
+      }, 1000);
+    };
+
     window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
+    window.addEventListener('click', handleClick);
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('click', handleClick);
+    };
   }, []);
 
   return (
@@ -25,6 +39,21 @@ export default function UIPolish() {
         className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-[var(--primary)] via-[var(--blue)] to-[var(--purple)] z-[2000] origin-left"
         style={{ scaleX }}
       />
+
+      {/* Click Particles */}
+      <AnimatePresence>
+        {clicks.map(click => (
+          <motion.div
+            key={click.id}
+            initial={{ scale: 0, opacity: 1 }}
+            animate={{ scale: 2, opacity: 0 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            className="fixed w-12 h-12 rounded-full border-2 border-[var(--primary)] pointer-events-none z-[9999]"
+            style={{ left: click.x - 24, top: click.y - 24 }}
+          />
+        ))}
+      </AnimatePresence>
 
       {/* Custom Magic Cursor (Desktop only) */}
       <motion.div

@@ -50,13 +50,17 @@ export default function CommandPalette() {
 
     // Projects (La Forge)
     { id: 'proj_1', title: 'Projet : Todo List React', icon: <Hammer />, type: 'Projet', path: '/projects/todo-react' },
-    { id: 'proj_2', title: 'Projet : Bot Météo Python', icon: <Hammer />, type: 'Projet', path: '/projects/weather-py' }
+    { id: 'proj_2', title: 'Projet : Bot Météo Python', icon: <Hammer />, type: 'Projet', path: '/projects/weather-py' },
+
+    // Quick Actions
+    { id: 'action_1', title: 'Passer au Thème Sombre/Clair', icon: <Settings />, type: 'Action', path: '#theme' },
+    { id: 'action_2', title: 'Personnaliser l\'Avatar', icon: <User />, type: 'Action', path: '/avatar' }
   ];
 
   const filteredItems = items.filter(item => 
     item.title.toLowerCase().includes(search.toLowerCase()) || 
     item.type.toLowerCase().includes(search.toLowerCase())
-  ).slice(0, 8); // Max 8 results
+  ).slice(0, 10); // Max 10 results
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -83,7 +87,18 @@ export default function CommandPalette() {
   }, [isOpen]);
 
   const handleExecute = (path: string) => {
-    navigate(path);
+    if (path === '#theme') {
+      const isLight = document.documentElement.classList.contains('light-theme');
+      if (isLight) {
+        document.documentElement.classList.remove('light-theme');
+        localStorage.setItem('theme', 'dark');
+      } else {
+        document.documentElement.classList.add('light-theme');
+        localStorage.setItem('theme', 'light');
+      }
+    } else {
+      navigate(path);
+    }
     setIsOpen(false);
   };
 
