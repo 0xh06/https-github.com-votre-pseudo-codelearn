@@ -37,6 +37,7 @@ import UIPolish from './components/UIPolish';
 import XPBubbles from './components/XPBubbles';
 import QuestWidget from './components/QuestWidget';
 import CommandPalette from './components/CommandPalette';
+import Onboarding from './components/Onboarding';
 
 export default function App() {
   const setUser = useStore(state => state.setUser);
@@ -59,6 +60,7 @@ export default function App() {
       <XPBubbles />
       <QuestWidget />
       <CommandPalette />
+      <Onboarding />
       <Toaster 
         position="bottom-center" 
         toastOptions={{ 
