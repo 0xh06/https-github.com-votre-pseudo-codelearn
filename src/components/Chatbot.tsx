@@ -4,19 +4,32 @@ import { MessageSquare, X, Send, Bot, Sparkles } from 'lucide-react';
 import toast from 'react-hot-toast';
 import ReactMarkdown from 'react-markdown';
 
+import { useStore } from '../store/useStore';
+import { useLocation } from 'react-router-dom';
+
 interface Message {
   role: 'user' | 'bot';
   text: string;
   isTyping?: boolean;
 }
 
-const SYSTEM_PROMPT = `Tu es l'Expert-Instructeur d'AlgoMaster. Ton ton est sérieux, professionnel, mais encourageant (style mentor de la Silicon Valley). 
-Ton objectif est d'aider les développeurs à maîtriser l'algorithmique de haut niveau. 
-- Ne donne jamais la solution complète immédiatement : guide l'utilisateur par des questions ou des indices.
-- Utilise des termes techniques précis (Big O, Structure de Données, Optimisation).
-- Formate tes réponses avec du Markdown propre.
-- Si on te demande du code, explique chaque ligne de manière pédagogique.
-- Rappelle-toi que tes réponses IA peuvent être imprécises.`;
+const getSystemPrompt = (context: any) => `Tu es l'Expert-Instructeur d'AlgoMaster, une IA de tutorat de classe mondiale. 
+Ton ton est celui d'un mentor technique de haut niveau : direct, brillant, analytique et inspirant.
+
+CONTEXTE ACTUEL DE L'UTILISATEUR :
+- Page : ${context.page}
+- XP : ${context.xp}
+- Exercices complétés : ${context.completedCount}
+- Langue UI : ${context.uiLang}
+
+DIRECTIVES DE RÉPONSE :
+1. INDÉPENDANCE : Ne te présente pas comme "une IA" ou "un modèle de langue". Tu es l'Expert-Instructeur. Prends des décisions, donne des avis tranchés sur les meilleures pratiques (ex: "N'utilise jamais var en JS, voici pourquoi...").
+2. RAISONNEMENT : Si on te pose une question complexe, décompose ton raisonnement. Explique le "Pourquoi" avant le "Comment".
+3. PÉDAGOGIE ACTIVE : Ne donne jamais la solution brute d'un exercice. Guide l'étudiant par la logique.
+4. EXPERTISE : Utilise un vocabulaire d'ingénieur senior (concurrence, gestion mémoire, complexité asymptotique, design patterns).
+5. FORMATAGE : Utilise le Markdown de manière exhaustive (tableaux, listes, blocs de code, gras).
+
+Tu as un accès complet à la connaissance algorithmique. Sois le meilleur mentor que cet utilisateur n'ait jamais eu.`;
 
 async function callGeminiAPI(messages: Message[]): Promise<string> {
   const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
@@ -32,14 +45,14 @@ async function callGeminiAPI(messages: Message[]): Promise<string> {
   const lastMessage = messages[messages.length - 1];
 
   const body = {
-    system_instruction: { parts: [{ text: SYSTEM_PROMPT }] },
+    system_instruction: { parts: [{ text: getSystemPrompt(messages[0].context || {}) }] },
     contents: [
       ...history,
       { role: 'user', parts: [{ text: lastMessage.text }] }
     ],
     generationConfig: {
-      maxOutputTokens: 512,
-      temperature: 0.7,
+      maxOutputTokens: 1024,
+      temperature: 0.8,
     }
   };
 
@@ -111,7 +124,15 @@ export default function Chatbot() {
     const userText = input.trim();
     setInput('');
 
-    const userMsg: Message = { role: 'user', text: userText };
+    const { xp, completed, uiLang } = useStore.getState();
+    const context = {
+      page: window.location.pathname,
+      xp,
+      completedCount: completed.length,
+      uiLang
+    };
+
+    const userMsg: any = { role: 'user', text: userText, context };
     const typingMsg: Message = { role: 'bot', text: '...', isTyping: true };
 
     setMessages(prev => [...prev, userMsg, typingMsg]);
