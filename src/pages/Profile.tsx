@@ -9,7 +9,7 @@ import { getLevelInfo } from '../utils/levels';
 import AvatarRenderer from '../components/AvatarRenderer';
 
 export default function Profile() {
-  const { xp, completed, favorites, streakData, avatar, user } = useStore();
+  const { xp, completed, favorites, streakData, avatar, user, username } = useStore();
   const levelData = getLevelInfo(xp);
   const completedAlgos = favorites.length;
   const completedExercises = completed.length;
@@ -35,7 +35,7 @@ export default function Profile() {
             <span className="text-[9px] font-black uppercase tracking-[0.2em] text-[var(--text-dim)]">Tableau de Bord Personnel</span>
           </div>
           <h1 className="text-5xl md:text-7xl font-black text-white tracking-tighter">VOTRE <span className="premium-gradient">ASCENSION</span></h1>
-          <p className="text-[var(--text-dim)] text-xl font-medium mt-2">Prêt à franchir le prochain palier, {user?.email?.split('@')[0] || 'Codeur'} ?</p>
+          <p className="text-[var(--text-dim)] text-xl font-medium mt-2">Prêt à franchir le prochain palier, {username || user?.email?.split('@')[0] || 'Codeur'} ?</p>
         </div>
         
         <div className="flex gap-3">

@@ -8,6 +8,7 @@ import toast from 'react-hot-toast';
 export default function Signup() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [pseudo, setPseudo] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
@@ -20,6 +21,11 @@ export default function Signup() {
     const { error } = await supabase.auth.signUp({
       email,
       password,
+      options: {
+        data: {
+          pseudo: pseudo,
+        }
+      }
     });
 
     if (error) {
@@ -106,6 +112,20 @@ export default function Signup() {
         )}
 
         <form onSubmit={handleSignup} className="space-y-4">
+          <div>
+            <label className="block text-xs font-bold uppercase tracking-widest mb-2 text-[var(--text-dim)]">Pseudo d'avatar</label>
+            <div className="relative">
+              <UserPlus className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--text-dim)]" />
+              <input 
+                type="text" 
+                required
+                placeholder="Ex: AlgoMaster99"
+                className="w-full bg-[var(--bg3)] border border-[var(--border)] rounded-xl py-3 pl-10 pr-4 focus:border-[var(--primary)] outline-none transition-all text-sm"
+                value={pseudo}
+                onChange={e => setPseudo(e.target.value)}
+              />
+            </div>
+          </div>
           <div>
             <label className="block text-xs font-bold uppercase tracking-widest mb-2 text-[var(--text-dim)]">Email Professionnel</label>
             <div className="relative">

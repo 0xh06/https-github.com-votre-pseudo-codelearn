@@ -29,7 +29,7 @@ import { t } from '../utils/i18n';
 import AvatarRenderer from './AvatarRenderer';
 
 export default function Navbar() {
-  const { xp, user, setUser, subscriptionPlan, uiLang, setUiLang, avatar, completedUniversal, streakData } = useStore();
+  const { xp, user, setUser, subscriptionPlan, uiLang, setUiLang, avatar, completedUniversal, streakData, username } = useStore();
   const location = useLocation();
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -160,7 +160,7 @@ export default function Navbar() {
                   </div>
                   <div className="hidden sm:block text-left">
                     <div className="text-[10px] font-black text-[var(--text-bright)] leading-none truncate max-w-[80px]">
-                      {user.email?.split('@')[0]}
+                      {username || user.email?.split('@')[0]}
                     </div>
                   </div>
                   <ChevronDown className={`w-3 h-3 text-[var(--text-dim)] transition-transform duration-300 ${isUserMenuOpen ? 'rotate-180' : ''}`} />
@@ -192,7 +192,7 @@ export default function Navbar() {
                         </div>
                         <div>
                           <div className="text-lg font-black text-[var(--text-bright)] tracking-tight">
-                            {user.email?.split('@')[0]}
+                            {username || user.email?.split('@')[0]}
                           </div>
                           <div className="text-[10px] font-black uppercase tracking-[0.2em] text-[var(--primary)]">
                             {levelData.name} • NIV.{levelData.level}

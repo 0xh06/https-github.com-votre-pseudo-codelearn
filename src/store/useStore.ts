@@ -41,6 +41,7 @@ interface StoreState {
   profile: any | null;
   subscriptionPlan: SubscriptionPlan;
   uiLang: Lang;
+  username: string | null;
   addXp: (amount: number) => void;
   toggleFavorite: (id: string) => void;
   toggleCompleted: (id: number) => void;
@@ -51,6 +52,7 @@ interface StoreState {
   setLastAlgo: (algoId: string) => void;
   checkStreak: () => void;
   setUser: (user: any) => void;
+  setUsername: (username: string | null) => void;
   setProfile: (profile: any) => void;
   setSubscriptionPlan: (plan: 'free' | 'pro') => void;
   setUiLang: (lang: Lang) => void;
@@ -88,6 +90,7 @@ export const useStore = create<StoreState>()(
       lastAlgo: null,
       user: null,
       profile: null,
+      username: null,
       subscriptionPlan: 'free',
       uiLang: 'fr',
 
@@ -179,13 +182,22 @@ export const useStore = create<StoreState>()(
       setUser: (user) => {
         set({ user });
         if (user) {
+          // If the user object has user_metadata (from signup/oauth), use the pseudo/full_name
+          const pseudo = user.user_metadata?.pseudo || user.user_metadata?.full_name || user.user_metadata?.user_name;
+          if (pseudo && !get().username) {
+            set({ username: pseudo });
+          }
           get().loadFromCloud(user.id);
         }
+      },
+      setUsername: (username) => {
+        set({ username });
+        get().syncToCloud();
       },
       setProfile: (profile) => set({ profile }),
       setSubscriptionPlan: (plan) => set({ subscriptionPlan: plan }),
       setUiLang: (lang) => set({ uiLang: lang }),
-      signOut: () => set({ user: null, profile: null }),
+      signOut: () => set({ user: null, profile: null, username: null }),
 
       loadFromCloud: async (userId: string) => {
         try {
@@ -203,7 +215,8 @@ export const useStore = create<StoreState>()(
               avatar: data.avatar_config || state.avatar,
               completed: data.completed_exercises || state.completed,
               completedUniversal: data.completed_universal || state.completedUniversal,
-              favorites: data.favorites || state.favorites
+              favorites: data.favorites || state.favorites,
+              username: data.username || state.username
             }));
           }
         } catch (err) {
@@ -220,6 +233,7 @@ export const useStore = create<StoreState>()(
           await supabase.from('profiles').upsert({
             id: state.user.id,
             email: state.user.email,
+            username: state.username,
             xp: state.xp,
             streak: state.streakData.count,
             avatar_config: state.avatar,
